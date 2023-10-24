@@ -18,6 +18,7 @@ import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.OutlinedIconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -29,17 +30,17 @@ import com.leventsurer.ecommerceappwithcompose.presentation.common.CustomElevate
 
 @Composable
 fun ProductTotalPriceAndCartButton() {
-    Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier
+    Row(horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically,modifier = Modifier
         .fillMaxWidth()
         .padding(horizontal = 10.dp)) {
         Column(modifier = Modifier.padding(end = 20.dp)) {
-            Text(text = "Total Price", color = Color.LightGray, fontSize = 10.sp)
-            Text(text = "$198.00", fontWeight = FontWeight.Bold)
+            Text(text = "Total Price", color = Color.LightGray, fontWeight = FontWeight.Bold,fontSize = 15.sp)
+            Text(text = "$198.00", fontWeight = FontWeight.Bold, fontSize = 24.sp)
         }
         ElevatedButton(
             colors = ButtonDefaults.elevatedButtonColors(containerColor = Color.Black),
             onClick = { /*TODO*/ }) {
-            Row() {
+            Row(verticalAlignment = Alignment.CenterVertically) {
                 Image(painter = painterResource(id = R.drawable.shopping_bag) , contentDescription = "" )
                 Spacer(modifier = Modifier.width(10.dp))
                 Text(text = "Add to cart", color = Color.White)

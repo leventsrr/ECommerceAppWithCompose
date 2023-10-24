@@ -13,7 +13,9 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonColors
 import androidx.compose.material3.IconButtonDefaults
+import androidx.compose.material3.IconToggleButtonColors
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -45,7 +47,9 @@ fun CustomTopAppBar(
             title = { },
             navigationIcon = {
 
-               IconButton(
+               FilledIconButton(
+                   shape = CircleShape,
+                   colors = IconButtonDefaults.filledIconButtonColors(containerColor = Color.Black),
                     modifier = Modifier
                         .size(30.dp),
                     onClick = onBackClick
@@ -53,7 +57,7 @@ fun CustomTopAppBar(
                     Icon(
                         imageVector = Icons.Default.ArrowBack,
                         contentDescription = "",
-                        tint = Color.Black,
+                        tint = Color.White,
                     )
                 }
 
@@ -70,12 +74,14 @@ fun CustomTopAppBar(
                         )
                     }
                 }else{
-                    IconButton(
+                    FilledIconButton(
+                        shape = CircleShape,
+                        colors = IconButtonDefaults.filledIconButtonColors(containerColor = Color.Black),
                         onClick = { /*TODO*/ }) {
                         Icon(
                             imageVector = Icons.Default.ShoppingCart,
                             contentDescription = "",
-                            tint = Color.Black
+                            tint = Color.White
                         )
                     }
                 }

@@ -1,5 +1,6 @@
 package com.leventsurer.ecommerceappwithcompose.ui.theme
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -14,6 +15,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
+import com.leventsurer.ecommerceappwithcompose.R
 
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,
@@ -37,6 +39,7 @@ private val LightColorScheme = lightColorScheme(
     */
 )
 
+@SuppressLint("ResourceAsColor")
 @Composable
 fun EcommerceAppWithComposeTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
@@ -57,7 +60,7 @@ fun EcommerceAppWithComposeTheme(
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
-            window.statusBarColor = colorScheme.primary.toArgb()
+            window.statusBarColor = R.color.black
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = darkTheme
         }
     }

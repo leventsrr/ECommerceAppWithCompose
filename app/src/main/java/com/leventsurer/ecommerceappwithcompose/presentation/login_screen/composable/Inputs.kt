@@ -21,9 +21,9 @@ fun Inputs() {
     Text(text = "Email", fontWeight = FontWeight.Bold, modifier = Modifier.fillMaxWidth())
     Spacer(modifier = Modifier.height(5.dp))
     TextField(
+        modifier = Modifier.height(20.dp).fillMaxWidth(),
+        colors = TextFieldDefaults.textFieldColors(containerColor = Color.Transparent),
 
-        modifier = Modifier.height(20.dp),
-        colors = TextFieldDefaults.textFieldColors(containerColor = Color.White,),
         value = "",
         onValueChange ={} )
     Spacer(modifier = Modifier.height(20.dp))
@@ -31,9 +31,8 @@ fun Inputs() {
     Text(text = "Password", fontWeight = FontWeight.Bold, modifier = Modifier.fillMaxWidth())
     Spacer(modifier = Modifier.height(5.dp))
     TextField(
-
-        modifier = Modifier.height(20.dp),
-        colors = TextFieldDefaults.textFieldColors(containerColor = Color.White,),
+        modifier = Modifier.height(20.dp).fillMaxWidth(),
+        colors = TextFieldDefaults.textFieldColors(containerColor = Color.Transparent,),
         value = "",
         onValueChange ={} )
 }

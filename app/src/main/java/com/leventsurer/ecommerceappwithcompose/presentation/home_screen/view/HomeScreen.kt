@@ -26,6 +26,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.FilterAlt
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Search
@@ -103,11 +104,11 @@ fun HomeScreen(
             Spacer(modifier = Modifier.width(20.dp))
             FloatingActionButton(
                 containerColor = Color.Black,
-                modifier = Modifier.size(30.dp),
+                modifier = Modifier.size(32.dp),
                 shape = CircleShape,
                 onClick = navigateToCategoriesPage
             ) {
-                Icon(imageVector = Icons.Default.Menu, contentDescription = "", tint = Color.White)
+                Icon(imageVector = Icons.Default.FilterAlt, contentDescription = "", tint = Color.White)
             }
         }
         Spacer(modifier = Modifier.height(20.dp))
@@ -161,19 +162,25 @@ fun HomeScreen(
             Text(text = "Top Categories", fontWeight = FontWeight.Bold, fontSize = 20.sp)
             Row(
                 horizontalArrangement = Arrangement.SpaceAround,
-                modifier = Modifier.fillMaxWidth().padding(top = 10.dp)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 10.dp)
             ) {
                 for (i in 0..3) {
                     Card(
                         border = BorderStroke(1.dp, Color.LightGray),
                         shape = CircleShape,
                         colors = CardDefaults.cardColors(containerColor = Color.White),
-                        modifier = Modifier.weight(1f).padding(end = 5.dp)
+                        modifier = Modifier
+                            .width(90.dp)
+                            .padding(horizontal = 3.dp)
                     ) {
                         Text(
                             text = "Kışlık",
                             color = Color.Black,
-                            modifier = Modifier.padding(horizontal = 10.dp, vertical = 10.dp).fillMaxWidth(),
+                            modifier = Modifier
+                                .padding(horizontal = 10.dp, vertical = 10.dp)
+                                .fillMaxWidth(),
                             fontWeight = FontWeight.Bold,
                             textAlign = TextAlign.Center
                         )
@@ -184,8 +191,11 @@ fun HomeScreen(
         Spacer(modifier = Modifier.height(20.dp))
 
         Column(modifier = Modifier.padding(horizontal = 5.dp)) {
-            Text(text = "New Arrivals", fontWeight = FontWeight.Bold, fontSize = 20.sp)
-            for (i in 0..10) {
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
+                Text(text = "New Arrivals", fontWeight = FontWeight.Bold, fontSize = 20.sp)
+                Text(text = "View All", fontWeight = FontWeight.Bold, fontSize = 13.sp)
+            }
+            for (i in 0..2) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween

@@ -17,6 +17,6 @@ fun GreetingsTexts(title:String,text:String) {
     Column() {
         Text(text = title, fontWeight = FontWeight.Bold, modifier = Modifier.fillMaxWidth(), fontSize = 23.sp)
         Spacer(modifier = Modifier.height(10.dp))
-        Text(text = text, fontSize = 13.sp, fontWeight = FontWeight.Bold, color = Color.LightGray)
+        Text(text = text, fontSize = 16.sp)
     }
 }

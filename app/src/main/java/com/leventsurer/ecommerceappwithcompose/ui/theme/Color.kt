@@ -11,6 +11,6 @@ val PurpleGrey40 = Color(0xFF625b71)
 val Pink40 = Color(0xFF7D5260)
 
 
-val FacebookThemeColor = Color(0xFF0866FF)
+val FacebookThemeColor = Color(0xFF3B5999)
 val Orange = Color(0xFFFFAC06)
 val Gray = Color(0xFF8C8C8C)
