@@ -58,13 +58,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.leventsurer.ecommerceappwithcompose.R
 import com.leventsurer.ecommerceappwithcompose.presentation.common.GreetingsTexts
-import com.leventsurer.ecommerceappwithcompose.presentation.home_screen.composable.HomePageProductCard
+import com.leventsurer.ecommerceappwithcompose.presentation.home_screen.view.composable.HomePageProductCard
 import com.leventsurer.ecommerceappwithcompose.ui.theme.Gray
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    padding: PaddingValues,
     navigateToCategoriesPage: () -> Unit,
     onProductDetailClick: () -> Unit
 ) {
@@ -72,8 +71,6 @@ fun HomeScreen(
         modifier = Modifier
             .fillMaxSize()
             .padding(
-                bottom = padding.calculateTopPadding(),
-                top = padding.calculateTopPadding(),
                 start = 10.dp,
                 end = 10.dp
             )

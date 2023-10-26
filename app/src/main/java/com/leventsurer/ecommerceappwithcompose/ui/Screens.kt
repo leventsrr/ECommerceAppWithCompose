@@ -8,7 +8,7 @@ sealed class Screens (val route:String){
     object LoginScreen:Screens("login_screen")
     object HomeScreen:Screens("home_screen")
     object CategoriesScreen:Screens("categories_screen")
-
+    object CartScreen:Screens("cart_screen")
 
 
 

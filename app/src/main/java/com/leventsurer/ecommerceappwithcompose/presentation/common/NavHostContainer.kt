@@ -1,11 +1,14 @@
 package com.leventsurer.ecommerceappwithcompose.presentation.common
 
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.leventsurer.ecommerceappwithcompose.presentation.categories_screen.view.CategoriesScreen
+import com.leventsurer.ecommerceappwithcompose.presentation.chart_screen.view.CartScreen
 import com.leventsurer.ecommerceappwithcompose.presentation.home_screen.view.HomeScreen
 import com.leventsurer.ecommerceappwithcompose.presentation.login_screen.view.LoginScreen
 import com.leventsurer.ecommerceappwithcompose.presentation.on_boarding_screen.view.OnBoardingScreen
@@ -18,6 +21,7 @@ import com.leventsurer.ecommerceappwithcompose.ui.Screens
 fun NavHostContainer(scaffoldPadding: PaddingValues, navController: NavHostController) {
 
     NavHost(
+        modifier = Modifier.padding(scaffoldPadding),
         navController = navController,
         startDestination = Screens.SplashScreen.route
     ) {
@@ -51,18 +55,21 @@ fun NavHostContainer(scaffoldPadding: PaddingValues, navController: NavHostContr
             )
         }
         composable(Screens.LoginScreen.route) {
-            LoginScreen(scaffoldPadding,
+            LoginScreen(padding =  scaffoldPadding,
             navigateToHomePage = {navController.navigate(Screens.HomeScreen.route)})
         }
         composable(Screens.HomeScreen.route) {
             HomeScreen(
-                scaffoldPadding,
                 navigateToCategoriesPage = { navController.navigate(Screens.CategoriesScreen.route) },
                 onProductDetailClick = {navController.navigate(Screens.ProductDetailScreen.route)}
             )
         }
         composable(Screens.CategoriesScreen.route) {
             CategoriesScreen(scaffoldPadding)
+        }
+
+        composable(Screens.CartScreen.route){
+            CartScreen()
         }
 
 

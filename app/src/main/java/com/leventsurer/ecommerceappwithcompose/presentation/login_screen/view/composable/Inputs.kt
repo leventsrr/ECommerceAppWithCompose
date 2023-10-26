@@ -1,5 +1,6 @@
-package com.leventsurer.ecommerceappwithcompose.presentation.login_screen.composable
+package com.leventsurer.ecommerceappwithcompose.presentation.login_screen.view.composable
 
+import android.util.Log
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -17,22 +18,27 @@ import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Inputs() {
+fun Inputs(userName:String,password:String,onUserNameValueChange:(String)->Unit,onPasswordValueChange:(String)->Unit) {
     Text(text = "Email", fontWeight = FontWeight.Bold, modifier = Modifier.fillMaxWidth())
     Spacer(modifier = Modifier.height(5.dp))
     TextField(
-        modifier = Modifier.height(20.dp).fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth(),
         colors = TextFieldDefaults.textFieldColors(containerColor = Color.Transparent),
 
-        value = "",
-        onValueChange ={} )
+        value = userName,
+        onValueChange ={
+            onUserNameValueChange(it)
+        } )
     Spacer(modifier = Modifier.height(20.dp))
 
     Text(text = "Password", fontWeight = FontWeight.Bold, modifier = Modifier.fillMaxWidth())
     Spacer(modifier = Modifier.height(5.dp))
     TextField(
-        modifier = Modifier.height(20.dp).fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth(),
         colors = TextFieldDefaults.textFieldColors(containerColor = Color.Transparent,),
-        value = "",
-        onValueChange ={} )
+        value = password,
+        onValueChange ={
+            onPasswordValueChange(it)
+
+        } )
 }

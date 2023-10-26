@@ -15,7 +15,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.leventsurer.ecommerceappwithcompose.presentation.categories_screen.composable.CategoryCard
+import com.leventsurer.ecommerceappwithcompose.presentation.categories_screen.view.composable.CategoryCard
 
 @Composable
 fun CategoriesScreen(padding: PaddingValues) {

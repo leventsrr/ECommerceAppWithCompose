@@ -1,4 +1,4 @@
-package com.leventsurer.ecommerceappwithcompose.presentation.product_detail_screen.composable
+package com.leventsurer.ecommerceappwithcompose.presentation.product_detail_screen.view.composable
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border

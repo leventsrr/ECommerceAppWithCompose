@@ -1,4 +1,4 @@
-package com.leventsurer.ecommerceappwithcompose.presentation.home_screen.composable
+package com.leventsurer.ecommerceappwithcompose.presentation.home_screen.view.composable
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable

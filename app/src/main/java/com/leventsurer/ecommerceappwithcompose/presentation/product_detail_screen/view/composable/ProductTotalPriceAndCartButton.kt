@@ -1,4 +1,4 @@
-package com.leventsurer.ecommerceappwithcompose.presentation.product_detail_screen.composable
+package com.leventsurer.ecommerceappwithcompose.presentation.product_detail_screen.view.composable
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement

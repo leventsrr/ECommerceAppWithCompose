@@ -19,7 +19,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -30,11 +29,11 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.leventsurer.ecommerceappwithcompose.R
-import com.leventsurer.ecommerceappwithcompose.presentation.product_detail_screen.composable.ProductDescription
-import com.leventsurer.ecommerceappwithcompose.presentation.product_detail_screen.composable.ProductQuantity
-import com.leventsurer.ecommerceappwithcompose.presentation.product_detail_screen.composable.ProductSize
-import com.leventsurer.ecommerceappwithcompose.presentation.product_detail_screen.composable.ProductTitleAndStar
-import com.leventsurer.ecommerceappwithcompose.presentation.product_detail_screen.composable.ProductTotalPriceAndCartButton
+import com.leventsurer.ecommerceappwithcompose.presentation.product_detail_screen.view.composable.ProductDescription
+import com.leventsurer.ecommerceappwithcompose.presentation.product_detail_screen.view.composable.ProductQuantity
+import com.leventsurer.ecommerceappwithcompose.presentation.product_detail_screen.view.composable.ProductSize
+import com.leventsurer.ecommerceappwithcompose.presentation.product_detail_screen.view.composable.ProductTitleAndStar
+import com.leventsurer.ecommerceappwithcompose.presentation.product_detail_screen.view.composable.ProductTotalPriceAndCartButton
 
 @Composable
 fun ProductDetailScreen(padding:PaddingValues) {

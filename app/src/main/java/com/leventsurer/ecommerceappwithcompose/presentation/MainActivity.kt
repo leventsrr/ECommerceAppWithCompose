@@ -1,4 +1,4 @@
-package com.leventsurer.ecommerceappwithcompose
+package com.leventsurer.ecommerceappwithcompose.presentation
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -18,7 +18,9 @@ import com.leventsurer.ecommerceappwithcompose.presentation.common.appbar.Custom
 import com.leventsurer.ecommerceappwithcompose.presentation.common.CustomTopAppBar
 import com.leventsurer.ecommerceappwithcompose.presentation.common.NavHostContainer
 import com.leventsurer.ecommerceappwithcompose.ui.theme.EcommerceAppWithComposeTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3Api::class)
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "ResourceAsColor")
@@ -48,7 +50,7 @@ class MainActivity : ComponentActivity() {
                             NavHostContainer(it, navController)
                         },
                         bottomBar = {
-                            CustomBottomAppBar(navBackStackEntry)
+                            CustomBottomAppBar(navController)
                         }
                     )
 

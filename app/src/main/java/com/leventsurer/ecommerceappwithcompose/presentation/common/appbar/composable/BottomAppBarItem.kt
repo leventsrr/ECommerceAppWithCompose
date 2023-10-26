@@ -30,6 +30,8 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun BottomAppBarItem(itemIndex:Int,chosenBottomBarIndex:Int,onClick:(Int)->Unit,itemIcon:ImageVector,itemTitle:String) {
+
+
     if (chosenBottomBarIndex == itemIndex) {
         Row(
             Modifier
@@ -46,6 +48,7 @@ fun BottomAppBarItem(itemIndex:Int,chosenBottomBarIndex:Int,onClick:(Int)->Unit,
                    onClick(0)
                 }) {
                 Icon(
+                    modifier = Modifier.size(16.dp),
                     imageVector = itemIcon,
                     contentDescription = "",
                     tint = Color.White
@@ -68,7 +71,7 @@ fun BottomAppBarItem(itemIndex:Int,chosenBottomBarIndex:Int,onClick:(Int)->Unit,
             Icon(
                 imageVector = itemIcon,
                 contentDescription = "",
-                tint = Color.Black
+                tint = Color.LightGray
             )
         }
     }

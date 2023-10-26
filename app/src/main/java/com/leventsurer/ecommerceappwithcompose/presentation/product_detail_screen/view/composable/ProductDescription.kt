@@ -1,4 +1,4 @@
-package com.leventsurer.ecommerceappwithcompose.presentation.product_detail_screen.composable
+package com.leventsurer.ecommerceappwithcompose.presentation.product_detail_screen.view.composable
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Text
