@@ -1,8 +1,6 @@
 package com.leventsurer.ecommerceappwithcompose.data.di
 
 import com.leventsurer.ecommerceappwithcompose.data.remote.AuthenticationApi
-import com.leventsurer.ecommerceappwithcompose.data.repository.AuthenticationRepositoryImpl
-import com.leventsurer.ecommerceappwithcompose.domain.repository.AuthenticationRepository
 import com.leventsurer.ecommerceappwithcompose.tools.Constants.BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -12,9 +10,10 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
+
 @InstallIn(SingletonComponent::class)
 @Module
-object RetrofitModule {
+object ToolsModule {
 
     @Provides
     @Singleton
@@ -23,4 +22,7 @@ object RetrofitModule {
         .addConverterFactory(GsonConverterFactory.create())
         .build()
         .create(AuthenticationApi::class.java)
+
+
+
 }

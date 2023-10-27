@@ -27,12 +27,15 @@ fun NavHostContainer(scaffoldPadding: PaddingValues, navController: NavHostContr
     ) {
         composable(Screens.SplashScreen.route) {
             SplashScreen(
-                scaffoldPadding,
+                scaffoldPadding =  scaffoldPadding,
                 onSignUpNavigateClick = {
                     navController.navigate(Screens.OnBoardingScreen.route)
                 },
                 onLoginNavigateClick = {
                     navController.navigate(Screens.LoginScreen.route)
+                },
+                navigateHomePage = {
+                    navController.navigate(Screens.HomeScreen.route)
                 }
             )
         }

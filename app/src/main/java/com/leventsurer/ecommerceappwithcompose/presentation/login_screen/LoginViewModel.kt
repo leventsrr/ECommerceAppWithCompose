@@ -1,49 +1,52 @@
 package com.leventsurer.ecommerceappwithcompose.presentation.login_screen
 
-import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.leventsurer.ecommerceappwithcompose.data.remote.dto.request.LoginRequest
+import com.leventsurer.ecommerceappwithcompose.domain.use_case.data_store.SetUserLoginStatusUseCase
 import com.leventsurer.ecommerceappwithcompose.domain.use_case.login.LoginUseCase
 import com.leventsurer.ecommerceappwithcompose.tools.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onCompletion
-import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val loginUseCase: LoginUseCase
-) : ViewModel(){
+    private val loginUseCase: LoginUseCase,
+    private val setIsLoginDataStoreUseCase: SetUserLoginStatusUseCase
+) : ViewModel() {
 
     private val _loginState = mutableStateOf(LoginState())
-    val loginState : State<LoginState> = _loginState
-    private var job : Job? = null
+    val loginState: State<LoginState> = _loginState
 
-    private fun login(loginRequest: LoginRequest){
-        job = loginUseCase.executeLogin(loginRequest).onEach {
-            when(it){
-                is Resource.Loading ->{
+
+    private fun login(loginRequest: LoginRequest) {
+        val combinedFlow = combine(
+            loginUseCase.executeLogin(loginRequest),
+            setIsLoginDataStoreUseCase.executeSetUserLoginStatus(true)
+        ) { loginUseCaseResource, setIsLoginDataStoreUseCase ->
+            when {
+                loginUseCaseResource is Resource.Loading || setIsLoginDataStoreUseCase is Resource.Loading -> {
                     _loginState.value = LoginState(isLoading = true)
                 }
-                is Resource.Error ->{
-                    _loginState.value = LoginState(error = it.message)
+                loginUseCaseResource is Resource.Success && setIsLoginDataStoreUseCase is Resource.Success -> {
+                    val loginUseCaseData = loginUseCaseResource.data
+                    //val secondData = setIsLoginDataStoreUseCase.data
+                    _loginState.value = LoginState(result = loginUseCaseData)
                 }
-                is Resource.Success->{
-                    _loginState.value = LoginState(result = it.data)
+                loginUseCaseResource is Resource.Error -> {
+                    _loginState.value = LoginState(error = loginUseCaseResource.message)
                 }
             }
         }.launchIn(viewModelScope)
     }
 
-    fun loginOnEvent(loginEvent: LoginEvent){
-        when(loginEvent){
-            is LoginEvent.Login->{
+    fun loginOnEvent(loginEvent: LoginEvent) {
+        when (loginEvent) {
+            is LoginEvent.Login -> {
                 login(loginEvent.loginRequest)
             }
         }

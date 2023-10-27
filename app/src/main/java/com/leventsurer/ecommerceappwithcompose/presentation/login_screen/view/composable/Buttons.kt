@@ -32,21 +32,20 @@ import kotlin.math.log
 fun Buttons(
     userName: String,
     password: String,
-    navigateToHomePage: () -> Unit,
     loginViewModel: LoginViewModel
 ) {
 
-    CustomElevatedButton("Login", {
-        loginViewModel.loginOnEvent(
-            LoginEvent.Login(
-                loginRequest = LoginRequest(
-                    username = userName,
-                    password = password
+    CustomElevatedButton("Login",
+        {
+            loginViewModel.loginOnEvent(
+                LoginEvent.Login(
+                    loginRequest = LoginRequest(
+                        username = userName,
+                        password = password
+                    )
                 )
             )
-        )
-    }
-
+        }
     )
     Spacer(modifier = Modifier.height(5.dp))
     Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {

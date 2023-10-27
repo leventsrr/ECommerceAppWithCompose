@@ -56,8 +56,11 @@ fun LoginScreen(
         }
         isCircularProgressActive = false
     }else if (loginViewModelState.error !=null){
-        isCircularProgressActive = false
-        Toast.makeText(context, "Wrong UserName Or Password", Toast.LENGTH_SHORT).show()
+        LaunchedEffect(Unit){
+            isCircularProgressActive = false
+            Toast.makeText(context, "Wrong UserName Or Password", Toast.LENGTH_SHORT).show()
+        }
+
     }
     Column(
         modifier = Modifier
@@ -74,11 +77,13 @@ fun LoginScreen(
         Inputs(userName,password, onUserNameValueChange = { userName = it}, onPasswordValueChange = {password = it})
         Spacer(modifier = Modifier.height(25.dp))
         if(isCircularProgressActive){
-            Box(modifier = Modifier.fillMaxWidth().fillMaxHeight(), contentAlignment = Alignment.Center) {
+            Box(modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight(), contentAlignment = Alignment.Center) {
                 CircularProgressIndicator()
             }
         }else{
-            Buttons(userName,password,navigateToHomePage = navigateToHomePage,loginViewModel)
+            Buttons(userName,password,loginViewModel)
         }
     }
 }
