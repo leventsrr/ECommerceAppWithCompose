@@ -14,14 +14,10 @@ class GetUserLoginStatusUseCase @Inject constructor(
 ) {
     fun executeGetUserLoginStatus(): Flow<Resource<Boolean>> = flow {
         try {
-            Log.e("kontrol","usecase ")
-
             emit(Resource.Loading())
             val isLoginState = dataStoreRepository.getUserLoginStatus()
-            Log.e("kontrol","usecase  result:$isLoginState")
             emit(Resource.Success(isLoginState))
         } catch (e: Exception) {
-            Log.e("kontrol","usecase carth error ${e.message}")
             emit(Resource.Error(e.message ?: "Error"))
         }
     }

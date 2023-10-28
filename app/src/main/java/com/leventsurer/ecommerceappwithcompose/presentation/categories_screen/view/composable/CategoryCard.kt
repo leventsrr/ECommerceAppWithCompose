@@ -21,7 +21,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun CategoryCard(categoryIcon:ImageVector,categoryName: String,categoryProductQuantity:Int) {
+fun CategoryCard(categoryName: String,categoryProductQuantity:Int) {
     Card(
         shape = CircleShape,
         colors = CardDefaults.cardColors(containerColor = Color.Black),
@@ -35,11 +35,7 @@ fun CategoryCard(categoryIcon:ImageVector,categoryName: String,categoryProductQu
                 .fillMaxWidth()
                 .padding(vertical = 20.dp, horizontal = 10.dp)
         ) {
-            Row {
-                Icon(imageVector = categoryIcon, contentDescription = "", tint = Color.White)
-                Spacer(modifier = Modifier.width(5.dp))
-                Text(text = categoryName, color = Color.White)
-            }
+            Text(text = categoryName, color = Color.White)
             Text(text = "$categoryProductQuantity Product", color = Color.White)
         }
     }

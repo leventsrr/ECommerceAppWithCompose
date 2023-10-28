@@ -5,10 +5,14 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import com.leventsurer.ecommerceappwithcompose.data.remote.AuthenticationApi
+import com.leventsurer.ecommerceappwithcompose.data.remote.CategoryApi
+import com.leventsurer.ecommerceappwithcompose.data.remote.ProductApi
 import com.leventsurer.ecommerceappwithcompose.data.repository.AuthenticationRepositoryImpl
 import com.leventsurer.ecommerceappwithcompose.data.repository.DataStoreRepositoryImpl
+import com.leventsurer.ecommerceappwithcompose.data.repository.DatabaseRepositoryImpl
 import com.leventsurer.ecommerceappwithcompose.domain.repository.AuthenticationRepository
 import com.leventsurer.ecommerceappwithcompose.domain.repository.DataStoreRepository
+import com.leventsurer.ecommerceappwithcompose.domain.repository.DatabaseRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -29,12 +33,16 @@ object RepositoryModule {
         return AuthenticationRepositoryImpl(authenticationApi)
     }
 
-
-
     @Provides
     @Singleton
     fun provideDataStoreRepository(
         @ApplicationContext context: Context
     ) : DataStoreRepository = DataStoreRepositoryImpl(context)
+
+    @Provides
+    @Singleton
+    fun provideDatabaseRepository(categoryApi: CategoryApi,productApi: ProductApi) : DatabaseRepository {
+        return DatabaseRepositoryImpl(categoryApi =  categoryApi, productApi = productApi)
+    }
 
 }

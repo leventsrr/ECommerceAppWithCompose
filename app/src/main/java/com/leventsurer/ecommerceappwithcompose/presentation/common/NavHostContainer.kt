@@ -21,7 +21,6 @@ import com.leventsurer.ecommerceappwithcompose.ui.Screens
 fun NavHostContainer(scaffoldPadding: PaddingValues, navController: NavHostController) {
 
     NavHost(
-        modifier = Modifier.padding(scaffoldPadding),
         navController = navController,
         startDestination = Screens.SplashScreen.route
     ) {
@@ -63,16 +62,20 @@ fun NavHostContainer(scaffoldPadding: PaddingValues, navController: NavHostContr
         }
         composable(Screens.HomeScreen.route) {
             HomeScreen(
+                paddingValues = scaffoldPadding,
                 navigateToCategoriesPage = { navController.navigate(Screens.CategoriesScreen.route) },
                 onProductDetailClick = {navController.navigate(Screens.ProductDetailScreen.route)}
             )
         }
+
         composable(Screens.CategoriesScreen.route) {
             CategoriesScreen(scaffoldPadding)
         }
 
         composable(Screens.CartScreen.route){
-            CartScreen()
+            CartScreen(
+                paddingValues = scaffoldPadding
+            )
         }
 
 

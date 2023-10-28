@@ -64,6 +64,7 @@ import com.leventsurer.ecommerceappwithcompose.ui.theme.Gray
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
+    paddingValues: PaddingValues,
     navigateToCategoriesPage: () -> Unit,
     onProductDetailClick: () -> Unit
 ) {
@@ -72,7 +73,8 @@ fun HomeScreen(
             .fillMaxSize()
             .padding(
                 start = 10.dp,
-                end = 10.dp
+                end = 10.dp,
+                top = paddingValues.calculateTopPadding()
             )
             .verticalScroll(rememberScrollState())
     ) {

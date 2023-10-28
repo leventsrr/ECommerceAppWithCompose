@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -33,9 +34,11 @@ import com.leventsurer.ecommerceappwithcompose.R
 import com.leventsurer.ecommerceappwithcompose.presentation.product_detail_screen.view.composable.ProductQuantity
 
 @Composable
-fun CartScreen() {
+fun CartScreen(
+    paddingValues: PaddingValues
+) {
 
-    Column(modifier = Modifier.padding(horizontal = 10.dp)) {
+    Column(modifier = Modifier.padding(start = 10.dp, end = 10.dp, top = paddingValues.calculateTopPadding())) {
         Text(text = "My Cart", fontWeight = FontWeight.Bold, fontSize = 32.sp)
         Spacer(modifier = Modifier.height(5.dp))
         LazyColumn() {
