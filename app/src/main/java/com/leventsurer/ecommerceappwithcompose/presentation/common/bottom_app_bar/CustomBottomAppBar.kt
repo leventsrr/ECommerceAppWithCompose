@@ -1,4 +1,4 @@
-package com.leventsurer.ecommerceappwithcompose.presentation.common.appbar
+package com.leventsurer.ecommerceappwithcompose.presentation.common.bottom_app_bar
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
@@ -24,7 +24,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.leventsurer.ecommerceappwithcompose.presentation.common.appbar.composable.BottomAppBarItem
+import com.leventsurer.ecommerceappwithcompose.presentation.common.bottom_app_bar.composable.BottomAppBarItem
 import com.leventsurer.ecommerceappwithcompose.ui.Screens
 
 @SuppressLint("SuspiciousIndentation")
@@ -34,13 +34,12 @@ fun CustomBottomAppBar(navHostController: NavHostController?) {
         mutableIntStateOf(0)
     }
     val navBackStackEntry by navHostController!!.currentBackStackEntryAsState()
-    if (navBackStackEntry?.destination?.route == Screens.OnBoardingScreen.route
+    if (!(navBackStackEntry?.destination?.route == Screens.OnBoardingScreen.route
         || navBackStackEntry?.destination?.route == Screens.SplashScreen.route
         || navBackStackEntry?.destination?.route == Screens.LoginScreen.route
         || navBackStackEntry?.destination?.route == Screens.RegisterScreen.route
+        ||  navBackStackEntry?.destination?.route == Screens.ProductDetailScreen.route)
     ) {
-
-    } else {
         BottomAppBar(
             modifier = Modifier
                 .fillMaxWidth()
@@ -59,8 +58,8 @@ fun CustomBottomAppBar(navHostController: NavHostController?) {
                         chosenBottomBarIndex = chosenBottomBarIndex,
                         onClick = {
                             chosenBottomBarIndex = it
-                                  navHostController?.navigate(Screens.HomeScreen.route)
-                                  },
+                            navHostController?.navigate(Screens.HomeScreen.route)
+                        },
                         itemIcon = Icons.Default.Home,
                         itemTitle = "Home"
                     )
@@ -68,7 +67,7 @@ fun CustomBottomAppBar(navHostController: NavHostController?) {
                         itemIndex = 1,
                         chosenBottomBarIndex = chosenBottomBarIndex,
                         onClick = { chosenBottomBarIndex = it
-                                  navHostController?.navigate(Screens.CartScreen.route)},
+                            navHostController?.navigate(Screens.CartScreen.route)},
                         itemIcon = Icons.Default.ShoppingCart,
                         itemTitle = "Cart"
                     )
@@ -90,6 +89,8 @@ fun CustomBottomAppBar(navHostController: NavHostController?) {
                 }
             }
         )
+    } else {
+
     }
 
 }

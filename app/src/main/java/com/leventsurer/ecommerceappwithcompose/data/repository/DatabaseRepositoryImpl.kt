@@ -20,4 +20,8 @@ class DatabaseRepositoryImpl @Inject constructor(
         return productApi.getProductsInCategory(categoryName)
     }
 
+    override suspend fun getAllProducts(): ArrayList<GetProductResponse> {
+        return productApi.getAllProducts()
+    }
+
 }

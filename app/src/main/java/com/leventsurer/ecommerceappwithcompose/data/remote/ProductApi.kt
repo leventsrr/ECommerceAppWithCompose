@@ -7,4 +7,8 @@ import retrofit2.http.Path
 interface ProductApi {
         @GET("products/category/{categoryName}")
         suspend fun getProductsInCategory(@Path("categoryName") categoryName:String) :ArrayList<GetProductResponse>
+
+        @GET("products")
+        suspend fun getAllProducts(): ArrayList<GetProductResponse>
+
 }

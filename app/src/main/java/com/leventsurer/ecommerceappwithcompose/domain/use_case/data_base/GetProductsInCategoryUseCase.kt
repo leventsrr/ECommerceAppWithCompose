@@ -1,8 +1,5 @@
 package com.leventsurer.ecommerceappwithcompose.domain.use_case.data_base
-
-import android.util.Log
 import com.leventsurer.ecommerceappwithcompose.data.remote.dto.response.CategoriesResponse
-import com.leventsurer.ecommerceappwithcompose.data.remote.dto.response.GetProductResponse
 import com.leventsurer.ecommerceappwithcompose.domain.model.CategoryProductQuantityModel
 import com.leventsurer.ecommerceappwithcompose.domain.repository.DatabaseRepository
 import com.leventsurer.ecommerceappwithcompose.tools.Resource

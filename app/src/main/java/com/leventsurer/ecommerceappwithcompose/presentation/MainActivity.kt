@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.leventsurer.ecommerceappwithcompose.presentation.common.appbar.CustomBottomAppBar
+import com.leventsurer.ecommerceappwithcompose.presentation.common.bottom_app_bar.CustomBottomAppBar
 import com.leventsurer.ecommerceappwithcompose.presentation.common.CustomTopAppBar
 import com.leventsurer.ecommerceappwithcompose.presentation.common.NavHostContainer
 import com.leventsurer.ecommerceappwithcompose.ui.theme.EcommerceAppWithComposeTheme
