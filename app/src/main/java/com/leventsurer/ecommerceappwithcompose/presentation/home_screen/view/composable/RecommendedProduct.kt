@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -22,14 +23,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.leventsurer.ecommerceappwithcompose.R
+import com.leventsurer.ecommerceappwithcompose.data.remote.dto.response.GetProductResponse
 
 @Composable
-fun RecommendedProduct() {
+fun RecommendedProduct(productModel:GetProductResponse) {
     Card(
         elevation = CardDefaults.cardElevation(5.dp),
         colors = CardDefaults.cardColors(Color.White),
@@ -45,21 +52,29 @@ fun RecommendedProduct() {
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Row() {
-                Image(
-                    painter = painterResource(id = R.drawable.onboarding3),
-                    contentDescription = ""
+            Row(modifier = Modifier.weight(5f)) {
+                AsyncImage(
+                    contentScale = ContentScale.Fit,
+                    modifier = Modifier
+                        .width(90.dp)
+                        .height(90.dp),
+                    model = ImageRequest.Builder(LocalContext.current)
+                        .data(productModel.image)
+                        .crossfade(true)
+                        .build(),
+                    contentDescription = null,
                 )
-
                 Column(modifier = Modifier.padding(horizontal = 5.dp)) {
-                    Text(text = "Axel Arigato", fontWeight = FontWeight.Bold)
+                    Text(text = productModel.title, fontWeight = FontWeight.Bold, maxLines = 1, overflow = TextOverflow.Ellipsis)
                     Text(
-                        text = "Clean 90 Triple Sceakers",
+                        text = productModel.description,
                         fontSize = 13.sp,
                         fontWeight = FontWeight.Bold,
-                        color = Color.Gray
+                        color = Color.Gray,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
                     )
-                    Text(text = "$245.00", fontWeight = FontWeight.Bold)
+                    Text(text = productModel.price, fontWeight = FontWeight.Bold)
                 }
             }
             ElevatedButton(

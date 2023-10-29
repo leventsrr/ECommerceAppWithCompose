@@ -1,12 +1,12 @@
 package com.leventsurer.ecommerceappwithcompose.presentation.common
 
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import com.leventsurer.ecommerceappwithcompose.presentation.categories_screen.view.CategoriesScreen
 import com.leventsurer.ecommerceappwithcompose.presentation.chart_screen.view.CartScreen
 import com.leventsurer.ecommerceappwithcompose.presentation.home_screen.view.HomeScreen
@@ -26,7 +26,7 @@ fun NavHostContainer(scaffoldPadding: PaddingValues, navController: NavHostContr
     ) {
         composable(Screens.SplashScreen.route) {
             SplashScreen(
-                scaffoldPadding =  scaffoldPadding,
+                scaffoldPadding = scaffoldPadding,
                 onSignUpNavigateClick = {
                     navController.navigate(Screens.OnBoardingScreen.route)
                 },
@@ -46,9 +46,13 @@ fun NavHostContainer(scaffoldPadding: PaddingValues, navController: NavHostContr
                 }
             )
         }
-        composable(Screens.ProductDetailScreen.route) {
-            ProductDetailScreen(scaffoldPadding)
+        composable(
+            route = "${Screens.ProductDetailScreen.route}/{productId}",
+            arguments = listOf(navArgument("productId") { type = NavType.StringType })
+        ) { backStackEntry ->
+            ProductDetailScreen(scaffoldPadding,productId = backStackEntry.arguments?.getString("productId"))
         }
+
         composable(Screens.OnBoardingScreen.route) {
             OnBoardingScreen(
                 navigateToRegister = {
@@ -57,22 +61,26 @@ fun NavHostContainer(scaffoldPadding: PaddingValues, navController: NavHostContr
             )
         }
         composable(Screens.LoginScreen.route) {
-            LoginScreen(padding =  scaffoldPadding,
-            navigateToHomePage = {navController.navigate(Screens.HomeScreen.route)})
+            LoginScreen(padding = scaffoldPadding,
+                navigateToHomePage = { navController.navigate(Screens.HomeScreen.route) })
         }
-        composable(Screens.HomeScreen.route) {
+        composable(
+            route = Screens.HomeScreen.route,
+
+            ) {
             HomeScreen(
                 paddingValues = scaffoldPadding,
                 navigateToCategoriesPage = { navController.navigate(Screens.CategoriesScreen.route) },
-                onProductDetailClick = {navController.navigate(Screens.ProductDetailScreen.route)}
+                navHostController =  navController
             )
         }
+
 
         composable(Screens.CategoriesScreen.route) {
             CategoriesScreen(scaffoldPadding)
         }
 
-        composable(Screens.CartScreen.route){
+        composable(Screens.CartScreen.route) {
             CartScreen(
                 paddingValues = scaffoldPadding
             )

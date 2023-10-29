@@ -34,12 +34,14 @@ fun CustomBottomAppBar(navHostController: NavHostController?) {
         mutableIntStateOf(0)
     }
     val navBackStackEntry by navHostController!!.currentBackStackEntryAsState()
-    if (!(navBackStackEntry?.destination?.route == Screens.OnBoardingScreen.route
+    if (navBackStackEntry?.destination?.route == Screens.OnBoardingScreen.route
         || navBackStackEntry?.destination?.route == Screens.SplashScreen.route
         || navBackStackEntry?.destination?.route == Screens.LoginScreen.route
         || navBackStackEntry?.destination?.route == Screens.RegisterScreen.route
-        ||  navBackStackEntry?.destination?.route == Screens.ProductDetailScreen.route)
+        ||  navBackStackEntry?.destination?.route == Screens.ProductDetailScreen.route
     ) {
+
+    } else {
         BottomAppBar(
             modifier = Modifier
                 .fillMaxWidth()
@@ -89,8 +91,6 @@ fun CustomBottomAppBar(navHostController: NavHostController?) {
                 }
             }
         )
-    } else {
-
     }
 
 }

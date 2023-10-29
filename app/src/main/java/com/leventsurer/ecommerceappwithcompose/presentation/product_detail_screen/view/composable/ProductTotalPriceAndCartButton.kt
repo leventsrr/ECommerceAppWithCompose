@@ -29,13 +29,13 @@ import com.leventsurer.ecommerceappwithcompose.R
 import com.leventsurer.ecommerceappwithcompose.presentation.common.CustomElevatedButton
 
 @Composable
-fun ProductTotalPriceAndCartButton() {
+fun ProductTotalPriceAndCartButton(totalPrice:Double) {
     Row(horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically,modifier = Modifier
         .fillMaxWidth()
         .padding(horizontal = 10.dp)) {
         Column(modifier = Modifier.padding(end = 20.dp)) {
             Text(text = "Total Price", color = Color.LightGray, fontWeight = FontWeight.Bold,fontSize = 15.sp)
-            Text(text = "$198.00", fontWeight = FontWeight.Bold, fontSize = 24.sp)
+            Text(text = "$${String.format("%.2f",totalPrice)}", fontWeight = FontWeight.Bold, fontSize = 24.sp)
         }
         ElevatedButton(
             colors = ButtonDefaults.elevatedButtonColors(containerColor = Color.Black),

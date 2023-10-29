@@ -65,7 +65,8 @@ fun ProductSize() {
         }
         Card(elevation = CardDefaults.cardElevation(15.dp), shape = CircleShape, colors = CardDefaults.cardColors(containerColor = Color.White)) {
             Column(modifier = Modifier.padding(5.dp)) {
-                for(i in 0 until productColors.size){
+                for(i in 0 until productColors.size/2){
+
                     Box(
                         modifier = Modifier
                             .width(25.dp)
@@ -75,7 +76,7 @@ fun ProductSize() {
                                 shape = CircleShape
                             )
                             .border(1.dp, Color.LightGray, CircleShape)
-                            
+
                     )
                     Spacer(modifier = Modifier.height(5.dp))
                 }

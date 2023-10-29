@@ -42,9 +42,8 @@ class MainActivity : ComponentActivity() {
                     Scaffold(
                         topBar = {
                             CustomTopAppBar(
-                                navBackStackEntry,
+                                navHostController = navController,
                                 onBackClick = { navController.popBackStack() })
-
                         },
                         content = {
                             NavHostContainer(it, navController)

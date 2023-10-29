@@ -10,4 +10,5 @@ interface DatabaseRepository {
     suspend fun getProductsInCategory(categoryName:String):ArrayList<GetProductResponse>
 
     suspend fun getAllProducts():ArrayList<GetProductResponse>
+    suspend fun getAProductById(productId:String): GetProductResponse
 }

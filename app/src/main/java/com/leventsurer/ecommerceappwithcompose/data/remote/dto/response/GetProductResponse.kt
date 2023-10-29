@@ -8,7 +8,8 @@ data class GetProductResponse(
     val id: Int,
     val image: String,
     val price: String,
-    val title: String
+    val title: String,
+    val rating: Rating,
 )
 
 

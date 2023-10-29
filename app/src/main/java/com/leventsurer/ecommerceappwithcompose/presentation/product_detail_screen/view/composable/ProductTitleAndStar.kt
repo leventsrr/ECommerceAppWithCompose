@@ -18,52 +18,39 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.leventsurer.ecommerceappwithcompose.data.remote.dto.response.Rating
 import com.leventsurer.ecommerceappwithcompose.ui.theme.Orange
 
 @Composable
-fun ProductTitleAndStar() {
+fun ProductTitleAndStar(productName:String,productId:String,productRate:Rating) {
     Column(horizontalAlignment = Alignment.Start, verticalArrangement = Arrangement.Center) {
-        Text(text = "Roller Rabbit", fontWeight = FontWeight.Bold, fontSize = 25.sp)
-        Spacer(modifier = Modifier.height(10.dp))
+        Text(text = productName, fontWeight = FontWeight.Bold, fontSize = 20.sp)
+        Spacer(modifier = Modifier.height(5.dp))
         Text(
-            text = "Vado Odelle Dress",
+            text = productId,
             fontSize = 15.sp,
             fontWeight = FontWeight.Light
         )
-        Spacer(modifier = Modifier.height(10.dp))
+        Spacer(modifier = Modifier.height(5.dp))
         Row() {
-            Icon(
-                imageVector = Icons.Default.Star,
-                contentDescription = "",
-                tint = Orange,
-                modifier = Modifier.size(20.dp)
-            )
-            Icon(
-                imageVector = Icons.Default.Star,
-                contentDescription = "",
-                tint = Orange,
-                modifier = Modifier.size(20.dp)
-            )
-            Icon(
-                imageVector = Icons.Default.Star,
-                contentDescription = "",
-                tint = Orange,
-                modifier = Modifier.size(20.dp)
-            )
-            Icon(
-                imageVector = Icons.Default.Star,
-                contentDescription = "",
-                tint = Orange,
-                modifier = Modifier.size(20.dp)
-            )
-            Icon(
-                imageVector = Icons.Default.Star,
-                contentDescription = "",
-                tint = Orange,
-                modifier = Modifier.size(20.dp)
-            )
+            for(i in 0..productRate.rate.toInt()){
+                Icon(
+                    imageVector = Icons.Default.Star,
+                    contentDescription = "",
+                    tint = Orange,
+                    modifier = Modifier.size(20.dp)
+                )
+            }
+            for(i in 0 until (5-productRate.rate).toInt()){
+                Icon(
+                    imageVector = Icons.Default.Star,
+                    contentDescription = "",
+                    tint = Color.Red,
+                    modifier = Modifier.size(20.dp)
+                )
+            }
             Spacer(modifier = Modifier.width(10.dp))
-            Text(text = "(320 Review)")
+            Text(text = "(${productRate.count})")
         }
     }
 }

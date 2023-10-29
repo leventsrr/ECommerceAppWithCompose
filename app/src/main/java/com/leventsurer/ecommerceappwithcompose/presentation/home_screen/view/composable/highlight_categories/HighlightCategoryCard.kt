@@ -22,7 +22,7 @@ fun HighlightCategoryCard(categoryName:String) {
         Box(
             modifier = Modifier
                 .width(130.dp)
-                .height(90.dp)
+                .height(70.dp)
                 .border(
                     1.dp, Color.LightGray,
                     RoundedCornerShape(5.dp)

@@ -24,4 +24,8 @@ class DatabaseRepositoryImpl @Inject constructor(
         return productApi.getAllProducts()
     }
 
+    override suspend fun getAProductById(productId:String): GetProductResponse{
+        return productApi.getAProductById(productId)
+    }
+
 }

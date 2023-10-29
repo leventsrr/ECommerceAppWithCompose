@@ -1,6 +1,7 @@
 package com.leventsurer.ecommerceappwithcompose.presentation.product_detail_screen.view.composable
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -23,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import com.leventsurer.ecommerceappwithcompose.R
 
 @Composable
-fun ProductQuantity() {
+fun ProductQuantity(productQuantity:Int,increaseProductQuantity:(Int)-> Unit,decreaseProductQuantity:(Int)->Unit) {
     Column(horizontalAlignment = Alignment.End) {
         Box(
             modifier = Modifier
@@ -35,19 +36,20 @@ fun ProductQuantity() {
                 .align(
                     Alignment.CenterStart
                 )
-                .padding(start = 5.dp, top = 5.dp, bottom = 5.dp))
-            Text(text = "2", modifier = Modifier
+                .padding(start = 5.dp, top = 5.dp, bottom = 5.dp)
+                .clickable { decreaseProductQuantity(productQuantity-1)})
+            Text(text = productQuantity.toString(), modifier = Modifier
                 .align(
                     Alignment.Center
                 )
-                .padding(start = 10.dp, top = 5.dp, bottom = 5.dp, end = 10.dp))
+                .padding(start = 10.dp, top = 5.dp, bottom = 5.dp, end = 10.dp)
+                )
             Icon(imageVector = Icons.Default.Add, contentDescription ="add", modifier = Modifier
                 .align(
                     Alignment.CenterEnd
                 )
-                .padding(end = 5.dp, top = 5.dp, bottom = 5.dp) )
+                .padding(end = 5.dp, top = 5.dp, bottom = 5.dp)
+                .clickable { increaseProductQuantity(productQuantity+1) })
         }
-        Spacer(modifier = Modifier.height(10.dp))
-        Text(text = "Available in stok", fontWeight = FontWeight.Bold)
     }
 }

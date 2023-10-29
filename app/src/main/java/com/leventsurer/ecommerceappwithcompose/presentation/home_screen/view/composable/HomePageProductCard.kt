@@ -25,22 +25,24 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.leventsurer.ecommerceappwithcompose.R
 import com.leventsurer.ecommerceappwithcompose.data.remote.dto.response.GetProductResponse
+import com.leventsurer.ecommerceappwithcompose.ui.Screens
 
 @Composable
 fun HomePageProductCard(
     productModel:GetProductResponse,
-    onProductDetailClick: () -> Unit
+    navHostController: NavHostController,
 ) {
     Card(
         elevation = CardDefaults.cardElevation(1.dp),
         modifier = Modifier
             .padding(horizontal = 5.dp, vertical = 10.dp)
             .width(170.dp)
-            .clickable { onProductDetailClick() },
+            .clickable { navHostController.navigate("${Screens.ProductDetailScreen.route}/${productModel.id}") },
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {

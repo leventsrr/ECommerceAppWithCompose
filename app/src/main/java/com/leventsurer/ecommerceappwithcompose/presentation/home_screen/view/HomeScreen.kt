@@ -9,11 +9,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import com.leventsurer.ecommerceappwithcompose.presentation.common.GreetingsTexts
 import com.leventsurer.ecommerceappwithcompose.presentation.home_screen.HomeEvent
 import com.leventsurer.ecommerceappwithcompose.presentation.home_screen.HomeViewModel
@@ -27,7 +29,7 @@ fun HomeScreen(
     homeViewModel: HomeViewModel = hiltViewModel(),
     paddingValues: PaddingValues,
     navigateToCategoriesPage: () -> Unit,
-    onProductDetailClick: () -> Unit
+    navHostController: NavHostController
 ) {
     val highlightsProductsState = homeViewModel.newArrivalProductsState.value
     val topCategoriesState = homeViewModel.topCategoriesState.value
@@ -51,9 +53,16 @@ fun HomeScreen(
         Spacer(modifier = Modifier.height(20.dp))
         SearchBoxAndCategoriesButton(navigateToCategoriesPage)
         Spacer(modifier = Modifier.height(20.dp))
-        RecommendedProduct()
+        if (highlightsProductsState.isLoading) {
+            CircularProgressIndicator()
+        } else if (!highlightsProductsState.newArrivalProducts.isNullOrEmpty()) {
+            RecommendedProduct(highlightsProductsState.newArrivalProducts[3])
+        }
+
         Spacer(modifier = Modifier.height(20.dp))
-        if (!topCategoriesState.topCategories.isNullOrEmpty()) {
+        if(topCategoriesState.isLoading){
+            LinearProgressIndicator()
+        } else if (!topCategoriesState.topCategories.isNullOrEmpty()) {
             HighlightCategories(highlightsCategories = topCategoriesState.topCategories)
         }
         Spacer(modifier = Modifier.height(20.dp))
@@ -62,7 +71,7 @@ fun HomeScreen(
         } else if (!highlightsProductsState.newArrivalProducts.isNullOrEmpty()) {
             NewArrivalProducts(
                 products = highlightsProductsState.newArrivalProducts,
-                onProductDetailClick =  onProductDetailClick )
+                navHostController = navHostController )
         }
     }
 }

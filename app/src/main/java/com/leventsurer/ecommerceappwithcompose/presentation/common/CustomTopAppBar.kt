@@ -32,9 +32,12 @@ import com.leventsurer.ecommerceappwithcompose.ui.Screens
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CustomTopAppBar(
-    navBackStackEntry: NavBackStackEntry?,
+    navHostController: NavHostController,
     onBackClick:()->Unit
     ) {
+
+    val navBackStackEntry by navHostController.currentBackStackEntryAsState()
+
     if (navBackStackEntry?.destination?.route == Screens.OnBoardingScreen.route
         || navBackStackEntry?.destination?.route == Screens.SplashScreen.route
         || navBackStackEntry?.destination?.route == Screens.LoginScreen.route
