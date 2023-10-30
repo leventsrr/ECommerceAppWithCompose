@@ -1,6 +1,7 @@
 package com.leventsurer.ecommerceappwithcompose.domain.repository
 
 import com.leventsurer.ecommerceappwithcompose.data.remote.dto.response.CategoriesResponse
+import com.leventsurer.ecommerceappwithcompose.data.remote.dto.response.GetAllCartsResponse
 import com.leventsurer.ecommerceappwithcompose.data.remote.dto.response.GetProductResponse
 
 interface DatabaseRepository {
@@ -11,4 +12,6 @@ interface DatabaseRepository {
 
     suspend fun getAllProducts():ArrayList<GetProductResponse>
     suspend fun getAProductById(productId:String): GetProductResponse
+
+    suspend fun getAllPastCarts(): ArrayList<GetAllCartsResponse>
 }

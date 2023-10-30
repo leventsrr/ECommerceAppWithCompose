@@ -5,6 +5,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import com.leventsurer.ecommerceappwithcompose.data.remote.AuthenticationApi
+import com.leventsurer.ecommerceappwithcompose.data.remote.CartApi
 import com.leventsurer.ecommerceappwithcompose.data.remote.CategoryApi
 import com.leventsurer.ecommerceappwithcompose.data.remote.ProductApi
 import com.leventsurer.ecommerceappwithcompose.data.repository.AuthenticationRepositoryImpl
@@ -41,8 +42,8 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideDatabaseRepository(categoryApi: CategoryApi,productApi: ProductApi) : DatabaseRepository {
-        return DatabaseRepositoryImpl(categoryApi =  categoryApi, productApi = productApi)
+    fun provideDatabaseRepository(categoryApi: CategoryApi,productApi: ProductApi,cartApi: CartApi) : DatabaseRepository {
+        return DatabaseRepositoryImpl(categoryApi =  categoryApi, productApi = productApi, cartApi = cartApi)
     }
 
 }

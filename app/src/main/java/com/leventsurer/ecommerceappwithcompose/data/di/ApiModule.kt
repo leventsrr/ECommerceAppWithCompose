@@ -1,6 +1,7 @@
 package com.leventsurer.ecommerceappwithcompose.data.di
 
 import com.leventsurer.ecommerceappwithcompose.data.remote.AuthenticationApi
+import com.leventsurer.ecommerceappwithcompose.data.remote.CartApi
 import com.leventsurer.ecommerceappwithcompose.data.remote.CategoryApi
 import com.leventsurer.ecommerceappwithcompose.data.remote.ProductApi
 import com.leventsurer.ecommerceappwithcompose.tools.Constants.BASE_URL
@@ -42,6 +43,14 @@ object ApiModule {
         .addConverterFactory(GsonConverterFactory.create())
         .build()
         .create(ProductApi::class.java)
+
+    @Provides
+    @Singleton
+    fun provideCartApi(): CartApi  =Retrofit.Builder()
+        .baseUrl(BASE_URL)
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+        .create(CartApi::class.java)
 
 
 
