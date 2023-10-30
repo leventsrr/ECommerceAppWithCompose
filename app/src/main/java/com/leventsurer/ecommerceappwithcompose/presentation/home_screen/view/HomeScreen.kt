@@ -63,7 +63,7 @@ fun HomeScreen(
         if(topCategoriesState.isLoading){
             LinearProgressIndicator()
         } else if (!topCategoriesState.topCategories.isNullOrEmpty()) {
-            HighlightCategories(highlightsCategories = topCategoriesState.topCategories)
+            HighlightCategories(highlightsCategories = topCategoriesState.topCategories,navHostController = navHostController)
         }
         Spacer(modifier = Modifier.height(20.dp))
         if (highlightsProductsState.isLoading) {

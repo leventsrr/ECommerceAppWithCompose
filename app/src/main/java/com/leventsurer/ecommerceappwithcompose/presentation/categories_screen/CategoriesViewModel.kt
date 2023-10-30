@@ -9,12 +9,8 @@ import com.leventsurer.ecommerceappwithcompose.domain.use_case.data_base.GetAllC
 import com.leventsurer.ecommerceappwithcompose.domain.use_case.data_base.GetProductsInCategoryUseCase
 import com.leventsurer.ecommerceappwithcompose.tools.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.zip
 import javax.inject.Inject
 
 @HiltViewModel
@@ -51,7 +47,7 @@ class CategoriesViewModel @Inject constructor(
 
 
     private fun getProductsInCategory(categoriesResponse:CategoriesResponse) {
-        getProductsInCategoryUseCase.executeGetProductsInCategory(categoriesResponse).onEach {
+        getProductsInCategoryUseCase.executeGetProductsInAllCategory(categoriesResponse).onEach {
             when (it) {
                 is Resource.Loading -> {
                     _productsInCategoryState.value = ProductState(isLoading = true)

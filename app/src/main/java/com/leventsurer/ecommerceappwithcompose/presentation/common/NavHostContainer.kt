@@ -8,11 +8,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.leventsurer.ecommerceappwithcompose.presentation.categories_screen.view.CategoriesScreen
-import com.leventsurer.ecommerceappwithcompose.presentation.chart_screen.view.CartScreen
+import com.leventsurer.ecommerceappwithcompose.presentation.cart_screen.view.CartScreen
 import com.leventsurer.ecommerceappwithcompose.presentation.home_screen.view.HomeScreen
 import com.leventsurer.ecommerceappwithcompose.presentation.login_screen.view.LoginScreen
 import com.leventsurer.ecommerceappwithcompose.presentation.on_boarding_screen.view.OnBoardingScreen
 import com.leventsurer.ecommerceappwithcompose.presentation.product_detail_screen.view.ProductDetailScreen
+import com.leventsurer.ecommerceappwithcompose.presentation.product_in_category_screen.view.ProductsInCategoryScreen
 import com.leventsurer.ecommerceappwithcompose.presentation.register_screen.view.RegisterScreen
 import com.leventsurer.ecommerceappwithcompose.presentation.splash_screen.view.SplashScreen
 import com.leventsurer.ecommerceappwithcompose.ui.Screens
@@ -50,7 +51,21 @@ fun NavHostContainer(scaffoldPadding: PaddingValues, navController: NavHostContr
             route = "${Screens.ProductDetailScreen.route}/{productId}",
             arguments = listOf(navArgument("productId") { type = NavType.StringType })
         ) { backStackEntry ->
-            ProductDetailScreen(scaffoldPadding,productId = backStackEntry.arguments?.getString("productId"))
+            ProductDetailScreen(
+                scaffoldPadding,
+                productId = backStackEntry.arguments?.getString("productId")
+            )
+        }
+
+        composable(
+            route = "${Screens.ProductsInCategoryScreen.route}/{categoryName}",
+            arguments = listOf(navArgument("categoryName") { type = NavType.StringType })
+        ) { backStackEntry ->
+            ProductsInCategoryScreen(
+                categoryName = backStackEntry.arguments?.getString("categoryName")!!,
+                paddingValues = scaffoldPadding,
+                navHostController = navController
+            )
         }
 
         composable(Screens.OnBoardingScreen.route) {
@@ -66,18 +81,17 @@ fun NavHostContainer(scaffoldPadding: PaddingValues, navController: NavHostContr
         }
         composable(
             route = Screens.HomeScreen.route,
-
-            ) {
+        ) {
             HomeScreen(
                 paddingValues = scaffoldPadding,
                 navigateToCategoriesPage = { navController.navigate(Screens.CategoriesScreen.route) },
-                navHostController =  navController
+                navHostController = navController
             )
         }
 
 
         composable(Screens.CategoriesScreen.route) {
-            CategoriesScreen(scaffoldPadding)
+            CategoriesScreen(scaffoldPadding, navHostController = navController)
         }
 
         composable(Screens.CartScreen.route) {
@@ -85,6 +99,8 @@ fun NavHostContainer(scaffoldPadding: PaddingValues, navController: NavHostContr
                 paddingValues = scaffoldPadding
             )
         }
+
+
 
 
     }

@@ -19,16 +19,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import com.leventsurer.ecommerceappwithcompose.ui.Screens
 
 @Composable
-fun CategoryCard(categoryName: String,categoryProductQuantity:Int) {
+fun CategoryCard(categoryName: String,categoryProductQuantity:Int,navHostController: NavHostController) {
     Card(
         shape = CircleShape,
         colors = CardDefaults.cardColors(containerColor = Color.Black),
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 10.dp, vertical = 5.dp)
-            .clickable { }) {
+            .clickable {
+                navHostController.navigate("${Screens.ProductsInCategoryScreen.route}/$categoryName")
+            }) {
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier

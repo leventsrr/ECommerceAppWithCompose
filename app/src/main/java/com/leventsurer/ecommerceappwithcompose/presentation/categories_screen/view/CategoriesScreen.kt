@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import com.leventsurer.ecommerceappwithcompose.R
 import com.leventsurer.ecommerceappwithcompose.domain.model.CategoryProductQuantityModel
 import com.leventsurer.ecommerceappwithcompose.presentation.categories_screen.CategoriesEvent
@@ -33,7 +34,8 @@ import com.leventsurer.ecommerceappwithcompose.presentation.categories_screen.vi
 @Composable
 fun CategoriesScreen(
     padding: PaddingValues,
-    categoriesViewModel: CategoriesViewModel = hiltViewModel()
+    categoriesViewModel: CategoriesViewModel = hiltViewModel() ,
+    navHostController: NavHostController
 ) {
     val categoriesState = categoriesViewModel.categoriesState.value
     val productQuantityState = categoriesViewModel.productsInCategoryState.value
@@ -58,7 +60,8 @@ fun CategoriesScreen(
             productQuantityState.productsAndQuantity.forEach {
                 CategoryCard(
                     categoryName = it.categoryName,
-                    categoryProductQuantity = it.categoryQuantity
+                    categoryProductQuantity = it.categoryQuantity,
+                    navHostController = navHostController
                 )
 
             }

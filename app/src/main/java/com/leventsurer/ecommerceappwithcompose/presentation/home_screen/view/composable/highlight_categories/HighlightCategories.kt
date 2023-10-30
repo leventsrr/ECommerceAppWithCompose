@@ -12,9 +12,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 
 @Composable
-fun HighlightCategories(highlightsCategories:ArrayList<String>) {
+fun HighlightCategories(highlightsCategories:ArrayList<String>,navHostController: NavHostController) {
     Column(modifier = Modifier.padding(horizontal = 5.dp)) {
         Text(text = "Top Categories", fontWeight = FontWeight.Bold, fontSize = 20.sp)
             LazyRow(
@@ -24,7 +25,7 @@ fun HighlightCategories(highlightsCategories:ArrayList<String>) {
                     .padding(top = 10.dp)
             ) {
                 itemsIndexed(highlightsCategories) { _, item ->
-                    HighlightCategoryCard(categoryName = item)
+                    HighlightCategoryCard(categoryName = item,navHostController = navHostController)
                 }
             }
     }

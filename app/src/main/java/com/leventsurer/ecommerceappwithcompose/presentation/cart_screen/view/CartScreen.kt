@@ -1,4 +1,4 @@
-package com.leventsurer.ecommerceappwithcompose.presentation.chart_screen.view
+package com.leventsurer.ecommerceappwithcompose.presentation.cart_screen.view
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -31,7 +31,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.leventsurer.ecommerceappwithcompose.R
-import com.leventsurer.ecommerceappwithcompose.presentation.product_detail_screen.view.composable.ProductQuantity
 
 @Composable
 fun CartScreen(
