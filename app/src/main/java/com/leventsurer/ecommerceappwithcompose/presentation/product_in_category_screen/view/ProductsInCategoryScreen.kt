@@ -41,6 +41,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.leventsurer.ecommerceappwithcompose.data.local.room.ProductModel
+import com.leventsurer.ecommerceappwithcompose.data.remote.dto.response.Product
 import com.leventsurer.ecommerceappwithcompose.presentation.home_screen.view.composable.HomePageProductCard
 import com.leventsurer.ecommerceappwithcompose.presentation.product_in_category_screen.ProductsInCategoryEvent
 import com.leventsurer.ecommerceappwithcompose.presentation.product_in_category_screen.ProductsInCategoryViewModel
@@ -64,11 +66,19 @@ fun ProductsInCategoryScreen(
     }
     Column(
         Modifier
-            .padding(top = paddingValues.calculateTopPadding(), bottom = paddingValues.calculateBottomPadding())
+            .padding(
+                top = paddingValues.calculateTopPadding(),
+                bottom = paddingValues.calculateBottomPadding()
+            )
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
     ) {
-        Text(text = categoryName, fontWeight = FontWeight.Bold, fontSize = 25.sp, modifier = Modifier.padding(start = 10.dp))
+        Text(
+            text = categoryName,
+            fontWeight = FontWeight.Bold,
+            fontSize = 25.sp,
+            modifier = Modifier.padding(start = 10.dp)
+        )
         if (productsInCategoryViewModelState.isLoading) {
             CircularProgressIndicator()
         } else if (!productsInCategoryViewModelState.productsInCategory.isNullOrEmpty()) {
@@ -82,10 +92,40 @@ fun ProductsInCategoryScreen(
                     ProductCard(
                         productModel = products[productIndex],
                         navHostController = navHostController,
+                        addProductToCart = {
+                            productsInProductsInCategoryViewModel.onEvent(
+                                ProductsInCategoryEvent.AddProductToCart(
+                                    ProductModel(
+                                        productImageUrl = products[productIndex].image,
+                                        productTitle = products[productIndex].title,
+                                        productDescription = products[productIndex].description,
+                                        productPrice = products[productIndex].price,
+                                        productCategory = products[productIndex].category,
+                                        productRating = products[productIndex].rating,
+                                        productId = products[productIndex].id
+                                    )
+                                )
+                            )
+                        }
                     )
                     ProductCard(
                         productModel = products[productIndex + 1],
                         navHostController = navHostController,
+                        addProductToCart = {
+                            productsInProductsInCategoryViewModel.onEvent(
+                                ProductsInCategoryEvent.AddProductToCart(
+                                    ProductModel(
+                                        productImageUrl = products[productIndex].image,
+                                        productTitle = products[productIndex].title,
+                                        productDescription = products[productIndex].description,
+                                        productPrice = products[productIndex].price,
+                                        productCategory = products[productIndex].category,
+                                        productRating = products[productIndex].rating,
+                                        productId = products[productIndex].id
+                                    )
+                                )
+                            )
+                        }
                     )
                 }
                 productIndex += 2

@@ -34,12 +34,14 @@ import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.leventsurer.ecommerceappwithcompose.data.remote.dto.response.GetProductResponse
+import com.leventsurer.ecommerceappwithcompose.data.remote.dto.response.Product
 import com.leventsurer.ecommerceappwithcompose.ui.Screens
 
 @Composable
 fun ProductCard(
     navHostController: NavHostController,
-    productModel: GetProductResponse
+    productModel: GetProductResponse,
+    addProductToCart:(Product)->Unit
 ) {
 
     Column(
@@ -71,7 +73,9 @@ fun ProductCard(
                 contentDescription = "",
                 modifier = Modifier.align(
                     Alignment.BottomEnd
-                )
+                ).clickable {
+
+                }
             )
         }
 
