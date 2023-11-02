@@ -1,12 +1,13 @@
 package com.leventsurer.ecommerceappwithcompose.data.local.room
 
+import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.leventsurer.ecommerceappwithcompose.data.remote.dto.response.Product
 
+@Dao
 interface ProductDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

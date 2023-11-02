@@ -11,6 +11,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
 import javax.inject.Qualifier
 import javax.inject.Singleton
 
@@ -18,25 +20,22 @@ import javax.inject.Singleton
 @Module
 object DatabaseModule {
 
-
-
     @Provides
     @Singleton
-    fun provideAppDatabase(@ApplicationContext appContext: Context): ProductRoomDatabase {
-        return Room.databaseBuilder(
-            appContext,
-            ProductRoomDatabase::class.java,
-            "product"
-        ).build()
-    }
-
-
+    fun provideDataBase(
+        app:Application,
+        callback: ProductRoomDatabase.CallBack
+    )= Room.databaseBuilder(app,ProductRoomDatabase::class.java,"product_database")
+        .fallbackToDestructiveMigration()
+        .addCallback(callback)
+        .build()
 
     @Provides
-    @Singleton
-    fun provideChannelDao(productRoomDatabase: ProductRoomDatabase): ProductDao {
-        return productRoomDatabase.productDao()
-    }
+    fun provideProductDao(db:ProductRoomDatabase)= db.productDao()
+
+    @ApplicationScope
+    @Provides
+    fun provideApplicationScope() = CoroutineScope(SupervisorJob())
 
 
 }

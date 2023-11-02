@@ -5,11 +5,11 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.leventsurer.ecommerceappwithcompose.data.remote.dto.response.Rating
-import kotlinx.parcelize.Parcelize
+import kotlinx.android.parcel.Parcelize
 import javax.annotation.Nonnull
 
-@Parcelize
 @Entity(tableName = "product")
+@Parcelize
 data class ProductModel(
     @PrimaryKey(autoGenerate = true)
     @Nonnull

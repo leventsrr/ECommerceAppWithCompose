@@ -31,13 +31,14 @@ import javax.inject.Singleton
 val Context.userDataStore: DataStore<Preferences> by preferencesDataStore(
     name = "dataStorePreferences"
 )
+
 @InstallIn(SingletonComponent::class)
 @Module
 object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideAuthenticationRepository(authenticationApi: AuthenticationApi) : AuthenticationRepository {
+    fun provideAuthenticationRepository(authenticationApi: AuthenticationApi): AuthenticationRepository {
         return AuthenticationRepositoryImpl(authenticationApi)
     }
 
@@ -45,29 +46,29 @@ object RepositoryModule {
     @Singleton
     fun provideDataStoreRepository(
         @ApplicationContext context: Context
-    ) : DataStoreRepository = DataStoreRepositoryImpl(context)
+    ): DataStoreRepository = DataStoreRepositoryImpl(context)
 
     @Provides
     @Singleton
-    fun provideDatabaseRepository(categoryApi: CategoryApi,productApi: ProductApi,cartApi: CartApi) : DatabaseRepository {
-        return DatabaseRepositoryImpl(categoryApi =  categoryApi, productApi = productApi, cartApi = cartApi)
+    fun provideDatabaseRepository(
+        categoryApi: CategoryApi,
+        productApi: ProductApi,
+        cartApi: CartApi
+    ): DatabaseRepository {
+        return DatabaseRepositoryImpl(
+            categoryApi = categoryApi,
+            productApi = productApi,
+            cartApi = cartApi
+        )
     }
 
-   @Provides
+    @Provides
     @Singleton
-    fun provideRoomRepository(productDao: ProductDao) : RoomDatabaseRepository {
+    fun provideRoomRepository(productDao: ProductDao): RoomDatabaseRepository {
         return RoomDatabaseRepositoryImpl(productDao = productDao)
     }
 
 
-
-    @Provides
-    fun provideFavoriteProductDao(db:ProductRoomDatabase)= db.productDao()
-
-    @ApplicationScope
-    @Provides
-    @Singleton
-    fun provideApplicationScope() = CoroutineScope(SupervisorJob())
 
 
 }

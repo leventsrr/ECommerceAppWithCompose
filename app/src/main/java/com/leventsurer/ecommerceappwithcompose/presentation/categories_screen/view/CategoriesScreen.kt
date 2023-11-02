@@ -55,8 +55,7 @@ fun CategoriesScreen(
         if (productQuantityState.isLoading) {
             Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
                 CircularProgressIndicator()
-            }
-        } else if (!productQuantityState.productsAndQuantity.isNullOrEmpty()) {
+            } } else if (!productQuantityState.productsAndQuantity.isNullOrEmpty()) {
             productQuantityState.productsAndQuantity.forEach {
                 CategoryCard(
                     categoryName = it.categoryName,
