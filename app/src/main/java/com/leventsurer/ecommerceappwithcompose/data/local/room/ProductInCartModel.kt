@@ -8,9 +8,12 @@ import com.leventsurer.ecommerceappwithcompose.data.remote.dto.response.Rating
 import kotlinx.android.parcel.Parcelize
 import javax.annotation.Nonnull
 
-@Entity(tableName = "favorite_product")
+
+
+
+@Entity(tableName = "product_in_cart")
 @Parcelize
-data class FavoriteProductModel(
+data class ProductInCartModel(
     @PrimaryKey(autoGenerate = false)
     @Nonnull
     @ColumnInfo(name = "productId")
@@ -22,16 +25,10 @@ data class FavoriteProductModel(
     @ColumnInfo(name = "productTitle")
     var productTitle: String,
 
-    @ColumnInfo(name = "productDescription")
-    var productDescription: String,
-
     @ColumnInfo(name = "productPrice")
     var productPrice: String,
 
-    @ColumnInfo(name = "productCategory")
-    var productCategory: String,
+    @ColumnInfo(name = "productQuantity")
+    var productQuantity: Int,
 
-    @ColumnInfo(name = "productRating")
-    var productRating: Rating,
-
-) : Parcelable
+    ) : Parcelable

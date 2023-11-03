@@ -10,16 +10,31 @@ import androidx.room.Update
 @Dao
 interface ProductDao {
 
-
+    //Favorite Product
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addProduct(favoriteProductModel: FavoriteProductModel)
+    suspend fun addFavoriteProduct(favoriteProductModel: FavoriteProductModel)
 
-    @Query("SELECT * FROM product")
-    suspend fun getProducts():List<FavoriteProductModel>
+    @Query("SELECT * FROM favorite_product")
+    suspend fun getFavoriteProducts():List<FavoriteProductModel>
 
     @Update
-    suspend fun updateProductDetails(favoriteProductModel: FavoriteProductModel)
+    suspend fun updateFavoriteProductDetails(favoriteProductModel: FavoriteProductModel)
 
     @Delete
-    suspend fun deleteProduct(favoriteProductModel: FavoriteProductModel)
+    suspend fun deleteFavoriteProduct(favoriteProductModel: FavoriteProductModel)
+
+    //Products in cart
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun addProductToCart(favoriteProductModel: FavoriteProductModel)
+
+    @Query("SELECT * FROM product_in_cart")
+    suspend fun getProductsToCart():List<ProductInCartModel>
+
+    @Update
+    suspend fun updateProductDetailsToCart(favoriteProductModel: ProductInCartModel)
+
+    @Delete
+    suspend fun deleteProductToCart(favoriteProductModel: ProductInCartModel)
+
 }

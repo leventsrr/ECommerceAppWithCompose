@@ -6,7 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.leventsurer.ecommerceappwithcompose.domain.use_case.data_base.GetAllPastCartsUseCase
-import com.leventsurer.ecommerceappwithcompose.domain.use_case.room.GetProductsUseCase
+import com.leventsurer.ecommerceappwithcompose.domain.use_case.room.GetFavoriteProductsUseCase
 import com.leventsurer.ecommerceappwithcompose.tools.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -15,7 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CartViewModel @Inject constructor(
     private val getAllPastCartsUseCase: GetAllPastCartsUseCase,
-    private val executeGetProducts: GetProductsUseCase,
+    private val executeGetProducts: GetFavoriteProductsUseCase,
 ) : ViewModel(){
 
     private val _getAllPastCartsState = mutableStateOf(PastCartState())

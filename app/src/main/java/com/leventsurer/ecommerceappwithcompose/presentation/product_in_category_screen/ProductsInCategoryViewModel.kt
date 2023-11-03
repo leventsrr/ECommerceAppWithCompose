@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.leventsurer.ecommerceappwithcompose.data.local.room.FavoriteProductModel
 import com.leventsurer.ecommerceappwithcompose.domain.use_case.data_base.GetProductsInCategoryUseCase
-import com.leventsurer.ecommerceappwithcompose.domain.use_case.room.AddProductUseCase
+import com.leventsurer.ecommerceappwithcompose.domain.use_case.room.AddFavoriteProductUseCase
 import com.leventsurer.ecommerceappwithcompose.tools.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -15,7 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ProductsInCategoryViewModel @Inject constructor(
     private val getProductsInCategoryUseCase: GetProductsInCategoryUseCase,
-    private val addProductUseCase: AddProductUseCase
+    private val addFavoriteProductUseCase: AddFavoriteProductUseCase
 ): ViewModel() {
 
     private val _productsInCategoryState = mutableStateOf(ProductsInCategoryState())
@@ -44,7 +44,7 @@ class ProductsInCategoryViewModel @Inject constructor(
 
     private fun addProductToCart(favoriteProductModel:FavoriteProductModel){
 
-        addProductUseCase.executeAddProductUseCase(favoriteProductModel).onEach {
+        addFavoriteProductUseCase.executeAddProductUseCase(favoriteProductModel).onEach {
             when(it){
                 is Resource.Loading ->{
                     _addProductState.value = AddProductState(isLoading = true)

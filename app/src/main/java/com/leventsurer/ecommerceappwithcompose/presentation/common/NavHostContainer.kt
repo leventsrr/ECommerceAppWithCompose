@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.leventsurer.ecommerceappwithcompose.presentation.categories_screen.view.CategoriesScreen
 import com.leventsurer.ecommerceappwithcompose.presentation.cart_screen.view.CartScreen
+import com.leventsurer.ecommerceappwithcompose.presentation.favorite_products_screen.view.FavoriteProductsScreen
 import com.leventsurer.ecommerceappwithcompose.presentation.home_screen.view.HomeScreen
 import com.leventsurer.ecommerceappwithcompose.presentation.login_screen.view.LoginScreen
 import com.leventsurer.ecommerceappwithcompose.presentation.on_boarding_screen.view.OnBoardingScreen
@@ -96,6 +97,13 @@ fun NavHostContainer(scaffoldPadding: PaddingValues, navController: NavHostContr
 
         composable(Screens.CartScreen.route) {
             CartScreen(
+                paddingValues = scaffoldPadding
+            )
+        }
+
+        composable(Screens.FavoriteProductsScreen.route){
+            FavoriteProductsScreen(
+                navHostController = navController,
                 paddingValues = scaffoldPadding
             )
         }

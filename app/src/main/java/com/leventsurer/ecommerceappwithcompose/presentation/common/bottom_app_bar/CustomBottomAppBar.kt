@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
@@ -76,9 +77,10 @@ fun CustomBottomAppBar(navHostController: NavHostController?) {
                     BottomAppBarItem(
                         itemIndex = 2,
                         chosenBottomBarIndex = chosenBottomBarIndex,
-                        onClick = { chosenBottomBarIndex = it },
-                        itemIcon = Icons.Default.Notifications,
-                        itemTitle = "Notification"
+                        onClick = { chosenBottomBarIndex = it
+                            navHostController?.navigate(Screens.FavoriteProductsScreen.route)},
+                        itemIcon = Icons.Default.Favorite,
+                        itemTitle = "Favorite"
                     )
                     BottomAppBarItem(
                         itemIndex = 3,
