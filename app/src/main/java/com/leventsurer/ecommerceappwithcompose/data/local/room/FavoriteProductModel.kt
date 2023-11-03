@@ -10,8 +10,8 @@ import javax.annotation.Nonnull
 
 @Entity(tableName = "product")
 @Parcelize
-data class ProductModel(
-    @PrimaryKey(autoGenerate = true)
+data class FavoriteProductModel(
+    @PrimaryKey(autoGenerate = false)
     @Nonnull
     @ColumnInfo(name = "productId")
     var productId: Int,

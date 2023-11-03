@@ -1,6 +1,6 @@
 package com.leventsurer.ecommerceappwithcompose.presentation.product_in_category_screen.view.composable
 
-import android.hardware.lights.Light
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -11,11 +11,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.FavoriteBorder
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -23,8 +20,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
@@ -33,16 +28,22 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.leventsurer.ecommerceappwithcompose.data.local.room.FavoriteProductModel
 import com.leventsurer.ecommerceappwithcompose.data.remote.dto.response.GetProductResponse
-import com.leventsurer.ecommerceappwithcompose.data.remote.dto.response.Product
+import com.leventsurer.ecommerceappwithcompose.presentation.product_in_category_screen.ProductsInCategoryEvent
+import com.leventsurer.ecommerceappwithcompose.presentation.product_in_category_screen.ProductsInCategoryViewModel
 import com.leventsurer.ecommerceappwithcompose.ui.Screens
 
 @Composable
 fun ProductCard(
     navHostController: NavHostController,
     productModel: GetProductResponse,
-    addProductToCart:(Product)->Unit
+    productsInProductsInCategoryViewModel: ProductsInCategoryViewModel
 ) {
+    val state = productsInProductsInCategoryViewModel.addProductState.value
+    if(state.result !=null && state.result){
+        Toast.makeText(LocalContext.current,"Favorilere Eklendi",Toast.LENGTH_SHORT).show()
+    }
 
     Column(
         modifier = Modifier
@@ -68,15 +69,31 @@ fun ProductCard(
                     .build(),
                 contentDescription = null,
             )
-            Icon(
-                imageVector = Icons.Outlined.FavoriteBorder,
-                contentDescription = "",
-                modifier = Modifier.align(
+            IconButton(modifier = Modifier
+                .align(
                     Alignment.BottomEnd
-                ).clickable {
+                ),
+                onClick = {
 
-                }
-            )
+                    productsInProductsInCategoryViewModel.onEvent(
+                        ProductsInCategoryEvent.AddProductToCart(
+                            FavoriteProductModel(
+                                productImageUrl = productModel.image,
+                                productTitle = productModel.title,
+                                productDescription = productModel.description,
+                                productPrice = productModel.price,
+                                productCategory = productModel.category,
+                                productRating = productModel.rating,
+                                productId = productModel.id
+                            )
+                        )
+                    )
+                }) {
+                Icon(
+                    imageVector = Icons.Outlined.FavoriteBorder,
+                    contentDescription = "",
+                )
+            }
         }
 
 

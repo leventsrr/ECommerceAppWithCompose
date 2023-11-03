@@ -1,7 +1,6 @@
 package com.leventsurer.ecommerceappwithcompose.domain.use_case.room
 
-import com.leventsurer.ecommerceappwithcompose.data.local.room.ProductModel
-import com.leventsurer.ecommerceappwithcompose.data.remote.dto.response.Product
+import com.leventsurer.ecommerceappwithcompose.data.local.room.FavoriteProductModel
 import com.leventsurer.ecommerceappwithcompose.domain.repository.RoomDatabaseRepository
 import com.leventsurer.ecommerceappwithcompose.tools.Resource
 import kotlinx.coroutines.flow.Flow
@@ -12,7 +11,7 @@ class GetProductsUseCase @Inject constructor(
     private val roomDatabaseRepository: RoomDatabaseRepository
 ) {
 
-    fun executeGetProducts():Flow<Resource<ArrayList<ProductModel>>> = flow {
+    fun executeGetProducts():Flow<Resource<List<FavoriteProductModel>>> = flow {
         try {
             emit(Resource.Loading())
             val products = roomDatabaseRepository.getProducts()

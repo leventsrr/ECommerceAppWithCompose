@@ -1,17 +1,16 @@
 package com.leventsurer.ecommerceappwithcompose.domain.repository
 
-import com.leventsurer.ecommerceappwithcompose.data.local.room.ProductModel
-import com.leventsurer.ecommerceappwithcompose.data.remote.dto.response.Product
+import com.leventsurer.ecommerceappwithcompose.data.local.room.FavoriteProductModel
 
 interface RoomDatabaseRepository {
 
-    suspend fun insertProduct(productModel: ProductModel)
+    suspend fun insertProduct(favoriteProductModel: FavoriteProductModel)
 
 
-    suspend fun updateProductDetail(productModel: ProductModel)
+    suspend fun updateProductDetail(favoriteProductModel: FavoriteProductModel)
 
-    suspend fun deleteProduct(productModel: ProductModel)
+    suspend fun deleteProduct(favoriteProductModel: FavoriteProductModel)
 
-    fun getProducts():ArrayList<ProductModel>
+    suspend fun getProducts():List<FavoriteProductModel>
 
 }

@@ -2,14 +2,14 @@ package com.leventsurer.ecommerceappwithcompose.data.local.room
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.leventsurer.ecommerceappwithcompose.data.di.ApplicationScope
-import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.CoroutineScope
+import com.leventsurer.ecommerceappwithcompose.tools.Converters
 import javax.inject.Inject
 import javax.inject.Provider
 
-@Database(entities = [ProductModel::class], version = 1)
+@Database(entities = [FavoriteProductModel::class], version = 1)
+@TypeConverters(Converters::class)
 abstract class ProductRoomDatabase :RoomDatabase(){
     abstract fun productDao(): ProductDao
 

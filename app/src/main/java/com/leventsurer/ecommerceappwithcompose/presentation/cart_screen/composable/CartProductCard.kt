@@ -1,6 +1,5 @@
 package com.leventsurer.ecommerceappwithcompose.presentation.cart_screen.composable
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -24,13 +23,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.leventsurer.ecommerceappwithcompose.R
+import com.leventsurer.ecommerceappwithcompose.data.local.room.FavoriteProductModel
 
 @Composable
-fun CartProductCard() {
+fun CartProductCard(favoriteProductModel: FavoriteProductModel) {
     Card(
         modifier = Modifier
             .padding(start = 10.dp, end = 10.dp, bottom = 10.dp, top = 5.dp)
@@ -44,24 +48,29 @@ fun CartProductCard() {
             .fillMaxWidth()
             .fillMaxHeight(),
             verticalAlignment = Alignment.Bottom) {
-            Image(
-                painter = painterResource(id = R.drawable.model1),
-                contentDescription = "",
+
+            AsyncImage(
+                contentScale = ContentScale.Fit,
                 modifier = Modifier
                     .width(80.dp)
                     .height(80.dp)
-                    .clip(RoundedCornerShape(15.dp))
+                    .clip(RoundedCornerShape(15.dp)),
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(favoriteProductModel.productImageUrl)
+                    .crossfade(true)
+                    .build(),
+                contentDescription = null,
             )
 
             Column(modifier = Modifier
                 .fillMaxHeight()
                 .weight(5f), verticalArrangement = Arrangement.SpaceBetween) {
                 Column {
-                    Text(text = "Macbook Air", fontWeight = FontWeight.Bold)
-                    Text(text = "Apple", fontWeight = FontWeight.Light)
+                    Text(text = favoriteProductModel.productTitle, fontWeight = FontWeight.Bold)
+                    Text(text = favoriteProductModel.productId.toString(), fontWeight = FontWeight.Light)
                 }
 
-                Text(text = "$1500.0", fontWeight = FontWeight.Bold)
+                Text(text = favoriteProductModel.productPrice, fontWeight = FontWeight.Bold)
             }
 
             Box(

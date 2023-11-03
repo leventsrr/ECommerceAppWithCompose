@@ -4,8 +4,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.leventsurer.ecommerceappwithcompose.data.local.room.ProductModel
-import com.leventsurer.ecommerceappwithcompose.data.remote.dto.response.Product
+import com.leventsurer.ecommerceappwithcompose.data.local.room.FavoriteProductModel
 import com.leventsurer.ecommerceappwithcompose.domain.use_case.data_base.GetProductsInCategoryUseCase
 import com.leventsurer.ecommerceappwithcompose.domain.use_case.room.AddProductUseCase
 import com.leventsurer.ecommerceappwithcompose.tools.Resource
@@ -21,6 +20,9 @@ class ProductsInCategoryViewModel @Inject constructor(
 
     private val _productsInCategoryState = mutableStateOf(ProductsInCategoryState())
     val productsInCategoryState : State<ProductsInCategoryState>  = _productsInCategoryState
+
+    private val _addProductState = mutableStateOf(AddProductState())
+    val addProductState : State<AddProductState>  = _addProductState
 
 
 
@@ -40,8 +42,22 @@ class ProductsInCategoryViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    private fun addProductToCart(productModel:ProductModel){
-        addProductUseCase.executeAddProductUseCase(productModel)
+    private fun addProductToCart(favoriteProductModel:FavoriteProductModel){
+
+        addProductUseCase.executeAddProductUseCase(favoriteProductModel).onEach {
+            when(it){
+                is Resource.Loading ->{
+                    _addProductState.value = AddProductState(isLoading = true)
+                }
+                is Resource.Error ->{
+                    _addProductState.value = AddProductState(error = it.message)
+                }
+                is Resource.Success ->{
+                    _addProductState.value = AddProductState(result = it.data)
+                }
+            }
+        }.launchIn(viewModelScope)
+
     }
 
     fun onEvent(productsInCategoryEvent: ProductsInCategoryEvent){
@@ -50,7 +66,7 @@ class ProductsInCategoryViewModel @Inject constructor(
                 getProductsInCategory(productsInCategoryEvent.categoryName)
             }
             is ProductsInCategoryEvent.AddProductToCart->{
-                addProductToCart(productsInCategoryEvent.productModel)
+                addProductToCart(productsInCategoryEvent.favoriteProductModel)
             }
         }
     }

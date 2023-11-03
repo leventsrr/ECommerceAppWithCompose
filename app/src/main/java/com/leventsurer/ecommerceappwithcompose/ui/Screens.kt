@@ -11,7 +11,7 @@ sealed class Screens (val route:String){
     object CartScreen:Screens("cart_screen")
 
     object ProductsInCategoryScreen:Screens("products_in_category_screen")
-
+    object FavoriteProductsScreen:Screens("favorite_products_screen")
 
 
 }
