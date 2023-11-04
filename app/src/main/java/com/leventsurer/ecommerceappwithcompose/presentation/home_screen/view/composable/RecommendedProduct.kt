@@ -52,7 +52,7 @@ fun RecommendedProduct(productModel:GetProductResponse) {
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Row(modifier = Modifier.weight(5f)) {
+            Row(modifier = Modifier.weight(5f).padding(end = 5.dp)) {
                 AsyncImage(
                     contentScale = ContentScale.Fit,
                     modifier = Modifier

@@ -15,8 +15,8 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun GreetingsTexts(title:String,text:String) {
     Column() {
-        Text(text = title, fontWeight = FontWeight.Bold, modifier = Modifier.fillMaxWidth(), fontSize = 23.sp)
+        Text(text = title, fontWeight = FontWeight.ExtraBold, modifier = Modifier.fillMaxWidth(), fontSize = 23.sp)
         Spacer(modifier = Modifier.height(10.dp))
-        Text(text = text, fontSize = 16.sp)
+        Text(text = text, fontSize = 16.sp, color = Color.Gray, fontWeight = FontWeight.Bold)
     }
 }

@@ -16,6 +16,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -37,26 +38,24 @@ import com.leventsurer.ecommerceappwithcompose.data.local.room.ProductInCartMode
 
 @Composable
 fun CartProductCard(productInCartModel: ProductInCartModel) {
-    Card(
+    Column(
         modifier = Modifier
             .padding(start = 10.dp, end = 10.dp, bottom = 10.dp, top = 5.dp)
             .fillMaxWidth(),
-        colors = CardDefaults.cardColors(containerColor = Color.White),
-        elevation = CardDefaults.cardElevation(10.dp)
     ) {
         Row(
             modifier = Modifier
                 .padding(5.dp)
                 .fillMaxWidth()
                 .fillMaxHeight(),
-            verticalAlignment = Alignment.Bottom
+            verticalAlignment = Alignment.CenterVertically
         ) {
 
             AsyncImage(
                 contentScale = ContentScale.Fit,
                 modifier = Modifier
                     .width(80.dp)
-                    .height(80.dp)
+                    .fillMaxHeight()
                     .clip(RoundedCornerShape(15.dp))
                     .padding(5.dp),
                 model = ImageRequest.Builder(LocalContext.current)
@@ -72,17 +71,27 @@ fun CartProductCard(productInCartModel: ProductInCartModel) {
                     .weight(5f), verticalArrangement = Arrangement.SpaceBetween
             ) {
                 Column {
-                    Text(text = productInCartModel.productTitle, fontWeight = FontWeight.Bold, maxLines = 2, overflow = TextOverflow.Ellipsis)
+                    Text(
+                        text = productInCartModel.productTitle,
+                        fontWeight = FontWeight.Bold,
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis
+                    )
                     Text(
                         text = productInCartModel.productId.toString(),
                         fontWeight = FontWeight.Light
                     )
                 }
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(text = "$${(productInCartModel.productPrice.toDouble() * productInCartModel.productQuantity)}", fontWeight = FontWeight.Bold)
+                    Text(
+                        text = "$${(productInCartModel.productPrice.toDouble() * productInCartModel.productQuantity)}",
+                        fontWeight = FontWeight.Bold
+                    )
                     Box(
                         modifier = Modifier
                             .clip(RoundedCornerShape(20.dp))
@@ -122,5 +131,7 @@ fun CartProductCard(productInCartModel: ProductInCartModel) {
             }
 
         }
+
+        Divider(color = Color.LightGray, thickness = 0.5.dp)
     }
 }

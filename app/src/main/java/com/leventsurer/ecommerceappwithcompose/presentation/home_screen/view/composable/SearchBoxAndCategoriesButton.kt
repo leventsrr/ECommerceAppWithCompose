@@ -14,6 +14,8 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButtonDefaults
+import androidx.compose.material3.OutlinedIconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
@@ -46,12 +48,11 @@ fun SearchBoxAndCategoriesButton(navigateToCategoriesPage:()->Unit) {
             onValueChange = {},
         )
         Spacer(modifier = Modifier.width(20.dp))
-        FloatingActionButton(
-            containerColor = Color.Black,
-            modifier = Modifier.size(32.dp),
-            shape = CircleShape,
-            onClick = navigateToCategoriesPage
-        ) {
+
+        OutlinedIconButton(
+            modifier = Modifier.size(35.dp),
+            colors = IconButtonDefaults.outlinedIconButtonColors(containerColor = Color.Black),
+            onClick = navigateToCategoriesPage) {
             Icon(
                 imageVector = Icons.Default.FilterAlt,
                 contentDescription = "",

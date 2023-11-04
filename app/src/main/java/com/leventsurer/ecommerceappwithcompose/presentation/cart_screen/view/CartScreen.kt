@@ -58,7 +58,7 @@ fun CartScreen(
             LaunchedEffect(Unit) {
                 cartViewModel.onEvent(CartEvent.GetCurrentCart)
             }
-            CurrentCart(currentCartViewModelState = currentCartViewModelState)
+            CurrentCart(currentCartViewModelState = currentCartViewModelState, paddingValues = paddingValues)
         }else if(selectedSegment == 1){
             LaunchedEffect(Unit) {
                 cartViewModel.onEvent(CartEvent.GetPastCarts)
