@@ -18,6 +18,13 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableDoubleStateOf
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -36,12 +43,19 @@ fun CurrentCart(
     if (currentCartViewModelState.isLoading) {
         CircularProgressIndicator()
     } else if (!currentCartViewModelState.currentCart.isNullOrEmpty()) {
+        var totalPrice by remember{
+            mutableDoubleStateOf(0.0)
+        }
+        val shippingPrice = 17
         Column(
             modifier = Modifier
                 .padding(bottom = paddingValues.calculateBottomPadding(),)
                 .verticalScroll(rememberScrollState())
         ) {
             currentCartViewModelState.currentCart.forEach { model ->
+                LaunchedEffect(Unit){
+                    totalPrice += model.productPrice.toDouble() * model.productQuantity
+                }
                 CartProductCard(model)
             }
 
@@ -52,35 +66,41 @@ fun CurrentCart(
                     .border(1.dp, Color.LightGray, RoundedCornerShape(15.dp))
             ) {
                 Row(
-                    modifier = Modifier.fillMaxWidth().padding(top = 15.dp, start = 10.dp, end = 10.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 15.dp, start = 10.dp, end = 10.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(text = "Subtotal", fontWeight = FontWeight.Bold)
-                    Text(text = "$483", fontSize = 23.sp, fontWeight = FontWeight.Bold)
+                    Text(text = "$${String.format("%.2f",totalPrice)}", fontSize = 23.sp, fontWeight = FontWeight.Bold)
 
                 }
                 Divider()
                 Row(
-                    modifier = Modifier.fillMaxWidth().padding(start = 10.dp, end = 10.dp, top = 5.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 10.dp, end = 10.dp, top = 5.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(text = "Shipping", fontWeight = FontWeight.Bold)
-                    Text(text = "$17", fontSize = 23.sp, fontWeight = FontWeight.Bold)
+                    Text(text = "$$shippingPrice", fontSize = 23.sp, fontWeight = FontWeight.Bold)
 
 
                 }
                 Divider()
                 Row(
-                    modifier = Modifier.fillMaxWidth().padding(bottom = 15.dp, start = 10.dp, end = 10.dp, top = 5.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 15.dp, start = 10.dp, end = 10.dp, top = 5.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(text = "Bag Total", fontWeight = FontWeight.Bold)
                     Row (verticalAlignment = Alignment.CenterVertically){
-                        Text(text = "(3 item) ", color = Color.LightGray)
-                        Text(text = "$483", fontSize = 23.sp, fontWeight = FontWeight.Bold)
+                        Text(text = "(${currentCartViewModelState.currentCart.size}) ", color = Color.LightGray)
+                        Text(text = "$${String.format("%.2f",totalPrice + shippingPrice)}", fontSize = 23.sp, fontWeight = FontWeight.Bold)
                     }
                 }
             }

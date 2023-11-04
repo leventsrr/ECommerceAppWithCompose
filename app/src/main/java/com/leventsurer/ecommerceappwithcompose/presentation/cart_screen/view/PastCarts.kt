@@ -15,7 +15,7 @@ fun PastCarts(
         CircularProgressIndicator()
     } else if (!cartViewModelState.pastCarts.isNullOrEmpty()) {
         LazyColumn() {
-            items(12) {
+            items(cartViewModelState.pastCarts.size) {
                 Text("asada")
             }
         }
