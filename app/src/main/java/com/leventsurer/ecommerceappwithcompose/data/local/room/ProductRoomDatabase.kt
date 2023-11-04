@@ -8,7 +8,7 @@ import com.leventsurer.ecommerceappwithcompose.tools.Converters
 import javax.inject.Inject
 import javax.inject.Provider
 
-@Database(entities = [FavoriteProductModel::class], version = 1)
+@Database(entities = [FavoriteProductModel::class,ProductInCartModel::class], version = 2)
 @TypeConverters(Converters::class)
 abstract class ProductRoomDatabase :RoomDatabase(){
     abstract fun productDao(): ProductDao

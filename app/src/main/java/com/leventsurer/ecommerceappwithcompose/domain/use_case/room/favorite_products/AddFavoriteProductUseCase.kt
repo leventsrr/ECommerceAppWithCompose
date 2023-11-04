@@ -1,4 +1,4 @@
-package com.leventsurer.ecommerceappwithcompose.domain.use_case.room
+package com.leventsurer.ecommerceappwithcompose.domain.use_case.room.favorite_products
 
 import android.util.Log
 import com.leventsurer.ecommerceappwithcompose.data.local.room.FavoriteProductModel

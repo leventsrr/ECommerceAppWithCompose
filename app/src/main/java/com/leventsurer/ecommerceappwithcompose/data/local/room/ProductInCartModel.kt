@@ -9,8 +9,6 @@ import kotlinx.android.parcel.Parcelize
 import javax.annotation.Nonnull
 
 
-
-
 @Entity(tableName = "product_in_cart")
 @Parcelize
 data class ProductInCartModel(

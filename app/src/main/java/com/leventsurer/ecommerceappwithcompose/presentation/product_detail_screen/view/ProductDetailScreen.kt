@@ -1,6 +1,7 @@
 package com.leventsurer.ecommerceappwithcompose.presentation.product_detail_screen.view
 
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -152,13 +153,23 @@ fun ProductDetailScreen(
                         }
                     }
                     Spacer(modifier = Modifier.height(5.dp))
-                    if(productDetail.category == "men's clothing" || productDetail.category == "women's clothing"){
+                    if (productDetail.category == "men's clothing" || productDetail.category == "women's clothing") {
                         ProductSize()
                     }
                     Spacer(modifier = Modifier.height(5.dp))
                     ProductDescription(productDetail.description)
                     Spacer(modifier = Modifier.height(5.dp))
-                    ProductTotalPriceAndCartButton(totalPrice = (productQuantity.toDouble() * productDetail.price.toDouble()))
+
+
+                    ProductTotalPriceAndCartButton(
+                        totalPrice = (productQuantity.toDouble() * productDetail.price.toDouble()),
+                        addProductToCart = {
+                            Log.e("kontrol","onClick")
+                            productDetailViewModel.onEvent(ProductDetailEvent.AddProductToCart(it))
+                        },
+                        productModel = productDetailViewModelState.productDetail,
+                        productQuantity =productQuantity
+                    )
 
 
                 }

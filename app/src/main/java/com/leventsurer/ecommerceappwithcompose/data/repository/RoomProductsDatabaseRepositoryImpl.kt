@@ -24,12 +24,12 @@ class RoomProductsDatabaseRepositoryImpl @Inject constructor(
     }
     
     //Products in cart
-    override suspend fun insertProductToCart(favoriteProductModel: ProductInCartModel) {
-        productDao.getProductsToCart()
+    override suspend fun insertProductToCart(productInCartModel: ProductInCartModel) {
+        productDao.addProductToCart(productInCartModel)
     }
 
-    override suspend fun deleteProductToCart(favoriteProductModel: ProductInCartModel) {
-        productDao.deleteProductToCart(favoriteProductModel)
+    override suspend fun deleteProductToCart(productInCartModel: ProductInCartModel) {
+        productDao.deleteProductToCart(productInCartModel)
     }
 
     override suspend fun getProductsToCart(): List<ProductInCartModel> {

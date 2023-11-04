@@ -6,7 +6,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.leventsurer.ecommerceappwithcompose.domain.use_case.data_base.GetAllPastCartsUseCase
-import com.leventsurer.ecommerceappwithcompose.domain.use_case.room.GetFavoriteProductsUseCase
+import com.leventsurer.ecommerceappwithcompose.domain.use_case.room.favorite_products.GetFavoriteProductsUseCase
+import com.leventsurer.ecommerceappwithcompose.domain.use_case.room.product_to_cart.GetProductsInCartUseCase
 import com.leventsurer.ecommerceappwithcompose.tools.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -15,7 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CartViewModel @Inject constructor(
     private val getAllPastCartsUseCase: GetAllPastCartsUseCase,
-    private val executeGetProducts: GetFavoriteProductsUseCase,
+    private val executeGetProductsInCart: GetProductsInCartUseCase,
 ) : ViewModel(){
 
     private val _getAllPastCartsState = mutableStateOf(PastCartState())
@@ -43,20 +44,18 @@ class CartViewModel @Inject constructor(
 
 
     private fun getCurrentCart(){
-        Log.e("kontrol","viewmodel add fonc içi")
-        executeGetProducts.executeGetProducts().onEach {
+        executeGetProductsInCart.executeGetProductsInCart().onEach {
             when(it){
                 is Resource.Loading ->{
+                    Log.e("kontrol","getCurrentCart loading")
                     _getCurrentCartState.value = CurrentCartState(isLoading = true)
-                    Log.e("kontrol","viewmodel loading")
                 }
                 is Resource.Error->{
                     _getCurrentCartState.value = CurrentCartState(error = it.message)
-                    Log.e("kontrol","viewmodel error:${it.message}")
                 }
                 is Resource.Success->{
+                    Log.e("kontrol","getCurrentCart success ${it.data!!.size}")
                     _getCurrentCartState.value = CurrentCartState(currentCart = it.data)
-                    Log.e("kontrol","viewmodel success:${it.data}")
                 }
             }
         }.launchIn(viewModelScope)

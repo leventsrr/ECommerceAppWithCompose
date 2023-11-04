@@ -5,8 +5,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.leventsurer.ecommerceappwithcompose.data.local.room.FavoriteProductModel
-import com.leventsurer.ecommerceappwithcompose.domain.use_case.room.DeleteFavoriteProductUseCase
-import com.leventsurer.ecommerceappwithcompose.domain.use_case.room.GetFavoriteProductsUseCase
+import com.leventsurer.ecommerceappwithcompose.domain.use_case.room.favorite_products.DeleteFavoriteProductUseCase
+import com.leventsurer.ecommerceappwithcompose.domain.use_case.room.favorite_products.GetFavoriteProductsUseCase
 import com.leventsurer.ecommerceappwithcompose.tools.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn

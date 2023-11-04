@@ -27,77 +27,100 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.leventsurer.ecommerceappwithcompose.R
 import com.leventsurer.ecommerceappwithcompose.data.local.room.FavoriteProductModel
+import com.leventsurer.ecommerceappwithcompose.data.local.room.ProductInCartModel
 
 @Composable
-fun CartProductCard(favoriteProductModel: FavoriteProductModel) {
+fun CartProductCard(productInCartModel: ProductInCartModel) {
     Card(
         modifier = Modifier
             .padding(start = 10.dp, end = 10.dp, bottom = 10.dp, top = 5.dp)
-            .fillMaxWidth()
-            .height(90.dp),
+            .fillMaxWidth(),
         colors = CardDefaults.cardColors(containerColor = Color.White),
         elevation = CardDefaults.cardElevation(10.dp)
     ) {
-        Row(modifier = Modifier
-            .padding(5.dp)
-            .fillMaxWidth()
-            .fillMaxHeight(),
-            verticalAlignment = Alignment.Bottom) {
+        Row(
+            modifier = Modifier
+                .padding(5.dp)
+                .fillMaxWidth()
+                .fillMaxHeight(),
+            verticalAlignment = Alignment.Bottom
+        ) {
 
             AsyncImage(
                 contentScale = ContentScale.Fit,
                 modifier = Modifier
                     .width(80.dp)
                     .height(80.dp)
-                    .clip(RoundedCornerShape(15.dp)),
+                    .clip(RoundedCornerShape(15.dp))
+                    .padding(5.dp),
                 model = ImageRequest.Builder(LocalContext.current)
-                    .data(favoriteProductModel.productImageUrl)
+                    .data(productInCartModel.productImageUrl)
                     .crossfade(true)
                     .build(),
                 contentDescription = null,
             )
 
-            Column(modifier = Modifier
-                .fillMaxHeight()
-                .weight(5f), verticalArrangement = Arrangement.SpaceBetween) {
+            Column(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .weight(5f), verticalArrangement = Arrangement.SpaceBetween
+            ) {
                 Column {
-                    Text(text = favoriteProductModel.productTitle, fontWeight = FontWeight.Bold)
-                    Text(text = favoriteProductModel.productId.toString(), fontWeight = FontWeight.Light)
+                    Text(text = productInCartModel.productTitle, fontWeight = FontWeight.Bold, maxLines = 2, overflow = TextOverflow.Ellipsis)
+                    Text(
+                        text = productInCartModel.productId.toString(),
+                        fontWeight = FontWeight.Light
+                    )
+                }
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(text = "$${(productInCartModel.productPrice.toDouble() * productInCartModel.productQuantity)}", fontWeight = FontWeight.Bold)
+                    Box(
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(20.dp))
+                            .background(Color.LightGray.copy(0.6f))
+                            .width(80.dp)
+
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.baseline_remove_24),
+                            contentDescription = "add",
+                            modifier = Modifier
+                                .align(
+                                    Alignment.CenterStart
+                                )
+                                .padding(start = 5.dp, top = 5.dp, bottom = 5.dp)
+                        )
+                        Text(
+                            text = productInCartModel.productQuantity.toString(),
+                            modifier = Modifier
+                                .align(
+                                    Alignment.Center
+                                )
+                                .padding(start = 10.dp, top = 5.dp, bottom = 5.dp, end = 10.dp)
+                        )
+                        Icon(
+                            imageVector = Icons.Default.Add,
+                            contentDescription = "add",
+                            modifier = Modifier
+                                .align(
+                                    Alignment.CenterEnd
+                                )
+                                .padding(end = 5.dp, top = 5.dp, bottom = 5.dp)
+                        )
+                    }
                 }
 
-                Text(text = favoriteProductModel.productPrice, fontWeight = FontWeight.Bold)
             }
 
-            Box(
-                modifier = Modifier
-                    .clip(RoundedCornerShape(20.dp))
-                    .background(Color.LightGray.copy(0.6f))
-                    .width(80.dp)
-
-            ) {
-                Icon(painter = painterResource(id = R.drawable.baseline_remove_24), contentDescription ="add" , modifier = Modifier
-                    .align(
-                        Alignment.CenterStart
-                    )
-                    .padding(start = 5.dp, top = 5.dp, bottom = 5.dp))
-                Text(text = "2", modifier = Modifier
-                    .align(
-                        Alignment.Center
-                    )
-                    .padding(start = 10.dp, top = 5.dp, bottom = 5.dp, end = 10.dp))
-                Icon(imageVector = Icons.Default.Add, contentDescription ="add", modifier = Modifier
-                    .align(
-                        Alignment.CenterEnd
-                    )
-                    .padding(end = 5.dp, top = 5.dp, bottom = 5.dp) )
-            }
-
-            Spacer(modifier = Modifier.height(5.dp))
         }
     }
 }

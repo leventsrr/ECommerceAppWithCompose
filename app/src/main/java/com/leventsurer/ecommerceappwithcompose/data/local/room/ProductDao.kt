@@ -26,15 +26,15 @@ interface ProductDao {
     //Products in cart
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addProductToCart(favoriteProductModel: FavoriteProductModel)
+    suspend fun addProductToCart(favoriteProductModel: ProductInCartModel)
 
     @Query("SELECT * FROM product_in_cart")
     suspend fun getProductsToCart():List<ProductInCartModel>
 
     @Update
-    suspend fun updateProductDetailsToCart(favoriteProductModel: ProductInCartModel)
+    suspend fun updateProductDetailsToCart(productInCartModel: ProductInCartModel)
 
     @Delete
-    suspend fun deleteProductToCart(favoriteProductModel: ProductInCartModel)
+    suspend fun deleteProductToCart(productInCartModel: ProductInCartModel)
 
 }
