@@ -38,7 +38,6 @@ import com.leventsurer.ecommerceappwithcompose.presentation.cart_screen.composab
 @Composable
 fun CurrentCart(
     currentCartViewModelState: CurrentCartState,
-    paddingValues: PaddingValues
 ) {
     if (currentCartViewModelState.isLoading) {
         CircularProgressIndicator()
@@ -49,7 +48,6 @@ fun CurrentCart(
         val shippingPrice = 17
         Column(
             modifier = Modifier
-                .padding(bottom = paddingValues.calculateBottomPadding(),)
                 .verticalScroll(rememberScrollState())
         ) {
             currentCartViewModelState.currentCart.forEach { model ->

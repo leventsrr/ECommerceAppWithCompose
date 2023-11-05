@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -40,7 +41,7 @@ fun CartScreen(
 
     Column(
         modifier = Modifier
-            .padding(start = 10.dp, end = 10.dp, top = paddingValues.calculateTopPadding())
+            .padding(start = 10.dp, end = 10.dp, top = paddingValues.calculateTopPadding(), bottom = paddingValues.calculateBottomPadding())
             .fillMaxSize()
     ) {
         Row(
@@ -51,22 +52,27 @@ fun CartScreen(
                 .padding(horizontal = 10.dp)
         ) {
             Text(text = "My Cart", fontWeight = FontWeight.Bold, fontSize = 32.sp)
-            SegmentedButton(selectedSegment = selectedSegment, onSegmentSelect = {selectedSegment = it})
+            SegmentedButton(
+                selectedSegment = selectedSegment,
+                onSegmentSelect = { selectedSegment = it })
         }
         Spacer(modifier = Modifier.height(5.dp))
-        if(selectedSegment == 0){
+        if (selectedSegment == 0) {
             LaunchedEffect(Unit) {
                 cartViewModel.onEvent(CartEvent.GetCurrentCart)
             }
-            CurrentCart(currentCartViewModelState = currentCartViewModelState, paddingValues = paddingValues)
-        }else if(selectedSegment == 1){
+            CurrentCart(
+                currentCartViewModelState = currentCartViewModelState,
+            )
+        } else if (selectedSegment == 1) {
             LaunchedEffect(Unit) {
                 cartViewModel.onEvent(CartEvent.GetPastCarts)
             }
-            PastCarts(cartViewModelState = pastCartViewModelState)
-            
+            PastCarts(cartViewModel.getPastCartsWithProducts.value)
+
+
+
         }
-       
 
 
     }
