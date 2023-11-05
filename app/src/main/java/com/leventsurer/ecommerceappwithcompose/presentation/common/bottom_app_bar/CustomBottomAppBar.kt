@@ -85,7 +85,8 @@ fun CustomBottomAppBar(navHostController: NavHostController?) {
                     BottomAppBarItem(
                         itemIndex = 3,
                         chosenBottomBarIndex = chosenBottomBarIndex,
-                        onClick = { chosenBottomBarIndex = it },
+                        onClick = { chosenBottomBarIndex = it
+                                  navHostController?.navigate(Screens.ProfileScreen.route)},
                         itemIcon = Icons.Default.Person,
                         itemTitle = "Profile"
                     )

@@ -33,7 +33,7 @@ fun CartScreen(
     cartViewModel: CartViewModel = hiltViewModel()
 ) {
 
-    val pastCartViewModelState = cartViewModel.getAllPastCartsState.value
+    cartViewModel.getAllPastCartsState.value
     val currentCartViewModelState = cartViewModel.getCurrentCartState.value
     var selectedSegment by rememberSaveable {
         mutableIntStateOf(0)
@@ -69,11 +69,6 @@ fun CartScreen(
                 cartViewModel.onEvent(CartEvent.GetPastCarts)
             }
             PastCarts(cartViewModel.getPastCartsWithProducts.value)
-
-
-
         }
-
-
     }
 }

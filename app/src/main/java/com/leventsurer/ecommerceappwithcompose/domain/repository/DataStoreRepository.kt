@@ -5,4 +5,5 @@ interface DataStoreRepository {
     suspend fun setUserLoginStatus(isLogin:Boolean) : Boolean
     suspend fun getUserLoginStatus() : Boolean
 
+
 }

@@ -15,6 +15,7 @@ import com.leventsurer.ecommerceappwithcompose.presentation.login_screen.view.Lo
 import com.leventsurer.ecommerceappwithcompose.presentation.on_boarding_screen.view.OnBoardingScreen
 import com.leventsurer.ecommerceappwithcompose.presentation.product_detail_screen.view.ProductDetailScreen
 import com.leventsurer.ecommerceappwithcompose.presentation.product_in_category_screen.view.ProductsInCategoryScreen
+import com.leventsurer.ecommerceappwithcompose.presentation.profile_screen.view.ProfileScreen
 import com.leventsurer.ecommerceappwithcompose.presentation.register_screen.view.RegisterScreen
 import com.leventsurer.ecommerceappwithcompose.presentation.splash_screen.view.SplashScreen
 import com.leventsurer.ecommerceappwithcompose.ui.Screens
@@ -104,6 +105,13 @@ fun NavHostContainer(scaffoldPadding: PaddingValues, navController: NavHostContr
         composable(Screens.FavoriteProductsScreen.route){
             FavoriteProductsScreen(
                 navHostController = navController,
+                paddingValues = scaffoldPadding
+            )
+        }
+
+
+        composable(Screens.ProfileScreen.route){
+            ProfileScreen(
                 paddingValues = scaffoldPadding
             )
         }
