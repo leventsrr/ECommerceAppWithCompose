@@ -36,6 +36,7 @@ import com.leventsurer.ecommerceappwithcompose.ui.Screens
 fun HomePageProductCard(
     productModel:GetProductResponse,
     navHostController: NavHostController,
+
 ) {
     Card(
         elevation = CardDefaults.cardElevation(1.dp),
