@@ -103,6 +103,7 @@ fun NavHostContainer(scaffoldPadding: PaddingValues, navController: NavHostContr
         }
         composable(Screens.ProfileScreen.route) {
             ProfileScreen(
+                navHostController = navController,
                 paddingValues = scaffoldPadding
             )
         }

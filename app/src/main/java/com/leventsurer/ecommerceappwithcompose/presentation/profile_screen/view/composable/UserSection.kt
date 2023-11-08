@@ -21,7 +21,7 @@ fun UserSection(rowItemIcons:ArrayList<ImageVector>, rowItemTitle: Array<String>
             )
     ) {
         Column {
-            for (i in 0 until rowItemTitle.size) {
+            for (i in rowItemTitle.indices) {
                 UserSectionRow(
                     icon = rowItemIcons[i],
                     title = rowItemTitle[i],

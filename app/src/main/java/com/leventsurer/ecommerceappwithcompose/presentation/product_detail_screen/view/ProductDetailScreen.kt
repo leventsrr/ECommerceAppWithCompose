@@ -1,5 +1,6 @@
 package com.leventsurer.ecommerceappwithcompose.presentation.product_detail_screen.view
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement

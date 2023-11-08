@@ -36,14 +36,31 @@ fun CustomBottomAppBar(navHostController: NavHostController?) {
         mutableIntStateOf(0)
     }
     val navBackStackEntry by navHostController!!.currentBackStackEntryAsState()
-    if (navBackStackEntry?.destination?.route == Screens.OnBoardingScreen.route
-        || navBackStackEntry?.destination?.route == Screens.SplashScreen.route
-        || navBackStackEntry?.destination?.route == Screens.LoginScreen.route
-        || navBackStackEntry?.destination?.route == Screens.RegisterScreen.route
-        ||  navBackStackEntry?.destination?.route == Screens.ProductDetailScreen.route
-    ) {
+    when (navBackStackEntry?.destination?.route) {
+        Screens.HomeScreen.route -> {
+            chosenBottomBarIndex = 0
+        }
 
-    } else {
+        Screens.CartScreen.route -> {
+            chosenBottomBarIndex = 1
+        }
+
+        Screens.FavoriteProductsScreen.route -> {
+            chosenBottomBarIndex = 2
+        }
+
+        Screens.ProfileScreen.route -> {
+            chosenBottomBarIndex = 3
+        }
+    }
+
+    if (!(navBackStackEntry?.destination?.route == Screens.OnBoardingScreen.route
+                || navBackStackEntry?.destination?.route == Screens.SplashScreen.route
+                || navBackStackEntry?.destination?.route == Screens.LoginScreen.route
+                || navBackStackEntry?.destination?.route == Screens.RegisterScreen.route
+                || navBackStackEntry?.destination?.route?.contains(Screens.ProductDetailScreen.route) == true
+                )
+    ) {
         BottomAppBar(
             modifier = Modifier
                 .fillMaxWidth()
@@ -56,7 +73,6 @@ fun CustomBottomAppBar(navHostController: NavHostController?) {
                     horizontalArrangement = Arrangement.SpaceAround,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-
                     BottomAppBarItem(
                         itemIndex = 0,
                         chosenBottomBarIndex = chosenBottomBarIndex,
@@ -70,24 +86,30 @@ fun CustomBottomAppBar(navHostController: NavHostController?) {
                     BottomAppBarItem(
                         itemIndex = 1,
                         chosenBottomBarIndex = chosenBottomBarIndex,
-                        onClick = { chosenBottomBarIndex = it
-                            navHostController?.navigate(Screens.CartScreen.route)},
+                        onClick = {
+                            chosenBottomBarIndex = it
+                            navHostController?.navigate(Screens.CartScreen.route)
+                        },
                         itemIcon = Icons.Default.ShoppingCart,
                         itemTitle = stringResource(id = R.string.cart)
                     )
                     BottomAppBarItem(
                         itemIndex = 2,
                         chosenBottomBarIndex = chosenBottomBarIndex,
-                        onClick = { chosenBottomBarIndex = it
-                            navHostController?.navigate(Screens.FavoriteProductsScreen.route)},
+                        onClick = {
+                            chosenBottomBarIndex = it
+                            navHostController?.navigate(Screens.FavoriteProductsScreen.route)
+                        },
                         itemIcon = Icons.Default.Favorite,
                         itemTitle = stringResource(id = R.string.favorite)
                     )
                     BottomAppBarItem(
                         itemIndex = 3,
                         chosenBottomBarIndex = chosenBottomBarIndex,
-                        onClick = { chosenBottomBarIndex = it
-                                  navHostController?.navigate(Screens.ProfileScreen.route)},
+                        onClick = {
+                            chosenBottomBarIndex = it
+                            navHostController?.navigate(Screens.ProfileScreen.route)
+                        },
                         itemIcon = Icons.Default.Person,
                         itemTitle = stringResource(id = R.string.profile)
                     )
@@ -95,5 +117,4 @@ fun CustomBottomAppBar(navHostController: NavHostController?) {
             }
         )
     }
-
 }

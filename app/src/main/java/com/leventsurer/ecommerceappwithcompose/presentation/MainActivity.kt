@@ -17,6 +17,7 @@ import androidx.navigation.compose.rememberNavController
 import com.leventsurer.ecommerceappwithcompose.presentation.common.bottom_app_bar.CustomBottomAppBar
 import com.leventsurer.ecommerceappwithcompose.presentation.common.CustomTopAppBar
 import com.leventsurer.ecommerceappwithcompose.presentation.common.NavHostContainer
+import com.leventsurer.ecommerceappwithcompose.ui.Screens
 import com.leventsurer.ecommerceappwithcompose.ui.theme.EcommerceAppWithComposeTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -37,9 +38,12 @@ class MainActivity : ComponentActivity() {
                     val navController = rememberNavController()
                     Scaffold(
                         topBar = {
+
                             CustomTopAppBar(
                                 navHostController = navController,
-                                onBackClick = { navController.popBackStack() })
+                                onBackClick = {
+                                    navController.popBackStack()
+                                })
                         },
                         content = {
                             NavHostContainer(it, navController)

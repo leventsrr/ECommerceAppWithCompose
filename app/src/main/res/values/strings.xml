@@ -39,28 +39,28 @@
 
 
     <string-array name="on_boarding_descriptions">
-        <string name="on_boarding_description_1">Publish up your selfies to make yourself more beautiful with this app.</string>
-        <string name="on_boarding_description_2">Discover Your Own Beauty.</string>
-        <string name="on_boarding_description_3">Fashion: More than Just Clothing.</string>
+        <item>Publish up your selfies to make yourself more beautiful with this app.</item>
+        <item>Discover Your Own Beauty.</item>
+        <item>Fashion: More than Just Clothing.</item>
     </string-array>
 
     <string-array name="on_boarding_titles">
-        <string name="on_boarding_title_1">20% Discount New Arrival Product</string>
-        <string name="on_boarding_title_2">Weekend Wardrobe Revamp: Save Big on Stylish Picks!</string>
-        <string name="on_boarding_title_3">Sunday Style Savings: Big Discounts on Stylish Choices!</string>
+        <item>20% Discount New Arrival Product</item>
+        <item>Weekend Wardrobe Revamp: Save Big on Stylish Picks!</item>
+        <item>Sunday Style Savings: Big Discounts on Stylish Choices!</item>
     </string-array>
 
     <string-array name="profile_screen_user_section_titles">
-        <string name="personal_details">Personal Details</string>
-        <string name="my_order">My Order</string>
-        <string name="my_favorites">My Favorites</string>
-        <string name="shipping_address">Shipping Address</string>
-        <string name="my_card">My Card</string>
-        <string name="settings">Settings</string>
+        <item>Personal Details</item>
+        <item>My Order</item>
+        <item>My Favorites</item>
+        <item>Shipping Address</item>
+        <item>My Card</item>
+        <item>Settings</item>
     </string-array>
 
     <string-array name="profile_screen_general_app_section_titles">
-        <string name="faq">FAQs</string>
-        <string name="privacy_policy">Privacy Policy</string>
+        <item>FAQs</item>
+        <item>Privacy Policy</item>
     </string-array>
 </resources>

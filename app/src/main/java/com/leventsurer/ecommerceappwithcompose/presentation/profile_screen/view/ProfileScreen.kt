@@ -37,12 +37,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.leventsurer.ecommerceappwithcompose.R
 import com.leventsurer.ecommerceappwithcompose.presentation.profile_screen.view.composable.GeneralAppSettings
 import com.leventsurer.ecommerceappwithcompose.presentation.profile_screen.view.composable.UserSection
 
 @Composable
 fun ProfileScreen(
+    navHostController: NavHostController,
     paddingValues: PaddingValues
 ) {
     val userSectionRowItemIcons = arrayListOf(
