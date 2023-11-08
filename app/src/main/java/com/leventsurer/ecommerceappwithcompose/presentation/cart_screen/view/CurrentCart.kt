@@ -1,9 +1,11 @@
 package com.leventsurer.ecommerceappwithcompose.presentation.cart_screen.view
 
+import android.util.Log
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -24,8 +26,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.LottieConstants
+import com.airbnb.lottie.compose.rememberLottieComposition
+import com.leventsurer.ecommerceappwithcompose.R
 import com.leventsurer.ecommerceappwithcompose.presentation.cart_screen.CurrentCartState
 import com.leventsurer.ecommerceappwithcompose.presentation.cart_screen.composable.CartProductCard
 
@@ -34,78 +42,96 @@ fun CurrentCart(
     currentCartViewModelState: CurrentCartState,
 ) {
     if (currentCartViewModelState.isLoading) {
-        CircularProgressIndicator()
-    } else if (!currentCartViewModelState.currentCart.isNullOrEmpty()) {
+        CircularProgressIndicator(color = Color.Black)
+    } else if (currentCartViewModelState.currentCart!=null) {
         var totalPrice by remember{
             mutableDoubleStateOf(0.0)
         }
         val shippingPrice = 17
-        Column(
-            modifier = Modifier
-                .verticalScroll(rememberScrollState())
-        ) {
-            currentCartViewModelState.currentCart.forEach { model ->
-                LaunchedEffect(Unit){
-                    totalPrice += model.productPrice.toDouble() * model.productQuantity
-                }
-                CartProductCard(model)
-            }
-
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 10.dp)
-                    .border(1.dp, Color.LightGray, RoundedCornerShape(15.dp))
-            ) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 15.dp, start = 10.dp, end = 10.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(text = "Subtotal", fontWeight = FontWeight.Bold)
-                    Text(text = "$${String.format("%.2f",totalPrice)}", fontSize = 23.sp, fontWeight = FontWeight.Bold)
-
-                }
-                Divider()
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 10.dp, end = 10.dp, top = 5.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(text = "Shipping", fontWeight = FontWeight.Bold)
-                    Text(text = "$$shippingPrice", fontSize = 23.sp, fontWeight = FontWeight.Bold)
-
-
-                }
-                Divider()
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 15.dp, start = 10.dp, end = 10.dp, top = 5.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(text = "Bag Total", fontWeight = FontWeight.Bold)
-                    Row (verticalAlignment = Alignment.CenterVertically){
-                        Text(text = "(${currentCartViewModelState.currentCart.size}) ", color = Color.LightGray)
-                        Text(text = "$${String.format("%.2f",totalPrice + shippingPrice)}", fontSize = 23.sp, fontWeight = FontWeight.Bold)
-                    }
-                }
-            }
-            ElevatedButton(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 10.dp, vertical = 10.dp),
-                shape = RoundedCornerShape(14.dp),
-                colors = ButtonDefaults.elevatedButtonColors(containerColor = Color.Black),
-                onClick = { /*TODO*/ }) {
-                Text("Proceed to Checkout", color = Color.White)
+        val currentCartList = currentCartViewModelState.currentCart
+        LaunchedEffect(Unit){
+            currentCartList.forEach {  cart->
+                totalPrice+=cart.productPrice.toDouble() * cart.productQuantity.toDouble()
             }
         }
+
+
+        if(currentCartViewModelState.currentCart.isNotEmpty()){
+            Column(
+                modifier = Modifier
+                    .verticalScroll(rememberScrollState())
+            ) {
+                currentCartViewModelState.currentCart.forEach { model ->
+                    CartProductCard(model)
+                }
+
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 10.dp)
+                        .border(1.dp, Color.LightGray, RoundedCornerShape(15.dp))
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 15.dp, start = 10.dp, end = 10.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(text = "Subtotal", fontWeight = FontWeight.Bold)
+                        Text(text = "$${String.format("%.2f",totalPrice)}", fontSize = 23.sp, fontWeight = FontWeight.Bold)
+
+                    }
+                    Divider()
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = 10.dp, end = 10.dp, top = 5.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(text = "Shipping", fontWeight = FontWeight.Bold)
+                        Text(text = "$$shippingPrice", fontSize = 23.sp, fontWeight = FontWeight.Bold)
+
+
+                    }
+                    Divider()
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 15.dp, start = 10.dp, end = 10.dp, top = 5.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(text = "Bag Total", fontWeight = FontWeight.Bold)
+                        Row (verticalAlignment = Alignment.CenterVertically){
+                            Text(text = "(${currentCartViewModelState.currentCart.size}) ", color = Color.LightGray)
+                            Text(text = "$${String.format("%.2f",totalPrice + shippingPrice)}", fontSize = 23.sp, fontWeight = FontWeight.Bold)
+                        }
+                    }
+                }
+                ElevatedButton(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 10.dp, vertical = 10.dp),
+                    shape = RoundedCornerShape(14.dp),
+                    colors = ButtonDefaults.elevatedButtonColors(containerColor = Color.Black),
+                    onClick = { /*TODO*/ }) {
+                    Text("Proceed to Checkout", color = Color.White)
+                }
+            }
+        }else if (currentCartViewModelState.currentCart.isEmpty()){
+            val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.empty_cart_animation))
+            Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center) {
+                LottieAnimation(
+                    modifier = Modifier.fillMaxWidth(),
+                    composition = composition,
+                    iterations = LottieConstants.IterateForever,
+                )
+                Text(text = "You don't have any product in cart", modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center, color = Color.LightGray)
+            }
+        }
+
 
     }
 }

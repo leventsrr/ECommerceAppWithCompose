@@ -4,9 +4,12 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.leventsurer.ecommerceappwithcompose.data.local.room.ProductInCartModel
 import com.leventsurer.ecommerceappwithcompose.data.remote.dto.response.GetAllCartsResponse
+import com.leventsurer.ecommerceappwithcompose.data.remote.dto.response.Product
 import com.leventsurer.ecommerceappwithcompose.domain.use_case.data_base.GetAProductByIdUseCase
 import com.leventsurer.ecommerceappwithcompose.domain.use_case.data_base.GetAllPastCartsUseCase
+import com.leventsurer.ecommerceappwithcompose.domain.use_case.room.product_to_cart.DeleteProductsFromCartUseCase
 import com.leventsurer.ecommerceappwithcompose.domain.use_case.room.product_to_cart.GetProductsInCartUseCase
 import com.leventsurer.ecommerceappwithcompose.tools.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,7 +20,8 @@ import javax.inject.Inject
 class CartViewModel @Inject constructor(
     private val getAllPastCartsUseCase: GetAllPastCartsUseCase,
     private val executeGetProductsInCart: GetProductsInCartUseCase,
-    private val getAProductByIdUseCase: GetAProductByIdUseCase
+    private val getAProductByIdUseCase: GetAProductByIdUseCase,
+    private val deleteProductsFromCartUseCase: DeleteProductsFromCartUseCase
 ) : ViewModel(){
 
     private val _getAllPastCartsState = mutableStateOf(PastCartState())
@@ -29,6 +33,9 @@ class CartViewModel @Inject constructor(
 
     private val _getPastCartsWithProducts = mutableStateOf(ProductsInPastCartState())
     val getPastCartsWithProducts : State<ProductsInPastCartState> = _getPastCartsWithProducts
+
+    private val _deleteProductFromCurrentCart = mutableStateOf(DeleteProductFromCurrentCartState())
+    val deleteProductFromCurrentCart : State<DeleteProductFromCurrentCartState> = _deleteProductFromCurrentCart
 
 
     private fun getProductsById(allCart: ArrayList<GetAllCartsResponse>){
@@ -46,6 +53,24 @@ class CartViewModel @Inject constructor(
             }
         }.launchIn(viewModelScope)
     }
+
+    private fun deleteProductFromCurrentCart(productInCartModel: ProductInCartModel){
+        deleteProductsFromCartUseCase.executeDeleteProductsFromCart(productInCartModel).onEach {
+            when(it){
+                is Resource.Loading->{
+                    _deleteProductFromCurrentCart.value = DeleteProductFromCurrentCartState(isLoading = true)
+                }
+                is Resource.Error->{
+                    _deleteProductFromCurrentCart.value = DeleteProductFromCurrentCartState(error = it.message)
+                }
+                is Resource.Success->{
+                    _deleteProductFromCurrentCart.value = DeleteProductFromCurrentCartState(result = it.data)
+                }
+
+            }
+        }
+    }
+
     private fun getPastCartWithIncludesProducts(){
         getAllPastCartsUseCase.executeGetAllPastCarts().onEach {
             when(it){
@@ -93,6 +118,9 @@ class CartViewModel @Inject constructor(
             }
             is CartEvent.GetCurrentCart->{
                 getCurrentCart()
+            }
+            is CartEvent.DeleteProductFromCurrentCart->{
+                deleteProductFromCurrentCart(cartEvent.productInCartModel)
             }
 
         }

@@ -38,7 +38,7 @@ import com.leventsurer.ecommerceappwithcompose.ui.Screens
 
 @Composable
 fun FavoriteProductCard(
-    favoriteProductsViewModel: FavoriteViewModel,
+    removeProductFromFavorite:(FavoriteProductModel)->Unit,
     favoriteProduct: FavoriteProductModel,
     navHostController: NavHostController
 ) {
@@ -96,11 +96,7 @@ fun FavoriteProductCard(
                         imageVector = Icons.Default.Favorite,
                         contentDescription = "",
                         modifier = Modifier.clickable {
-                            favoriteProductsViewModel.onEvent(
-                                FavoriteEvent.DeleteFavoriteProduct(
-                                    favoriteProduct
-                                )
-                            )
+                            removeProductFromFavorite(favoriteProduct)
                         })
                 }
             }

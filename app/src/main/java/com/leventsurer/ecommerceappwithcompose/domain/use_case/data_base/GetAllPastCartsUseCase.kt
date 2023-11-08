@@ -17,7 +17,6 @@ class GetAllPastCartsUseCase @Inject constructor(
             val pastCarts = databaseRepository.getAllPastCarts()
             emit(Resource.Success(pastCarts))
         }catch (e:Exception){
-            Log.e("kontrol","error :${e.message}")
             emit(Resource.Error(e.message ?: "Error"))
         }
     }

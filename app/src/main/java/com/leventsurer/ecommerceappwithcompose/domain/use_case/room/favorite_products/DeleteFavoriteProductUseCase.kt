@@ -20,7 +20,4 @@ class DeleteFavoriteProductUseCase @Inject constructor(
             emit(Resource.Error(e.message ?: "Error"))
         }
     }
-
-
-
 }

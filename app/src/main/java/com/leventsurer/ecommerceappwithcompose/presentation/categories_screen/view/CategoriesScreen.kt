@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -54,7 +55,7 @@ fun CategoriesScreen(
         Text(text = "Categories", fontWeight = FontWeight.ExtraBold, fontSize = 25.sp)
         if (productQuantityState.isLoading) {
             Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-                CircularProgressIndicator()
+                CircularProgressIndicator(color = Color.Black)
             } } else if (!productQuantityState.productsAndQuantity.isNullOrEmpty()) {
             productQuantityState.productsAndQuantity.forEach {
                 CategoryCard(

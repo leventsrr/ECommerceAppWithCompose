@@ -27,6 +27,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FilledIconButton
@@ -55,6 +57,8 @@ import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.leventsurer.ecommerceappwithcompose.R
+import com.leventsurer.ecommerceappwithcompose.data.local.room.FavoriteProductModel
+import com.leventsurer.ecommerceappwithcompose.data.remote.dto.response.GetProductResponse
 import com.leventsurer.ecommerceappwithcompose.presentation.product_detail_screen.ProductDetailEvent
 import com.leventsurer.ecommerceappwithcompose.presentation.product_detail_screen.ProductDetailViewModel
 import com.leventsurer.ecommerceappwithcompose.presentation.product_detail_screen.view.composable.ProductDescription
@@ -69,6 +73,9 @@ fun ProductDetailScreen(
     productId: String?,
     productDetailViewModel: ProductDetailViewModel = hiltViewModel()
 ) {
+    var isInFavorite by remember {
+        mutableStateOf(false)
+    }
     val productDetailViewModelState = productDetailViewModel.getAProductByIdState.value
     var productQuantity by rememberSaveable {
         mutableIntStateOf(1)
@@ -78,10 +85,13 @@ fun ProductDetailScreen(
     }
     if (productDetailViewModelState.isLoading) {
         Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
-            CircularProgressIndicator()
+            CircularProgressIndicator(color = Color.Black)
         }
-    } else if (productDetailViewModelState.productDetail != null) {
-        val productDetail = productDetailViewModelState.productDetail
+    } else if (productDetailViewModelState.productDetail != null && productDetailViewModel.getFavoriteProductsState.value.result != null) {
+        val productDetail:GetProductResponse = productDetailViewModelState.productDetail
+        val favoriteProductsId = productDetailViewModel.getFavoriteProductsState.value.result!!.map { it.productId }
+        isInFavorite = productDetail.id in favoriteProductsId
+
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -124,9 +134,49 @@ fun ProductDetailScreen(
                             contentColor = Color.Black
                         ),
                         modifier = Modifier.size(30.dp),
-                        onClick = { /*TODO*/ },
+                        onClick = {
+
+                            val model = FavoriteProductModel(
+                                productImageUrl = productDetail.image,
+                                productTitle = productDetail.title,
+                                productDescription = productDetail.description,
+                                productPrice = productDetail.price,
+                                productCategory = productDetail.category,
+                                productRating = productDetail.rating,
+                                productId = productDetail.id
+                            )
+                            if (isInFavorite) {
+                                productDetailViewModel.onEvent(
+                                    ProductDetailEvent.RemoveProductToFavorites(
+                                        model
+                                    )
+                                )
+                            } else {
+                                productDetailViewModel.onEvent(
+                                    ProductDetailEvent.AddProductToFavorites(
+                                        model
+                                    )
+                                )
+                            }
+                            isInFavorite = !isInFavorite
+                        },
                     ) {
-                        Icon(imageVector = Icons.Outlined.FavoriteBorder, contentDescription = "")
+                        if (isInFavorite) {
+                            Icon(
+                                imageVector = Icons.Outlined.Favorite,
+                                contentDescription = "",
+                                tint = Color.Black,
+                                modifier = Modifier.size(15.dp)
+                            )
+                        } else {
+                            Icon(
+                                imageVector = Icons.Filled.FavoriteBorder,
+                                contentDescription = "",
+                                tint = Color.Black,
+                                modifier = Modifier.size(15.dp)
+                            )
+
+                        }
                     }
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -153,22 +203,18 @@ fun ProductDetailScreen(
                         }
                     }
                     Spacer(modifier = Modifier.height(5.dp))
-                    if (productDetail.category == "men's clothing" || productDetail.category == "women's clothing") {
-                        ProductSize()
-                    }
+                    if (productDetail.category == "men's clothing" || productDetail.category == "women's clothing") { ProductSize() }
                     Spacer(modifier = Modifier.height(5.dp))
                     ProductDescription(productDetail.description)
                     Spacer(modifier = Modifier.height(5.dp))
 
-
                     ProductTotalPriceAndCartButton(
                         totalPrice = (productQuantity.toDouble() * productDetail.price.toDouble()),
                         addProductToCart = {
-                            Log.e("kontrol","onClick")
                             productDetailViewModel.onEvent(ProductDetailEvent.AddProductToCart(it))
                         },
                         productModel = productDetailViewModelState.productDetail,
-                        productQuantity =productQuantity
+                        productQuantity = productQuantity
                     )
 
 

@@ -1,5 +1,6 @@
 package com.leventsurer.ecommerceappwithcompose.presentation.product_in_category_screen.view
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -13,12 +14,18 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.leventsurer.ecommerceappwithcompose.presentation.home_screen.HomeEvent
 import com.leventsurer.ecommerceappwithcompose.presentation.product_in_category_screen.ProductsInCategoryEvent
 import com.leventsurer.ecommerceappwithcompose.presentation.product_in_category_screen.ProductsInCategoryViewModel
 import com.leventsurer.ecommerceappwithcompose.presentation.product_in_category_screen.view.composable.ProductCard
@@ -32,11 +39,20 @@ fun ProductsInCategoryScreen(
 ) {
     val productsInCategoryViewModelState =
         productsInProductsInCategoryViewModel.productsInCategoryState.value
+
+    var favoriteProductsId: List<Int> by remember {
+        mutableStateOf(emptyList())
+    }
+
     LaunchedEffect(Unit) {
         productsInProductsInCategoryViewModel.onEvent(
             ProductsInCategoryEvent.GetProductInProductsInCategory(
                 categoryName
             )
+        )
+
+        productsInProductsInCategoryViewModel.onEvent(
+            ProductsInCategoryEvent.GetFavoriteProducts
         )
     }
     Column(
@@ -55,9 +71,15 @@ fun ProductsInCategoryScreen(
             modifier = Modifier.padding(start = 10.dp)
         )
         if (productsInCategoryViewModelState.isLoading) {
-            CircularProgressIndicator()
-        } else if (!productsInCategoryViewModelState.productsInCategory.isNullOrEmpty()) {
+            CircularProgressIndicator(color = Color.Black)
+        } else if (!productsInCategoryViewModelState.productsInCategory.isNullOrEmpty()
+            && productsInProductsInCategoryViewModel.getFavoriteProducts.value.favoriteProducts != null
+        ) {
             val products = productsInCategoryViewModelState.productsInCategory
+            favoriteProductsId =
+                productsInProductsInCategoryViewModel.getFavoriteProducts.value.favoriteProducts!!.map { product ->
+                    product.productId
+                }
             var productIndex = 0
             while (productIndex < products.size) {
                 Row(
@@ -65,14 +87,36 @@ fun ProductsInCategoryScreen(
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
                     ProductCard(
-                        productModel = products[productIndex],
+                        isInFavorites = productsInCategoryViewModelState.productsInCategory[productIndex].id in favoriteProductsId,
+                        productModel = productsInCategoryViewModelState.productsInCategory[productIndex],
                         navHostController = navHostController,
-                        productsInProductsInCategoryViewModel = productsInProductsInCategoryViewModel
+                        productsInProductsInCategoryViewModel = productsInProductsInCategoryViewModel,
+                        addProductToFavorite = { favoriteProduct ->
+                            productsInProductsInCategoryViewModel.onEvent(
+                                ProductsInCategoryEvent.AddProductToCart(
+                                    favoriteProduct
+                                )
+                            )
+                        },
+                        removeProductFromFavorite = { favoriteProductModel ->
+                            productsInProductsInCategoryViewModel.onEvent(ProductsInCategoryEvent.RemoveProductFromFavorite(favoriteProductModel))
+                        }
                     )
                     ProductCard(
-                        productModel = products[productIndex + 1],
+                        isInFavorites = productsInCategoryViewModelState.productsInCategory[productIndex + 1].id in favoriteProductsId,
+                        productModel = productsInCategoryViewModelState.productsInCategory[productIndex + 1],
                         navHostController = navHostController,
-                        productsInProductsInCategoryViewModel = productsInProductsInCategoryViewModel
+                        productsInProductsInCategoryViewModel = productsInProductsInCategoryViewModel,
+                        addProductToFavorite = { favoriteProduct ->
+                            productsInProductsInCategoryViewModel.onEvent(
+                                ProductsInCategoryEvent.AddProductToCart(
+                                    favoriteProduct
+                                )
+                            )
+                        },
+                        removeProductFromFavorite = {favoriteProductModel ->
+                            productsInProductsInCategoryViewModel.onEvent(ProductsInCategoryEvent.RemoveProductFromFavorite(favoriteProductModel))
+                        }
                     )
                 }
                 productIndex += 2

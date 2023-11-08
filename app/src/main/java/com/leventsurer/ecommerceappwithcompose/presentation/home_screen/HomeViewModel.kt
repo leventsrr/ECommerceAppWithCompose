@@ -5,9 +5,15 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.leventsurer.ecommerceappwithcompose.data.local.room.FavoriteProductModel
 import com.leventsurer.ecommerceappwithcompose.domain.use_case.data_base.GetAllCategoriesUseCase
 import com.leventsurer.ecommerceappwithcompose.domain.use_case.data_base.GetAllProductsUseCase
 import com.leventsurer.ecommerceappwithcompose.domain.use_case.data_base.SearchProductByNameUseCase
+import com.leventsurer.ecommerceappwithcompose.domain.use_case.room.favorite_products.AddFavoriteProductUseCase
+import com.leventsurer.ecommerceappwithcompose.domain.use_case.room.favorite_products.DeleteFavoriteProductUseCase
+import com.leventsurer.ecommerceappwithcompose.domain.use_case.room.favorite_products.GetFavoriteProductsUseCase
+import com.leventsurer.ecommerceappwithcompose.presentation.product_in_category_screen.GetFavoritesProductsState
+import com.leventsurer.ecommerceappwithcompose.presentation.product_in_category_screen.RemoveProductFromFavoriteState
 import com.leventsurer.ecommerceappwithcompose.tools.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -18,6 +24,9 @@ class HomeViewModel @Inject constructor(
     private val getAllCategoriesUseCase: GetAllCategoriesUseCase,
     private val getAllProductsUseCase: GetAllProductsUseCase,
     private val searchProductByNameUseCase: SearchProductByNameUseCase,
+    private val getFavoriteProductsUseCase: GetFavoriteProductsUseCase,
+    private val addProductToFavoriteProductsUseCase: AddFavoriteProductUseCase,
+    private val deleteFavoriteProductUseCase: DeleteFavoriteProductUseCase
 ) : ViewModel(){
 
     private val _newArrivalProductsState = mutableStateOf(NewArrivalProductsState())
@@ -29,6 +38,53 @@ class HomeViewModel @Inject constructor(
     private val _searchProductByNameState = mutableStateOf(SearchProductByNameState())
     val  searchProductByNameState : State<SearchProductByNameState> = _searchProductByNameState
 
+    private val _getFavoriteProducts = mutableStateOf(GetFavoritesProductsState())
+    val getFavoriteProducts : State<GetFavoritesProductsState> = _getFavoriteProducts
+
+    private val _addProductToFavorite = mutableStateOf(AddProductToFavoriteState())
+    val addProductToFavorite : State<AddProductToFavoriteState> = _addProductToFavorite
+
+    private val _removeProductFromFavorite = mutableStateOf(RemoveProductFromFavoriteState())
+    val removeProductFromFavorite : State<RemoveProductFromFavoriteState> = _removeProductFromFavorite
+    private fun getFavoriteProducts(){
+        getFavoriteProductsUseCase.executeGetProducts().onEach {
+            when(it){
+                is Resource.Loading->{}
+                is Resource.Error->{}
+                is Resource.Success->{
+                    _getFavoriteProducts.value = GetFavoritesProductsState(favoriteProducts = it.data)
+                }
+            }
+        }.launchIn(viewModelScope)
+    }
+
+    private fun removeProductFromFavorite(favoriteProductModel: FavoriteProductModel){
+        deleteFavoriteProductUseCase.executeDeleteFavoriteProduct(favoriteProductModel).onEach {
+            when(it){
+                is Resource.Success->{
+                    _removeProductFromFavorite.value = RemoveProductFromFavoriteState(result = it.data!!)
+                }
+                is Resource.Loading->{
+                    _removeProductFromFavorite.value = RemoveProductFromFavoriteState(isLoading = true)
+                }
+                is Resource.Error->{
+                    _removeProductFromFavorite.value = RemoveProductFromFavoriteState(error = it.message)
+                }
+            }
+        }
+    }
+
+    private fun addProductToFavorite(favoriteProductModel: FavoriteProductModel){
+        addProductToFavoriteProductsUseCase.executeAddProductUseCase(favoriteProductModel).onEach {
+            when(it){
+                is Resource.Loading->{}
+                is Resource.Error->{}
+                is Resource.Success->{
+                    _addProductToFavorite.value = AddProductToFavoriteState(result = it.data)
+                }
+            }
+        }.launchIn(viewModelScope)
+    }
 
     private fun getNewArrivalProducts(){
         getAllProductsUseCase.executeGetRandomProductsInAll().onEach {
@@ -67,7 +123,6 @@ class HomeViewModel @Inject constructor(
         searchProductByNameUseCase.executeSearchProductByName(productName).onEach {
             when(it){
                 is Resource.Loading->{
-                    Log.e("kontrol","searcing loading")
                     _searchProductByNameState.value = SearchProductByNameState(isLoading = true)
                 }
                 is Resource.Error->{
@@ -89,6 +144,18 @@ class HomeViewModel @Inject constructor(
 
             is HomeEvent.SearchProductByName->{
                 searchProductByName(homeEvent.productName)
+            }
+
+            is HomeEvent.GetFavoriteProducts->{
+                getFavoriteProducts()
+            }
+
+            is HomeEvent.AddProductToFavorite->{
+                addProductToFavorite(homeEvent.favoriteProductModel)
+            }
+
+            is HomeEvent.RemoveProductFromFavorite->{
+                removeProductFromFavorite(homeEvent.favoriteProductModel)
             }
         }
     }

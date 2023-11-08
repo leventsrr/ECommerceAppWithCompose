@@ -11,7 +11,7 @@ import androidx.room.Update
 interface ProductDao {
 
     //Favorite Product
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.ABORT)
     suspend fun addFavoriteProduct(favoriteProductModel: FavoriteProductModel)
 
     @Query("SELECT * FROM favorite_product")

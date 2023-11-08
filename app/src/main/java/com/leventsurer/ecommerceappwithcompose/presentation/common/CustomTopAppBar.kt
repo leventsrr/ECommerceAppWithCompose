@@ -8,7 +8,10 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.DoorFront
+import androidx.compose.material.icons.filled.Logout
 import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material.icons.outlined.DoorFront
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
@@ -49,24 +52,40 @@ fun CustomTopAppBar(
             colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = Color.Transparent),
             title = { },
             navigationIcon = {
-
-               FilledIconButton(
-                   shape = CircleShape,
-                   colors = IconButtonDefaults.filledIconButtonColors(containerColor = Color.Black),
-                    modifier = Modifier
-                        .size(30.dp),
-                    onClick = onBackClick
-               ) {
-                    Icon(
-                        imageVector = Icons.Default.ArrowBack,
-                        contentDescription = "",
-                        tint = Color.White,
-                    )
+                if (navBackStackEntry?.destination?.route == Screens.HomeScreen.route){
+                    FilledIconButton(
+                        shape = CircleShape,
+                        colors = IconButtonDefaults.filledIconButtonColors(containerColor = Color.Black),
+                        modifier = Modifier
+                            .size(30.dp),
+                        onClick = {}
+                    ) {
+                        Icon(
+                            imageVector = Icons.Filled.DoorFront,
+                            contentDescription = "",
+                            tint = Color.White,
+                        )
+                    }
+                }else{
+                    FilledIconButton(
+                        shape = CircleShape,
+                        colors = IconButtonDefaults.filledIconButtonColors(containerColor = Color.Black),
+                        modifier = Modifier
+                            .size(30.dp),
+                        onClick = onBackClick
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.ArrowBack,
+                            contentDescription = "",
+                            tint = Color.White,
+                        )
+                    }
                 }
 
 
+
             },
-            actions = {
+            /*actions = {
                 if(navBackStackEntry?.destination?.route == Screens.HomeScreen.route){
                   IconButton(
                         onClick = { /*TODO*/ }) {
@@ -89,7 +108,7 @@ fun CustomTopAppBar(
                     }
                 }
 
-            }
+            }*/
         )
     }
 

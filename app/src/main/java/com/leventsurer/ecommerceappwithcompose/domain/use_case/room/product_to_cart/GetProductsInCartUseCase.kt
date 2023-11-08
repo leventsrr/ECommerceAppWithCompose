@@ -14,12 +14,10 @@ class GetProductsInCartUseCase @Inject constructor(
 
     fun executeGetProductsInCart(): Flow<Resource<List<ProductInCartModel>>> = flow{
         try {
-            Log.e("kontrol","executeGetProductsInCart try")
             emit(Resource.Loading())
             val productsInCart = roomProductsDatabaseRepository.getProductsToCart()
             emit(Resource.Success(productsInCart))
         }catch (e:Exception){
-            Log.e("kontrol","executeGetProductsInCart error:${e.message}")
             emit(Resource.Error(e.message ?: "Error"))
         }
     }

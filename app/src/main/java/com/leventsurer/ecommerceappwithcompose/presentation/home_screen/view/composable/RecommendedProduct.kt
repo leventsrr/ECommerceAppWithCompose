@@ -1,6 +1,7 @@
 package com.leventsurer.ecommerceappwithcompose.presentation.home_screen.view.composable
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -30,13 +31,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.leventsurer.ecommerceappwithcompose.R
 import com.leventsurer.ecommerceappwithcompose.data.remote.dto.response.GetProductResponse
+import com.leventsurer.ecommerceappwithcompose.ui.Screens
 
 @Composable
-fun RecommendedProduct(productModel:GetProductResponse) {
+fun RecommendedProduct(
+    navHostController: NavHostController,
+    productModel:GetProductResponse
+) {
     Card(
         elevation = CardDefaults.cardElevation(5.dp),
         colors = CardDefaults.cardColors(Color.White),
@@ -84,7 +90,9 @@ fun RecommendedProduct(productModel:GetProductResponse) {
                 contentPadding = PaddingValues(horizontal = 0.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Color.Black),
                 shape = RoundedCornerShape(10),
-                onClick = { /*TODO*/ }) {
+                onClick = {
+                    navHostController.navigate("${Screens.ProductDetailScreen.route}/${productModel.id}")
+                }) {
                 Icon(imageVector = Icons.Default.KeyboardArrowRight, contentDescription = "")
             }
         }

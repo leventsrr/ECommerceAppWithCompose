@@ -11,16 +11,21 @@ import javax.inject.Inject
 class AddProductToCartUseCase @Inject constructor(
     private val roomProductsDatabaseRepository: RoomProductsDatabaseRepository
 ) {
-    fun executeAddProductToCart(productInCartModel: ProductInCartModel): Flow<Resource<Boolean>> = flow {
-        try {
-            Log.e("kontrol","executeAddProductToCart try")
-            emit(Resource.Loading())
-            roomProductsDatabaseRepository.insertProductToCart(productInCartModel)
-            emit(Resource.Success(true))
-        }catch (e:Exception){
-            Log.e("kontrol","executeAddProductToCart cath ${e.message}")
-
-            emit(Resource.Error(e.message ?: "Error"))
+    fun executeAddProductToCart(productInCartModel: ProductInCartModel): Flow<Resource<Boolean>> =
+        flow {
+            try {
+                emit(Resource.Loading())
+                val currentCartProducts = roomProductsDatabaseRepository.getProductsToCart()
+                currentCartProducts.forEach { product ->
+                    if (productInCartModel.productId == product.productId) {
+                        productInCartModel.productQuantity += product.productQuantity
+                        roomProductsDatabaseRepository.insertProductToCart(productInCartModel)
+                    }
+                }
+                roomProductsDatabaseRepository.insertProductToCart(productInCartModel)
+                emit(Resource.Success(true))
+            } catch (e: Exception) {
+                emit(Resource.Error(e.message ?: "Error"))
+            }
         }
-    }
 }

@@ -18,7 +18,6 @@ class AddFavoriteProductUseCase @Inject constructor(
            roomProductsDatabaseRepository.insertFavoriteProduct(favoriteProductModel)
            emit(Resource.Success(true))
        }catch (e:Exception){
-           Log.e("kontrol","suecase add error:${e.message}")
            emit(Resource.Error(e.message ?: "Error"))
        }
     }

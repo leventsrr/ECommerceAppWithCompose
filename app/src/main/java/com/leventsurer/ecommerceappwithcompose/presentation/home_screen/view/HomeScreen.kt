@@ -25,6 +25,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -50,6 +51,7 @@ fun HomeScreen(
 ) {
     val highlightsProductsState = homeViewModel.newArrivalProductsState.value
     val topCategoriesState = homeViewModel.topCategoriesState.value
+    val favoriteProductsState = homeViewModel.getFavoriteProducts.value
     var searchingProductName by rememberSaveable {
         mutableStateOf("")
     }
@@ -81,6 +83,8 @@ fun HomeScreen(
                         searchingProductName
                     )
                 )
+
+                homeViewModel.onEvent(HomeEvent.GetFavoriteProducts)
             },
             searchingProductName = searchingProductName,
             typeSearchingProductName = {
@@ -97,20 +101,37 @@ fun HomeScreen(
 
 
         if (isUserSearchingProduct) {
-            if (!homeViewModel.searchProductByNameState.value.products.isNullOrEmpty()) {
+            if (!homeViewModel.searchProductByNameState.value.products.isNullOrEmpty() && !favoriteProductsState.favoriteProducts.isNullOrEmpty()) {
                 var index = 0
+                val favoriteProductsId = favoriteProductsState.favoriteProducts.map { product ->
+                    product.productId
+                }
                 while (index < homeViewModel.searchProductByNameState.value.products!!.size) {
                     Row(modifier = Modifier.fillMaxWidth()) {
                         ProductCard(
+                            isInFavorites = homeViewModel.searchProductByNameState.value.products!![index].id in favoriteProductsId,
                             navHostController = navHostController,
                             productModel = homeViewModel.searchProductByNameState.value.products!![index],
-                            productsInProductsInCategoryViewModel = productInCategoryViewModel
+                            addProductToFavorite = { favoriteProduct ->
+                                homeViewModel.onEvent(HomeEvent.AddProductToFavorite(favoriteProduct))
+                            },
+                            productsInProductsInCategoryViewModel = productInCategoryViewModel,
+                            removeProductFromFavorite = {}
                         )
                         if (index + 1 < homeViewModel.searchProductByNameState.value.products!!.size) {
                             ProductCard(
+                                isInFavorites = homeViewModel.searchProductByNameState.value.products!![index + 1].id in favoriteProductsId,
                                 navHostController = navHostController,
                                 productModel = homeViewModel.searchProductByNameState.value.products!![index + 1],
-                                productsInProductsInCategoryViewModel = productInCategoryViewModel
+                                addProductToFavorite = { favoriteProduct ->
+                                    homeViewModel.onEvent(
+                                        HomeEvent.AddProductToFavorite(
+                                            favoriteProduct
+                                        )
+                                    )
+                                },
+                                productsInProductsInCategoryViewModel = productInCategoryViewModel,
+                                removeProductFromFavorite = {}
                             )
                         }
                     }
@@ -126,14 +147,17 @@ fun HomeScreen(
                 homeViewModel.onEvent(HomeEvent.GetHomeScreenData)
             }
             if (highlightsProductsState.isLoading) {
-                CircularProgressIndicator()
+                CircularProgressIndicator(color = Color.Black)
             } else if (!highlightsProductsState.newArrivalProducts.isNullOrEmpty()) {
-                RecommendedProduct(highlightsProductsState.newArrivalProducts[3])
+                RecommendedProduct(
+                    navHostController = navHostController,
+                    productModel = highlightsProductsState.newArrivalProducts[3]
+                )
             }
 
             Spacer(modifier = Modifier.height(20.dp))
             if (topCategoriesState.isLoading) {
-                LinearProgressIndicator()
+                LinearProgressIndicator(color = Color.Black)
             } else if (!topCategoriesState.topCategories.isNullOrEmpty()) {
                 HighlightCategories(
                     highlightsCategories = topCategoriesState.topCategories,
@@ -142,7 +166,7 @@ fun HomeScreen(
             }
             Spacer(modifier = Modifier.height(20.dp))
             if (highlightsProductsState.isLoading) {
-                CircularProgressIndicator()
+                CircularProgressIndicator(color = Color.Black)
             } else if (!highlightsProductsState.newArrivalProducts.isNullOrEmpty()) {
                 NewArrivalProducts(
                     products = highlightsProductsState.newArrivalProducts,

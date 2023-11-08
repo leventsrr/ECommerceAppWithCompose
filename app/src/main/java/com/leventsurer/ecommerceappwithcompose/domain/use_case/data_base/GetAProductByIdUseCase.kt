@@ -20,7 +20,6 @@ class GetAProductByIdUseCase @Inject constructor(
             val product = databaseRepository.getAProductById(productId)
             emit(Resource.Success(product))
         } catch (e: Exception) {
-            Log.e("kontrol", "usecase error : ${e.message}")
             emit(Resource.Error(e.message ?: "Error"))
         }
     }
@@ -46,7 +45,6 @@ class GetAProductByIdUseCase @Inject constructor(
                 }
                 emit(Resource.Success(carts))
             } catch (e: Exception) {
-                Log.e("kontrol", "usecase error : ${e.message}")
                 emit(Resource.Error(e.message ?: "Error"))
             }
         }

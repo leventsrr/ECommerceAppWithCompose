@@ -65,7 +65,7 @@ fun SplashScreen(
             Text(text = "My Life My Style", color = Color.White, fontWeight = FontWeight.Bold)
         }
         if(viewModelState.isLoading){
-            CircularProgressIndicator()
+            CircularProgressIndicator(color = Color.Black)
         }else if (viewModelState.result){
             LaunchedEffect(Unit){
                 navigateHomePage()
