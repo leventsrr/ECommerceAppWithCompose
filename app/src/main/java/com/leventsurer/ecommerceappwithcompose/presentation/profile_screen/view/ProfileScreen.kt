@@ -1,7 +1,6 @@
 package com.leventsurer.ecommerceappwithcompose.presentation.profile_screen.view
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -33,7 +32,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -41,13 +40,11 @@ import androidx.compose.ui.unit.sp
 import com.leventsurer.ecommerceappwithcompose.R
 import com.leventsurer.ecommerceappwithcompose.presentation.profile_screen.view.composable.GeneralAppSettings
 import com.leventsurer.ecommerceappwithcompose.presentation.profile_screen.view.composable.UserSection
-import com.leventsurer.ecommerceappwithcompose.presentation.profile_screen.view.composable.UserSectionRow
 
 @Composable
 fun ProfileScreen(
     paddingValues: PaddingValues
 ) {
-
     val userSectionRowItemIcons = arrayListOf(
         Icons.Filled.AccountCircle,
         Icons.Filled.ShoppingBag,
@@ -56,19 +53,13 @@ fun ProfileScreen(
         Icons.Filled.CreditCard,
         Icons.Filled.Settings
     )
+    val userSectionRowItemTitle = LocalContext.current.resources.getStringArray(R.array.profile_screen_user_section_titles)
 
-    val userSectionRowItemTitle = arrayListOf(
-        "Personal Details",
-        "My Order",
-        "My Favorites",
-        "Shipping Address",
-        "My Card",
-        "Settings"
-    )
 
-    val generalAppSectionRowItemIcons = arrayListOf(Icons.Default.Warning,Icons.Filled.PrivacyTip)
 
-    val generalAppSectionRowItemTitles = arrayListOf("FAQs","Privacy Policy")
+    val generalAppSectionRowItemIcons = arrayListOf(Icons.Default.Warning, Icons.Filled.PrivacyTip)
+    val generalAppSectionRowItemTitles = LocalContext.current.resources.getStringArray(R.array.profile_screen_general_app_section_titles)
+
 
     Column(
         modifier = Modifier
@@ -82,7 +73,6 @@ fun ProfileScreen(
             ),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
         Card(
             modifier = Modifier.fillMaxWidth(),
             elevation = CardDefaults.cardElevation(10.dp),
@@ -116,12 +106,10 @@ fun ProfileScreen(
                 }
             }
         }
-
         Spacer(modifier = Modifier.height(30.dp))
-
-        UserSection(userSectionRowItemIcons,userSectionRowItemTitle)
+        UserSection(userSectionRowItemIcons, userSectionRowItemTitle)
         Spacer(modifier = Modifier.height(30.dp))
-        GeneralAppSettings(generalAppSectionRowItemIcons,generalAppSectionRowItemTitles)
+        GeneralAppSettings(generalAppSectionRowItemIcons, generalAppSectionRowItemTitles)
     }
 }
 

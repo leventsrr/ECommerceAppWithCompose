@@ -1,6 +1,5 @@
 package com.leventsurer.ecommerceappwithcompose.data.repository
 
-import android.util.Log
 import com.leventsurer.ecommerceappwithcompose.data.remote.CartApi
 import com.leventsurer.ecommerceappwithcompose.data.remote.CategoryApi
 import com.leventsurer.ecommerceappwithcompose.data.remote.ProductApi
@@ -34,5 +33,4 @@ class DatabaseRepositoryImpl @Inject constructor(
     override suspend fun getAllPastCarts(): ArrayList<GetAllCartsResponse> {
         return cartApi.getAllPastCarts()
     }
-
 }

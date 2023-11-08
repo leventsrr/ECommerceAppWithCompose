@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -35,12 +36,11 @@ import com.leventsurer.ecommerceappwithcompose.presentation.categories_screen.vi
 @Composable
 fun CategoriesScreen(
     padding: PaddingValues,
-    categoriesViewModel: CategoriesViewModel = hiltViewModel() ,
+    categoriesViewModel: CategoriesViewModel = hiltViewModel(),
     navHostController: NavHostController
 ) {
     val categoriesState = categoriesViewModel.categoriesState.value
     val productQuantityState = categoriesViewModel.productsInCategoryState.value
-
     LaunchedEffect(Unit) {
         categoriesViewModel.onEvent(CategoriesEvent.GetAllCategories)
     }
@@ -52,24 +52,22 @@ fun CategoriesScreen(
             end = 5.dp
         )
     ) {
-        Text(text = "Categories", fontWeight = FontWeight.ExtraBold, fontSize = 25.sp)
+        Text(text = stringResource(id = R.string.categories), fontWeight = FontWeight.ExtraBold, fontSize = 25.sp)
         if (productQuantityState.isLoading) {
             Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
                 CircularProgressIndicator(color = Color.Black)
-            } } else if (!productQuantityState.productsAndQuantity.isNullOrEmpty()) {
+            }
+        } else if (!productQuantityState.productsAndQuantity.isNullOrEmpty()) {
             productQuantityState.productsAndQuantity.forEach {
                 CategoryCard(
                     categoryName = it.categoryName,
                     categoryProductQuantity = it.categoryQuantity,
                     navHostController = navHostController
                 )
-
             }
         } else if (!categoriesState.error.isNullOrEmpty() || !productQuantityState.error.isNullOrEmpty()) {
             val errorText = categoriesState.error ?: productQuantityState.error
             Toast.makeText(LocalContext.current, "$errorText", Toast.LENGTH_SHORT).show()
         }
     }
-
-
 }

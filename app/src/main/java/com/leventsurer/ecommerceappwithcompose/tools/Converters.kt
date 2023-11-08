@@ -9,7 +9,6 @@ class Converters {
     @TypeConverter
     fun fromRating(rating: Rating?): String? {
         return rating?.let {
-            // Rating sınıfını JSON formatına dönüştür
             Gson().toJson(it)
         }
     }
@@ -17,7 +16,6 @@ class Converters {
     @TypeConverter
     fun toRating(ratingString: String?): Rating? {
         return ratingString?.let {
-            // JSON formatındaki veriyi Rating sınıfına dönüştür
             Gson().fromJson(it, Rating::class.java)
         }
     }

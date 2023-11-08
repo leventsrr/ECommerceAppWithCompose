@@ -23,6 +23,7 @@ import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -32,15 +33,14 @@ import com.leventsurer.ecommerceappwithcompose.presentation.splash_screen.Splash
 
 @Composable
 fun SplashScreen(
-    splashScreenViewModel:SplashScreenViewModel = hiltViewModel(),
-    scaffoldPadding:PaddingValues,
-    onSignUpNavigateClick:()->Unit,
-    onLoginNavigateClick:()->Unit,
-    navigateHomePage:()->Unit
+    splashScreenViewModel: SplashScreenViewModel = hiltViewModel(),
+    scaffoldPadding: PaddingValues,
+    onSignUpNavigateClick: () -> Unit,
+    onLoginNavigateClick: () -> Unit,
+    navigateHomePage: () -> Unit
 ) {
-
     val viewModelState = splashScreenViewModel.userIsLoginState.value
-    LaunchedEffect(Unit){
+    LaunchedEffect(Unit) {
         splashScreenViewModel.getUserLoginStatus()
     }
 
@@ -64,14 +64,13 @@ fun SplashScreen(
             )
             Text(text = "My Life My Style", color = Color.White, fontWeight = FontWeight.Bold)
         }
-        if(viewModelState.isLoading){
+        if (viewModelState.isLoading) {
             CircularProgressIndicator(color = Color.Black)
-        }else if (viewModelState.result){
-            LaunchedEffect(Unit){
+        } else if (viewModelState.result) {
+            LaunchedEffect(Unit) {
                 navigateHomePage()
             }
-
-        }else if(!viewModelState.result){
+        } else {
             Column(
                 modifier = Modifier
                     .padding(bottom = 16.dp)
@@ -83,7 +82,11 @@ fun SplashScreen(
                     colors = ButtonDefaults.buttonColors(containerColor = Color.White),
                     onClick = onLoginNavigateClick
                 ) {
-                    Text(text = "Login", color = Color.Black, fontWeight = FontWeight.Bold)
+                    Text(
+                        text = stringResource(id = R.string.login),
+                        color = Color.Black,
+                        fontWeight = FontWeight.Bold
+                    )
                 }
                 Spacer(modifier = Modifier.height(8.dp))
                 ElevatedButton(
@@ -98,12 +101,9 @@ fun SplashScreen(
                     colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
                     onClick = onSignUpNavigateClick
                 ) {
-                    Text(text = "Sign Up", fontWeight = FontWeight.Bold)
+                    Text(text = stringResource(id = R.string.sign_up), fontWeight = FontWeight.Bold)
                 }
             }
         }
-
     }
-
-
 }

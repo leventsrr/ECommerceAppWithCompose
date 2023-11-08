@@ -1,6 +1,5 @@
 package com.leventsurer.ecommerceappwithcompose.presentation.splash_screen
 
-import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -12,6 +11,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
+
 @HiltViewModel
 class SplashScreenViewModel @Inject constructor(
     private val getUserLoginStateUseCase: GetUserLoginStatusUseCase

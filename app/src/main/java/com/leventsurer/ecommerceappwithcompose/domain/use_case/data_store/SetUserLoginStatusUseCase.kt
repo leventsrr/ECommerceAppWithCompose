@@ -18,6 +18,4 @@ class SetUserLoginStatusUseCase @Inject constructor(
             emit(Resource.Error(e.message ?: "Error"))
         }
     }
-
-
 }

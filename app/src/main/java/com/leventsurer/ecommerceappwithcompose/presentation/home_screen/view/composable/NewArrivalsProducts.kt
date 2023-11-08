@@ -9,12 +9,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.leventsurer.ecommerceappwithcompose.R
 import com.leventsurer.ecommerceappwithcompose.data.remote.dto.response.GetProductResponse
-import com.leventsurer.ecommerceappwithcompose.ui.Screens
 
 @Composable
 fun NewArrivalProducts(products: ArrayList<GetProductResponse>, navHostController: NavHostController) {
@@ -24,7 +25,7 @@ fun NewArrivalProducts(products: ArrayList<GetProductResponse>, navHostControlle
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(text = "New Arrivals", fontWeight = FontWeight.Bold, fontSize = 20.sp)
+            Text(text = stringResource(id = R.string.new_arrivals), fontWeight = FontWeight.Bold, fontSize = 20.sp)
             Text(text = "View All", fontWeight = FontWeight.Bold, fontSize = 13.sp)
         }
         var productIndex = 0
@@ -45,6 +46,4 @@ fun NewArrivalProducts(products: ArrayList<GetProductResponse>, navHostControlle
             productIndex += 2
         }
     }
-
-
 }

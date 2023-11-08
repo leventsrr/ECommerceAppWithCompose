@@ -16,24 +16,25 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
+
 @HiltViewModel
 class ProductDetailViewModel @Inject constructor(
     private val getAProductByIdUseCase: GetAProductByIdUseCase,
-    private val addProductToCartUseCase:AddProductToCartUseCase,
+    private val addProductToCartUseCase: AddProductToCartUseCase,
     private val getFavoriteProductsUseCase: GetFavoriteProductsUseCase,
     private val addFavoriteProductUseCase: AddFavoriteProductUseCase,
     private val deleteFavoriteProductUseCase: DeleteFavoriteProductUseCase
-) :ViewModel() {
-
+) : ViewModel() {
 
     private val _getAProductByIdState = mutableStateOf(ProductDetailState())
-    val getAProductByIdState : State<ProductDetailState> = _getAProductByIdState
+    val getAProductByIdState: State<ProductDetailState> = _getAProductByIdState
 
     private val _productCartTransactionState = mutableStateOf(ProductCartTransactionsState())
-    val productCartTransactionState : State<ProductCartTransactionsState> = _productCartTransactionState
+    val productCartTransactionState: State<ProductCartTransactionsState> =
+        _productCartTransactionState
 
     private val _getFavoriteProductsState = mutableStateOf(GetFavoriteProductsState())
-    val getFavoriteProductsState : State<GetFavoriteProductsState> = _getFavoriteProductsState
+    val getFavoriteProductsState: State<GetFavoriteProductsState> = _getFavoriteProductsState
 
     private val _addProductToFavorites = mutableStateOf(false)
     val addProductToFavorites = _addProductToFavorites
@@ -41,57 +42,60 @@ class ProductDetailViewModel @Inject constructor(
     private val _removeProductFromFavorites = mutableStateOf(false)
     val removeProductFromFavorite = _removeProductFromFavorites
 
-
-    private fun removeProductFromFavorites(favoriteProductModel: FavoriteProductModel){
+    private fun removeProductFromFavorites(favoriteProductModel: FavoriteProductModel) {
         deleteFavoriteProductUseCase.executeDeleteFavoriteProduct(favoriteProductModel).onEach {
-            when(it){
-                is Resource.Loading->{}
-                is Resource.Error->{}
-                is Resource.Success->{
+            when (it) {
+                is Resource.Loading -> {}
+                is Resource.Error -> {}
+                is Resource.Success -> {
                     _removeProductFromFavorites.value = it.data!!
                 }
             }
         }.launchIn(viewModelScope)
     }
-    private fun addProductToFavorites(favoriteProductModel: FavoriteProductModel){
+
+    private fun addProductToFavorites(favoriteProductModel: FavoriteProductModel) {
         addFavoriteProductUseCase.executeAddProductUseCase(favoriteProductModel).onEach {
-            when(it){
-                is Resource.Loading->{}
-                is Resource.Error->{}
-                is Resource.Success->{
+            when (it) {
+                is Resource.Loading -> {}
+                is Resource.Error -> {}
+                is Resource.Success -> {
                     _addProductToFavorites.value = it.data!!
                 }
             }
         }.launchIn(viewModelScope)
     }
 
-
-    private fun getFavoriteProducts(){
+    private fun getFavoriteProducts() {
         getFavoriteProductsUseCase.executeGetProducts().onEach {
-            when(it){
-                is Resource.Loading->{
+            when (it) {
+                is Resource.Loading -> {
                     _getFavoriteProductsState.value = GetFavoriteProductsState(isLoading = true)
                 }
-                is Resource.Error->{
+
+                is Resource.Error -> {
                     _getFavoriteProductsState.value = GetFavoriteProductsState(error = it.message)
                 }
-                is Resource.Success->{
+
+                is Resource.Success -> {
                     _getFavoriteProductsState.value = GetFavoriteProductsState(result = it.data)
                 }
             }
         }.launchIn(viewModelScope)
     }
 
-    private fun getAProductById(productId:String){
+    private fun getAProductById(productId: String) {
         getAProductByIdUseCase.executeGetAProductById(productId).onEach {
-            when(it){
-                is Resource.Loading->{
+            when (it) {
+                is Resource.Loading -> {
                     _getAProductByIdState.value = ProductDetailState(isLoading = true)
                 }
-                is Resource.Error->{
+
+                is Resource.Error -> {
                     _getAProductByIdState.value = ProductDetailState(error = it.message)
                 }
-                is Resource.Success->{
+
+                is Resource.Success -> {
                     _getAProductByIdState.value = ProductDetailState(productDetail = it.data)
                     getFavoriteProducts()
                 }
@@ -99,42 +103,47 @@ class ProductDetailViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    private fun addProductToCart(productInCartModel: ProductInCartModel){
+    private fun addProductToCart(productInCartModel: ProductInCartModel) {
         addProductToCartUseCase.executeAddProductToCart(productInCartModel).onEach {
-            when(it){
-                is Resource.Loading->{
-                    _productCartTransactionState.value = ProductCartTransactionsState(isLoading = true)
+            when (it) {
+                is Resource.Loading -> {
+                    _productCartTransactionState.value =
+                        ProductCartTransactionsState(isLoading = true)
                 }
-                is Resource.Error->{
-                    _productCartTransactionState.value = ProductCartTransactionsState(error = it.message)
+
+                is Resource.Error -> {
+                    _productCartTransactionState.value =
+                        ProductCartTransactionsState(error = it.message)
                 }
-                is Resource.Success->{
-                    _productCartTransactionState.value = ProductCartTransactionsState(result = it.data)
+
+                is Resource.Success -> {
+                    _productCartTransactionState.value =
+                        ProductCartTransactionsState(result = it.data)
                 }
             }
         }.launchIn(viewModelScope)
     }
 
-    fun onEvent(productDetailEvent: ProductDetailEvent){
-        when(productDetailEvent){
-            is ProductDetailEvent.GetProductDetailById ->{
+    fun onEvent(productDetailEvent: ProductDetailEvent) {
+        when (productDetailEvent) {
+            is ProductDetailEvent.GetProductDetailById -> {
                 getAProductById(productDetailEvent.productId)
             }
-            is ProductDetailEvent.AddProductToCart->{
+
+            is ProductDetailEvent.AddProductToCart -> {
                 addProductToCart(productDetailEvent.productInCartModel)
             }
-            is ProductDetailEvent.DeleteProductFromCart->{}
 
-            is ProductDetailEvent.AddProductToFavorites->{
+            is ProductDetailEvent.DeleteProductFromCart -> {}
+
+            is ProductDetailEvent.AddProductToFavorites -> {
                 addProductToFavorites(productDetailEvent.favoriteProductModel)
             }
 
-            is ProductDetailEvent.RemoveProductToFavorites->{
+            is ProductDetailEvent.RemoveProductToFavorites -> {
                 removeProductFromFavorites(productDetailEvent.favoriteProductModel)
             }
 
         }
     }
-
-
 }

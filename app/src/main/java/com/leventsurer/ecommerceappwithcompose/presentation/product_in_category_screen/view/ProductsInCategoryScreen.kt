@@ -1,6 +1,5 @@
 package com.leventsurer.ecommerceappwithcompose.presentation.product_in_category_screen.view
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -25,7 +24,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.leventsurer.ecommerceappwithcompose.presentation.home_screen.HomeEvent
 import com.leventsurer.ecommerceappwithcompose.presentation.product_in_category_screen.ProductsInCategoryEvent
 import com.leventsurer.ecommerceappwithcompose.presentation.product_in_category_screen.ProductsInCategoryViewModel
 import com.leventsurer.ecommerceappwithcompose.presentation.product_in_category_screen.view.composable.ProductCard
@@ -39,22 +37,20 @@ fun ProductsInCategoryScreen(
 ) {
     val productsInCategoryViewModelState =
         productsInProductsInCategoryViewModel.productsInCategoryState.value
-
     var favoriteProductsId: List<Int> by remember {
         mutableStateOf(emptyList())
     }
-
     LaunchedEffect(Unit) {
         productsInProductsInCategoryViewModel.onEvent(
             ProductsInCategoryEvent.GetProductInProductsInCategory(
                 categoryName
             )
         )
-
         productsInProductsInCategoryViewModel.onEvent(
             ProductsInCategoryEvent.GetFavoriteProducts
         )
     }
+
     Column(
         Modifier
             .padding(
@@ -99,7 +95,11 @@ fun ProductsInCategoryScreen(
                             )
                         },
                         removeProductFromFavorite = { favoriteProductModel ->
-                            productsInProductsInCategoryViewModel.onEvent(ProductsInCategoryEvent.RemoveProductFromFavorite(favoriteProductModel))
+                            productsInProductsInCategoryViewModel.onEvent(
+                                ProductsInCategoryEvent.RemoveProductFromFavorite(
+                                    favoriteProductModel
+                                )
+                            )
                         }
                     )
                     ProductCard(
@@ -114,8 +114,12 @@ fun ProductsInCategoryScreen(
                                 )
                             )
                         },
-                        removeProductFromFavorite = {favoriteProductModel ->
-                            productsInProductsInCategoryViewModel.onEvent(ProductsInCategoryEvent.RemoveProductFromFavorite(favoriteProductModel))
+                        removeProductFromFavorite = { favoriteProductModel ->
+                            productsInProductsInCategoryViewModel.onEvent(
+                                ProductsInCategoryEvent.RemoveProductFromFavorite(
+                                    favoriteProductModel
+                                )
+                            )
                         }
                     )
                 }

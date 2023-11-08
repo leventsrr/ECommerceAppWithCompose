@@ -25,7 +25,6 @@ class CategoriesViewModel @Inject constructor(
     private val _productsInCategoryState = mutableStateOf(ProductState())
     val productsInCategoryState: State<ProductState> = _productsInCategoryState
 
-
     private fun getAllCategories() {
         getAllCategoriesUseCase.executeGetUAllCategories().onEach {
             when (it) {
@@ -45,8 +44,7 @@ class CategoriesViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-
-    private fun getProductsInCategory(categoriesResponse:CategoriesResponse) {
+    private fun getProductsInCategory(categoriesResponse: CategoriesResponse) {
         getProductsInCategoryUseCase.executeGetProductsInAllCategory(categoriesResponse).onEach {
             when (it) {
                 is Resource.Loading -> {
@@ -63,8 +61,6 @@ class CategoriesViewModel @Inject constructor(
                 }
             }
         }.launchIn(viewModelScope)
-
-
     }
 
     fun onEvent(categoriesEvent: CategoriesEvent) {
@@ -74,6 +70,4 @@ class CategoriesViewModel @Inject constructor(
             }
         }
     }
-
-
 }

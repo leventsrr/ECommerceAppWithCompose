@@ -4,6 +4,5 @@ import com.leventsurer.ecommerceappwithcompose.data.remote.dto.request.LoginRequ
 import com.leventsurer.ecommerceappwithcompose.data.remote.dto.response.LoginResponse
 
 interface AuthenticationRepository {
-
-    suspend fun login(loginRequest: LoginRequest) : LoginResponse
+    suspend fun login(loginRequest: LoginRequest): LoginResponse
 }

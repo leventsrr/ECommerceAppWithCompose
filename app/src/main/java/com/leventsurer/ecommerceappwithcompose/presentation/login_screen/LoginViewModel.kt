@@ -22,9 +22,8 @@ class LoginViewModel @Inject constructor(
     private val _loginState = mutableStateOf(LoginState())
     val loginState: State<LoginState> = _loginState
 
-
     private fun login(loginRequest: LoginRequest) {
-        val combinedFlow = combine(
+        combine(
             loginUseCase.executeLogin(loginRequest),
             setIsLoginDataStoreUseCase.executeSetUserLoginStatus(true)
         ) { loginUseCaseResource, setIsLoginDataStoreUseCase ->
@@ -34,7 +33,6 @@ class LoginViewModel @Inject constructor(
                 }
                 loginUseCaseResource is Resource.Success && setIsLoginDataStoreUseCase is Resource.Success -> {
                     val loginUseCaseData = loginUseCaseResource.data
-                    //val secondData = setIsLoginDataStoreUseCase.data
                     _loginState.value = LoginState(result = loginUseCaseData)
                 }
                 loginUseCaseResource is Resource.Error -> {
@@ -51,6 +49,4 @@ class LoginViewModel @Inject constructor(
             }
         }
     }
-
-
 }

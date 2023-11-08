@@ -44,6 +44,4 @@ class GetProductsInCategoryUseCase @Inject constructor(
                 emit(Resource.Error(e.message ?: "Error"))
             }
         }
-
-
 }

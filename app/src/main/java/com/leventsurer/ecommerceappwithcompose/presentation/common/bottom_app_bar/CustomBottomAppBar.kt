@@ -9,7 +9,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.BottomAppBar
@@ -22,9 +21,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.leventsurer.ecommerceappwithcompose.R
 import com.leventsurer.ecommerceappwithcompose.presentation.common.bottom_app_bar.composable.BottomAppBarItem
 import com.leventsurer.ecommerceappwithcompose.ui.Screens
 
@@ -64,7 +65,7 @@ fun CustomBottomAppBar(navHostController: NavHostController?) {
                             navHostController?.navigate(Screens.HomeScreen.route)
                         },
                         itemIcon = Icons.Default.Home,
-                        itemTitle = "Home"
+                        itemTitle = stringResource(id = R.string.home)
                     )
                     BottomAppBarItem(
                         itemIndex = 1,
@@ -72,7 +73,7 @@ fun CustomBottomAppBar(navHostController: NavHostController?) {
                         onClick = { chosenBottomBarIndex = it
                             navHostController?.navigate(Screens.CartScreen.route)},
                         itemIcon = Icons.Default.ShoppingCart,
-                        itemTitle = "Cart"
+                        itemTitle = stringResource(id = R.string.cart)
                     )
                     BottomAppBarItem(
                         itemIndex = 2,
@@ -80,7 +81,7 @@ fun CustomBottomAppBar(navHostController: NavHostController?) {
                         onClick = { chosenBottomBarIndex = it
                             navHostController?.navigate(Screens.FavoriteProductsScreen.route)},
                         itemIcon = Icons.Default.Favorite,
-                        itemTitle = "Favorite"
+                        itemTitle = stringResource(id = R.string.favorite)
                     )
                     BottomAppBarItem(
                         itemIndex = 3,
@@ -88,9 +89,8 @@ fun CustomBottomAppBar(navHostController: NavHostController?) {
                         onClick = { chosenBottomBarIndex = it
                                   navHostController?.navigate(Screens.ProfileScreen.route)},
                         itemIcon = Icons.Default.Person,
-                        itemTitle = "Profile"
+                        itemTitle = stringResource(id = R.string.profile)
                     )
-
                 }
             }
         )

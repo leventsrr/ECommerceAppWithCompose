@@ -20,10 +20,10 @@ import androidx.navigation.NavHostController
 import com.leventsurer.ecommerceappwithcompose.ui.Screens
 
 @Composable
-fun HighlightCategoryCard(categoryName:String,navHostController: NavHostController) {
-    Row (modifier = Modifier.clickable {
+fun HighlightCategoryCard(categoryName: String, navHostController: NavHostController) {
+    Row(modifier = Modifier.clickable {
         navHostController.navigate("${Screens.ProductsInCategoryScreen.route}/$categoryName")
-    }){
+    }) {
         Box(
             modifier = Modifier
                 .width(130.dp)
@@ -34,7 +34,11 @@ fun HighlightCategoryCard(categoryName:String,navHostController: NavHostControll
                 ),
             contentAlignment = Alignment.Center
         ) {
-            Text(text = categoryName, modifier = Modifier.padding(5.dp), textAlign = TextAlign.Center)
+            Text(
+                text = categoryName,
+                modifier = Modifier.padding(5.dp),
+                textAlign = TextAlign.Center
+            )
         }
         Spacer(modifier = Modifier.width(5.dp))
     }

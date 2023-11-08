@@ -1,6 +1,5 @@
 package com.leventsurer.ecommerceappwithcompose.domain.use_case.login
 
-import android.util.Log
 import com.leventsurer.ecommerceappwithcompose.data.remote.dto.request.LoginRequest
 import com.leventsurer.ecommerceappwithcompose.data.remote.dto.response.LoginResponse
 import com.leventsurer.ecommerceappwithcompose.domain.repository.AuthenticationRepository

@@ -1,13 +1,11 @@
 package com.leventsurer.ecommerceappwithcompose.presentation.home_screen.view.composable
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -22,22 +20,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.leventsurer.ecommerceappwithcompose.R
 import com.leventsurer.ecommerceappwithcompose.data.remote.dto.response.GetProductResponse
 import com.leventsurer.ecommerceappwithcompose.ui.Screens
 
 @Composable
 fun HomePageProductCard(
-    productModel:GetProductResponse,
+    productModel: GetProductResponse,
     navHostController: NavHostController,
-
-) {
+    ) {
     Card(
         elevation = CardDefaults.cardElevation(1.dp),
         modifier = Modifier
@@ -68,7 +63,6 @@ fun HomePageProductCard(
                     contentDescription = null,
                 )
             }
-
             Text(
                 text = productModel.title,
                 maxLines = 1,
@@ -80,5 +74,4 @@ fun HomePageProductCard(
             )
         }
     }
-
 }

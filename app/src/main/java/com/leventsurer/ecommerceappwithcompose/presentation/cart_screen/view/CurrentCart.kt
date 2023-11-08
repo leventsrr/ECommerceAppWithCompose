@@ -1,6 +1,5 @@
 package com.leventsurer.ecommerceappwithcompose.presentation.cart_screen.view
 
-import android.util.Log
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -25,6 +24,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -64,7 +64,6 @@ fun CurrentCart(
                 currentCartViewModelState.currentCart.forEach { model ->
                     CartProductCard(model)
                 }
-
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -90,10 +89,8 @@ fun CurrentCart(
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text(text = "Shipping", fontWeight = FontWeight.Bold)
+                        Text(text = stringResource(id = R.string.shipping), fontWeight = FontWeight.Bold)
                         Text(text = "$$shippingPrice", fontSize = 23.sp, fontWeight = FontWeight.Bold)
-
-
                     }
                     Divider()
                     Row(
@@ -103,7 +100,7 @@ fun CurrentCart(
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text(text = "Bag Total", fontWeight = FontWeight.Bold)
+                        Text(text = stringResource(id = R.string.bag_total), fontWeight = FontWeight.Bold)
                         Row (verticalAlignment = Alignment.CenterVertically){
                             Text(text = "(${currentCartViewModelState.currentCart.size}) ", color = Color.LightGray)
                             Text(text = "$${String.format("%.2f",totalPrice + shippingPrice)}", fontSize = 23.sp, fontWeight = FontWeight.Bold)
@@ -117,21 +114,20 @@ fun CurrentCart(
                     shape = RoundedCornerShape(14.dp),
                     colors = ButtonDefaults.elevatedButtonColors(containerColor = Color.Black),
                     onClick = { /*TODO*/ }) {
-                    Text("Proceed to Checkout", color = Color.White)
+                    Text(stringResource(id = R.string.proceed_to_check_out), color = Color.White)
                 }
             }
-        }else if (currentCartViewModelState.currentCart.isEmpty()){
+        }else{
             val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.empty_cart_animation))
+
             Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center) {
                 LottieAnimation(
                     modifier = Modifier.fillMaxWidth(),
                     composition = composition,
                     iterations = LottieConstants.IterateForever,
                 )
-                Text(text = "You don't have any product in cart", modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center, color = Color.LightGray)
+                Text(text = stringResource(id = R.string.empty_cart_warning), modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center, color = Color.LightGray)
             }
         }
-
-
     }
 }

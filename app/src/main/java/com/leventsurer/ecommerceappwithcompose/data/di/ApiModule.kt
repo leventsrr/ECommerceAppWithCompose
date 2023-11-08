@@ -13,24 +13,20 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
-
 @InstallIn(SingletonComponent::class)
 @Module
 object ApiModule {
-
     @Provides
     @Singleton
-    fun provideAuthenticationApi(): AuthenticationApi =Retrofit.Builder()
+    fun provideAuthenticationApi(): AuthenticationApi = Retrofit.Builder()
         .baseUrl(BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
         .create(AuthenticationApi::class.java)
 
-
-
     @Provides
     @Singleton
-    fun provideCategoryApi(): CategoryApi  =Retrofit.Builder()
+    fun provideCategoryApi(): CategoryApi = Retrofit.Builder()
         .baseUrl(BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
@@ -38,7 +34,7 @@ object ApiModule {
 
     @Provides
     @Singleton
-    fun provideProductApi(): ProductApi  =Retrofit.Builder()
+    fun provideProductApi(): ProductApi = Retrofit.Builder()
         .baseUrl(BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
@@ -46,12 +42,9 @@ object ApiModule {
 
     @Provides
     @Singleton
-    fun provideCartApi(): CartApi  =Retrofit.Builder()
+    fun provideCartApi(): CartApi = Retrofit.Builder()
         .baseUrl(BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
         .create(CartApi::class.java)
-
-
-
 }

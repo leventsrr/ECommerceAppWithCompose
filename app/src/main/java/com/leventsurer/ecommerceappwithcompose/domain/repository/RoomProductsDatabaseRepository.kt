@@ -4,20 +4,13 @@ import com.leventsurer.ecommerceappwithcompose.data.local.room.FavoriteProductMo
 import com.leventsurer.ecommerceappwithcompose.data.local.room.ProductInCartModel
 
 interface RoomProductsDatabaseRepository {
-
     //Favorite Products
     suspend fun insertFavoriteProduct(favoriteProductModel: FavoriteProductModel)
-
     suspend fun deleteFavoriteProduct(favoriteProductModel: FavoriteProductModel)
-
-    suspend fun getFavoriteProducts():List<FavoriteProductModel>
+    suspend fun getFavoriteProducts(): List<FavoriteProductModel>
 
     //Products in cart
-
     suspend fun insertProductToCart(favoriteProductModel: ProductInCartModel)
-
     suspend fun deleteProductToCart(favoriteProductModel: ProductInCartModel)
-
-    suspend fun getProductsToCart():List<ProductInCartModel>
-
+    suspend fun getProductsToCart(): List<ProductInCartModel>
 }

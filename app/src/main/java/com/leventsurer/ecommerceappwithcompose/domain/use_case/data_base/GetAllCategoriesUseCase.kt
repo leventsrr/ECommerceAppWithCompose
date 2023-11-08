@@ -1,8 +1,6 @@
 package com.leventsurer.ecommerceappwithcompose.domain.use_case.data_base
 
-import android.util.Log
 import com.leventsurer.ecommerceappwithcompose.data.remote.dto.response.CategoriesResponse
-import com.leventsurer.ecommerceappwithcompose.domain.repository.DataStoreRepository
 import com.leventsurer.ecommerceappwithcompose.domain.repository.DatabaseRepository
 import com.leventsurer.ecommerceappwithcompose.tools.Resource
 import kotlinx.coroutines.flow.Flow
@@ -21,6 +19,4 @@ class GetAllCategoriesUseCase @Inject constructor(
             emit(Resource.Error(e.message ?: "Error"))
         }
     }
-
-
 }

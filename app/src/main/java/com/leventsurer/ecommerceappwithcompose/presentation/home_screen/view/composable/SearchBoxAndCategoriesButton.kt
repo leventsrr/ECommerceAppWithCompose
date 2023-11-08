@@ -1,6 +1,5 @@
 package com.leventsurer.ecommerceappwithcompose.presentation.home_screen.view.composable
 
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -15,11 +14,11 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.FilterAlt
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.OutlinedIconButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -44,12 +43,15 @@ fun SearchBoxAndCategoriesButton(
             .fillMaxWidth()
             .padding(horizontal = 5.dp)
     ) {
+        val containerColor = Color.LightGray.copy(0.3f)
         OutlinedTextField(
             modifier = Modifier.weight(4f),
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                containerColor = Color.LightGray.copy(0.3f),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedContainerColor = containerColor,
+                unfocusedContainerColor = containerColor,
+                disabledContainerColor = containerColor,
+                focusedBorderColor = Color.Black,
                 unfocusedBorderColor = Color.Transparent,
-                focusedBorderColor = Color.Black
             ),
             leadingIcon = {
                 Icon(
@@ -60,7 +62,7 @@ fun SearchBoxAndCategoriesButton(
                     })
             },
             trailingIcon = {
-                if (!searchingProductName.isNullOrEmpty()) {
+                if (searchingProductName.isNotEmpty()) {
                     Icon(
                         imageVector = Icons.Default.Close,
                         contentDescription = "",
@@ -77,8 +79,7 @@ fun SearchBoxAndCategoriesButton(
             },
         )
         Spacer(modifier = Modifier.width(20.dp))
-
-        if(searchingProductName.isNullOrEmpty()){
+        if(searchingProductName.isEmpty()){
             OutlinedIconButton(
                 modifier = Modifier.size(35.dp),
                 colors = IconButtonDefaults.outlinedIconButtonColors(containerColor = Color.Black),

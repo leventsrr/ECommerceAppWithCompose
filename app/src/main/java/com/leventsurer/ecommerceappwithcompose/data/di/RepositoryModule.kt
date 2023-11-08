@@ -27,11 +27,9 @@ import javax.inject.Singleton
 val Context.userDataStore: DataStore<Preferences> by preferencesDataStore(
     name = "dataStorePreferences"
 )
-
 @InstallIn(SingletonComponent::class)
 @Module
 object RepositoryModule {
-
     @Provides
     @Singleton
     fun provideAuthenticationRepository(authenticationApi: AuthenticationApi): AuthenticationRepository {
@@ -63,8 +61,4 @@ object RepositoryModule {
     fun provideRoomRepository(productDao: ProductDao): RoomProductsDatabaseRepository {
         return RoomProductsDatabaseRepositoryImpl(productDao = productDao)
     }
-
-
-
-
 }

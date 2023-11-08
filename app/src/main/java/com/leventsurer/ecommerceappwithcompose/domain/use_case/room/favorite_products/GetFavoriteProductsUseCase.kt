@@ -10,13 +10,12 @@ import javax.inject.Inject
 class GetFavoriteProductsUseCase @Inject constructor(
     private val roomProductsDatabaseRepository: RoomProductsDatabaseRepository
 ) {
-
-    fun executeGetProducts():Flow<Resource<List<FavoriteProductModel>>> = flow {
+    fun executeGetProducts(): Flow<Resource<List<FavoriteProductModel>>> = flow {
         try {
             emit(Resource.Loading())
             val products = roomProductsDatabaseRepository.getFavoriteProducts()
             emit(Resource.Success(products))
-        }catch (e:Exception){
+        } catch (e: Exception) {
             emit(Resource.Error(e.message ?: "Error"))
         }
     }

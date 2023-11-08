@@ -48,6 +48,4 @@ class GetAProductByIdUseCase @Inject constructor(
                 emit(Resource.Error(e.message ?: "Error"))
             }
         }
-
-
 }

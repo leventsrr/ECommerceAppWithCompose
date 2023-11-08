@@ -4,7 +4,6 @@ import com.leventsurer.ecommerceappwithcompose.data.remote.dto.response.GetAllCa
 import retrofit2.http.GET
 
 interface CartApi {
-
     @GET("carts")
     suspend fun getAllPastCarts() : ArrayList<GetAllCartsResponse>
 }

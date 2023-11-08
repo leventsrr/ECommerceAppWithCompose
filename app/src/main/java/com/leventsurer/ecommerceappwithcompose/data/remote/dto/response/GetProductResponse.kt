@@ -1,7 +1,5 @@
 package com.leventsurer.ecommerceappwithcompose.data.remote.dto.response
 
-import com.leventsurer.ecommerceappwithcompose.domain.model.CategoryProductQuantityModel
-
 data class GetProductResponse(
     val category: String,
     val description: String,

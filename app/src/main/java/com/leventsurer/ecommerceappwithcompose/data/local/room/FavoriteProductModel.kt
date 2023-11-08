@@ -7,7 +7,6 @@ import androidx.room.PrimaryKey
 import com.leventsurer.ecommerceappwithcompose.data.remote.dto.response.Rating
 import kotlinx.android.parcel.Parcelize
 import javax.annotation.Nonnull
-
 @Entity(tableName = "favorite_product")
 @Parcelize
 data class FavoriteProductModel(
@@ -33,5 +32,4 @@ data class FavoriteProductModel(
 
     @ColumnInfo(name = "productRating")
     var productRating: Rating,
-
 ) : Parcelable

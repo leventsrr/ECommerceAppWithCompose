@@ -1,6 +1,5 @@
 package com.leventsurer.ecommerceappwithcompose.presentation.product_in_category_screen
 
-import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -124,9 +123,6 @@ class ProductsInCategoryViewModel @Inject constructor(
             is ProductsInCategoryEvent.RemoveProductFromFavorite -> {
                 removeProductFromFavorite(productsInCategoryEvent.favoriteProductModel)
             }
-
         }
     }
-
-
 }

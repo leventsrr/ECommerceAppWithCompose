@@ -7,6 +7,6 @@ data class LoginRequest(
     val password: String,
     @SerializedName("username")
     val username: String
-){
+) {
     override fun toString() = ""
 }

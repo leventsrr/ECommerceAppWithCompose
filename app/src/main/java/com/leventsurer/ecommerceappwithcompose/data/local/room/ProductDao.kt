@@ -9,7 +9,6 @@ import androidx.room.Update
 
 @Dao
 interface ProductDao {
-
     //Favorite Product
     @Insert(onConflict = OnConflictStrategy.ABORT)
     suspend fun addFavoriteProduct(favoriteProductModel: FavoriteProductModel)
@@ -24,7 +23,6 @@ interface ProductDao {
     suspend fun deleteFavoriteProduct(favoriteProductModel: FavoriteProductModel)
 
     //Products in cart
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addProductToCart(favoriteProductModel: ProductInCartModel)
 
@@ -36,5 +34,4 @@ interface ProductDao {
 
     @Delete
     suspend fun deleteProductToCart(productInCartModel: ProductInCartModel)
-
 }

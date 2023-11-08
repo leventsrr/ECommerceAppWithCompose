@@ -1,3 +1,66 @@
 <resources>
     <string name="app_name">EcommerceAppWithCompose</string>
+    <string name="current">Current</string>
+    <string name="past">Past</string>
+    <string name="my_cart">My Cart</string>
+    <string name="shipping">Shipping</string>
+    <string name="bag_total">Bag Total</string>
+    <string name="proceed_to_check_out">Proceed to Checkout</string>
+    <string name="empty_cart_warning">You don\'t have any product in cart</string>
+    <string name="product">Product</string>
+    <string name="categories">Categories</string>
+    <string name="home">Home</string>
+    <string name="cart">Cart</string>
+    <string name="favorite">Favorite</string>
+    <string name="profile">Profile</string>
+    <string name="emptyfavorite_warning">You don\'t have any favorite product</string>
+    <string name="top_categories">Top Categories</string>
+    <string name="new_arrivals">New Arrivals</string>
+    <string name="welcome">Welcome</string>
+    <string name="our_fashions_app">Our Fashions App</string>
+    <string name="cant_find_searched_product_warning">No products found for the name you are looking for</string>
+    <string name="login">Login</string>
+    <string name="or">or</string>
+    <string name="continue_with_facebook">Continıe with Facebook</string>
+    <string name="continue_with_google">Continue with Google</string>
+    <string name="continue_with_apple">Continue with Apple</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="please_login_or_register">Please login or sign up to continue our app</string>
+    <string name="desctiption">Description</string>
+    <string name="total_price">Total Price</string>
+    <string name="add_to_cart">Add to cart</string>
+    <string name="added_to_favorites">Added to favorites</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="create_new_account">Create an new account</string>
+    <string name="user_name">User Name</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="register_accept_term"><![CDATA[By creating an account you have to agree with our them & condication.]]></string>
+
+
+    <string-array name="on_boarding_descriptions">
+        <string name="on_boarding_description_1">Publish up your selfies to make yourself more beautiful with this app.</string>
+        <string name="on_boarding_description_2">Discover Your Own Beauty.</string>
+        <string name="on_boarding_description_3">Fashion: More than Just Clothing.</string>
+    </string-array>
+
+    <string-array name="on_boarding_titles">
+        <string name="on_boarding_title_1">20% Discount New Arrival Product</string>
+        <string name="on_boarding_title_2">Weekend Wardrobe Revamp: Save Big on Stylish Picks!</string>
+        <string name="on_boarding_title_3">Sunday Style Savings: Big Discounts on Stylish Choices!</string>
+    </string-array>
+
+    <string-array name="profile_screen_user_section_titles">
+        <string name="personal_details">Personal Details</string>
+        <string name="my_order">My Order</string>
+        <string name="my_favorites">My Favorites</string>
+        <string name="shipping_address">Shipping Address</string>
+        <string name="my_card">My Card</string>
+        <string name="settings">Settings</string>
+    </string-array>
+
+    <string-array name="profile_screen_general_app_section_titles">
+        <string name="faq">FAQs</string>
+        <string name="privacy_policy">Privacy Policy</string>
+    </string-array>
 </resources>

@@ -10,8 +10,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.leventsurer.ecommerceappwithcompose.R
 
 @Composable
 fun SegmentedButton(selectedSegment:Int,onSegmentSelect:(Int)->Unit) {
@@ -25,7 +27,7 @@ fun SegmentedButton(selectedSegment:Int,onSegmentSelect:(Int)->Unit) {
             )
     ) {
         Text(
-            text = "Current",
+            text = stringResource(R.string.current),
             modifier = Modifier
                 .weight(1f)
                 .background(if (selectedSegment == 0) Color.LightGray else Color.White)
@@ -34,7 +36,7 @@ fun SegmentedButton(selectedSegment:Int,onSegmentSelect:(Int)->Unit) {
 
             )
         Text(
-            text = "Past",
+            text = stringResource(id = R.string.past),
             modifier = Modifier
                 .weight(1f)
                 .background(if (selectedSegment == 0) Color.White else Color.LightGray)

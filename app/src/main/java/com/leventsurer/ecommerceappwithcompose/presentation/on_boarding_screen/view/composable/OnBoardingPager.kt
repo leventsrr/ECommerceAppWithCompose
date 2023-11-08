@@ -17,13 +17,32 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun OnBoardingPager(image:Int,title:String,description:String) {
+fun OnBoardingPager(image: Int, title: String, description: String) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Image(painter =  painterResource(id = image), contentDescription ="image", modifier = Modifier.padding(top = 10.dp) )
+        Image(
+            painter = painterResource(id = image),
+            contentDescription = "image",
+            modifier = Modifier.padding(top = 10.dp)
+        )
         Spacer(modifier = Modifier.height(40.dp))
-        Text(text = title, lineHeight = 30.sp, fontWeight = FontWeight.ExtraBold, fontSize = 30.sp, modifier = Modifier.fillMaxWidth().padding(horizontal = 10.dp))
+        Text(
+            text = title,
+            lineHeight = 30.sp,
+            fontWeight = FontWeight.ExtraBold,
+            fontSize = 30.sp,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 10.dp)
+        )
         Spacer(modifier = Modifier.height(20.dp))
-        Text(text = description, fontWeight = FontWeight.Bold, color = Color.LightGray,fontSize = 16.sp,modifier = Modifier.fillMaxWidth().padding(horizontal = 10.dp))
-
+        Text(
+            text = description,
+            fontWeight = FontWeight.Bold,
+            color = Color.LightGray,
+            fontSize = 16.sp,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 10.dp)
+        )
     }
 }

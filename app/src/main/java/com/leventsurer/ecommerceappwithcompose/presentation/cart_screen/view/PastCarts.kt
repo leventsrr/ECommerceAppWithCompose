@@ -46,8 +46,6 @@ import com.leventsurer.ecommerceappwithcompose.tools.toFormattedDate
 fun PastCarts(
     productsInPastCartState: ProductsInPastCartState
 ) {
-
-
     if (productsInPastCartState.isLoading) {
         val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.cart_loading_animation))
         Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center) {
@@ -68,7 +66,13 @@ fun PastCarts(
                     colors = CardDefaults.cardColors(containerColor = Color.White),
                     elevation = CardDefaults.cardElevation(5.dp)
                 ) {
-                    Row(modifier = Modifier.fillMaxWidth().padding(5.dp) , horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(5.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
                         Column(
 
                             verticalArrangement = Arrangement.SpaceBetween
@@ -76,8 +80,7 @@ fun PastCarts(
                             Text(
                                 text = productsInPastCartState.pastCarts[index].cartDate.toFormattedDate(
                                     "dd.MM.yyyy"
-                                )
-                                , modifier = Modifier.padding(bottom = 5.dp)
+                                ), modifier = Modifier.padding(bottom = 5.dp)
                             )
                             Row(modifier = Modifier.padding(bottom = 5.dp)) {
                                 productsInPastCartState.pastCarts[index].products.forEach { product ->
@@ -110,10 +113,7 @@ fun PastCarts(
 
                             }
                             Text(text = "Total Price: $${String.format("%.2f", totalPrice)}")
-
                         }
-
-
                         IconButton(onClick = { /*TODO*/ }) {
                             Icon(
                                 tint = Color.Black,
@@ -121,7 +121,6 @@ fun PastCarts(
                                 contentDescription = ""
                             )
                         }
-
                     }
                 }
             }

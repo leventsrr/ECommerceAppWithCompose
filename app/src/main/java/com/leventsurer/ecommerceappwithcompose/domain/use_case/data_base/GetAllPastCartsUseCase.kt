@@ -1,6 +1,5 @@
 package com.leventsurer.ecommerceappwithcompose.domain.use_case.data_base
 
-import android.util.Log
 import com.leventsurer.ecommerceappwithcompose.data.remote.dto.response.GetAllCartsResponse
 import com.leventsurer.ecommerceappwithcompose.domain.repository.DatabaseRepository
 import com.leventsurer.ecommerceappwithcompose.tools.Resource

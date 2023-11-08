@@ -10,13 +10,13 @@ import kotlin.random.Random
 
 class GetAllProductsUseCase @Inject constructor(
     private val databaseRepository: DatabaseRepository
-){
+) {
     fun executeGetAllProducts(): Flow<Resource<ArrayList<GetProductResponse>>> = flow {
         try {
             emit(Resource.Loading())
             val products = databaseRepository.getAllProducts()
             emit(Resource.Success(products))
-        }catch (e:Exception){
+        } catch (e: Exception) {
             emit(Resource.Error(e.message ?: "Error"))
         }
     }
@@ -27,9 +27,9 @@ class GetAllProductsUseCase @Inject constructor(
         try {
             emit(Resource.Loading())
             val products = databaseRepository.getAllProducts()
-            while (randomIndexes.size<6){
+            while (randomIndexes.size < 6) {
                 val randomProductIndex = Random.nextInt(products.size)
-                if(randomProductIndex  !in randomIndexes){
+                if (randomProductIndex !in randomIndexes) {
                     randomIndexes.add(randomProductIndex)
                 }
             }
@@ -37,9 +37,8 @@ class GetAllProductsUseCase @Inject constructor(
                 randomProducts.add(products[it])
             }
             emit(Resource.Success(randomProducts))
-        }catch (e:Exception){
+        } catch (e: Exception) {
             emit(Resource.Error(e.message ?: "Error"))
         }
     }
-
 }

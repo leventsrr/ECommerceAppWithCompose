@@ -11,7 +11,10 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun GeneralAppSettings(generalAppSectionRowItemIcons:ArrayList<ImageVector>, generalAppSectionRowItemTitles:ArrayList<String>) {
+fun GeneralAppSettings(
+    generalAppSectionRowItemIcons: ArrayList<ImageVector>,
+    generalAppSectionRowItemTitles: Array<String>
+) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -30,6 +33,5 @@ fun GeneralAppSettings(generalAppSectionRowItemIcons:ArrayList<ImageVector>, gen
                 )
             }
         }
-
     }
 }

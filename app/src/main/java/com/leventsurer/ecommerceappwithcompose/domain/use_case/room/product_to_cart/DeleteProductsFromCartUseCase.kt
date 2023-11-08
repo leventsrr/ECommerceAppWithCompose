@@ -7,19 +7,17 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-
-
 class DeleteProductsFromCartUseCase @Inject constructor(
     private val roomProductsDatabaseRepository: RoomProductsDatabaseRepository
-){
-
-    fun executeDeleteProductsFromCart(productInCartModel: ProductInCartModel): Flow<Resource<Boolean>> = flow{
-        try {
-            emit(Resource.Loading())
-             roomProductsDatabaseRepository.deleteProductToCart(productInCartModel)
-            emit(Resource.Success(true))
-        }catch (e:Exception){
-            emit(Resource.Error(e.message ?: "Error"))
+) {
+    fun executeDeleteProductsFromCart(productInCartModel: ProductInCartModel): Flow<Resource<Boolean>> =
+        flow {
+            try {
+                emit(Resource.Loading())
+                roomProductsDatabaseRepository.deleteProductToCart(productInCartModel)
+                emit(Resource.Success(true))
+            } catch (e: Exception) {
+                emit(Resource.Error(e.message ?: "Error"))
+            }
         }
-    }
 }

@@ -19,25 +19,22 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 @Module
 object DatabaseModule {
-
     @Provides
     @Singleton
     fun provideDataBase(
-        app:Application,
+        app: Application,
         callback: ProductRoomDatabase.CallBack
-    )= Room.databaseBuilder(app,ProductRoomDatabase::class.java,"product")
+    ) = Room.databaseBuilder(app, ProductRoomDatabase::class.java, "product")
         .fallbackToDestructiveMigration()
         .addCallback(callback)
         .build()
 
     @Provides
-    fun provideProductDao(db:ProductRoomDatabase)= db.productDao()
+    fun provideProductDao(db: ProductRoomDatabase) = db.productDao()
 
     @ApplicationScope
     @Provides
     fun provideApplicationScope() = CoroutineScope(SupervisorJob())
-
-
 }
 
 @Retention(AnnotationRetention.RUNTIME)

@@ -13,5 +13,4 @@ interface ProductApi {
 
         @GET("products/{productId}")
         suspend fun getAProductById(@Path("productId") productId:String) : GetProductResponse
-
 }

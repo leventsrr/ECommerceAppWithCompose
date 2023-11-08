@@ -24,9 +24,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun BottomAppBarItem(itemIndex:Int,chosenBottomBarIndex:Int,onClick:(Int)->Unit,itemIcon:ImageVector,itemTitle:String) {
-
-
+fun BottomAppBarItem(
+    itemIndex: Int,
+    chosenBottomBarIndex: Int,
+    onClick: (Int) -> Unit,
+    itemIcon: ImageVector,
+    itemTitle: String
+) {
     if (chosenBottomBarIndex == itemIndex) {
         Row(
             Modifier
@@ -40,7 +44,7 @@ fun BottomAppBarItem(itemIndex:Int,chosenBottomBarIndex:Int,onClick:(Int)->Unit,
                 modifier = Modifier.size(30.dp),
                 colors = IconButtonDefaults.filledIconButtonColors(containerColor = Color.Black),
                 onClick = {
-                   onClick(0)
+                    onClick(0)
                 }) {
                 Icon(
                     modifier = Modifier.size(16.dp),
@@ -59,7 +63,6 @@ fun BottomAppBarItem(itemIndex:Int,chosenBottomBarIndex:Int,onClick:(Int)->Unit,
         }
     } else {
         IconButton(
-
             onClick = {
                 onClick(itemIndex)
             }) {

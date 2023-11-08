@@ -1,12 +1,7 @@
 package com.leventsurer.ecommerceappwithcompose.presentation.product_detail_screen.view
 
-import android.util.Log
-import android.widget.Toast
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,17 +14,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.overscroll
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.outlined.Favorite
-import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
@@ -37,7 +27,6 @@ import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -47,16 +36,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.rotary.onRotaryScrollEvent
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.leventsurer.ecommerceappwithcompose.R
 import com.leventsurer.ecommerceappwithcompose.data.local.room.FavoriteProductModel
 import com.leventsurer.ecommerceappwithcompose.data.remote.dto.response.GetProductResponse
 import com.leventsurer.ecommerceappwithcompose.presentation.product_detail_screen.ProductDetailEvent
@@ -83,15 +68,16 @@ fun ProductDetailScreen(
     LaunchedEffect(Unit) {
         productDetailViewModel.onEvent(ProductDetailEvent.GetProductDetailById(productId ?: "-1"))
     }
+
     if (productDetailViewModelState.isLoading) {
         Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
             CircularProgressIndicator(color = Color.Black)
         }
     } else if (productDetailViewModelState.productDetail != null && productDetailViewModel.getFavoriteProductsState.value.result != null) {
-        val productDetail:GetProductResponse = productDetailViewModelState.productDetail
-        val favoriteProductsId = productDetailViewModel.getFavoriteProductsState.value.result!!.map { it.productId }
+        val productDetail: GetProductResponse = productDetailViewModelState.productDetail
+        val favoriteProductsId =
+            productDetailViewModel.getFavoriteProductsState.value.result!!.map { it.productId }
         isInFavorite = productDetail.id in favoriteProductsId
-
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -135,7 +121,6 @@ fun ProductDetailScreen(
                         ),
                         modifier = Modifier.size(30.dp),
                         onClick = {
-
                             val model = FavoriteProductModel(
                                 productImageUrl = productDetail.image,
                                 productTitle = productDetail.title,
@@ -175,7 +160,6 @@ fun ProductDetailScreen(
                                 tint = Color.Black,
                                 modifier = Modifier.size(15.dp)
                             )
-
                         }
                     }
                     Row(
@@ -203,7 +187,9 @@ fun ProductDetailScreen(
                         }
                     }
                     Spacer(modifier = Modifier.height(5.dp))
-                    if (productDetail.category == "men's clothing" || productDetail.category == "women's clothing") { ProductSize() }
+                    if (productDetail.category == "men's clothing" || productDetail.category == "women's clothing") {
+                        ProductSize()
+                    }
                     Spacer(modifier = Modifier.height(5.dp))
                     ProductDescription(productDetail.description)
                     Spacer(modifier = Modifier.height(5.dp))
@@ -216,13 +202,9 @@ fun ProductDetailScreen(
                         productModel = productDetailViewModelState.productDetail,
                         productQuantity = productQuantity
                     )
-
-
                 }
             }
 
         }
     }
-
-
 }

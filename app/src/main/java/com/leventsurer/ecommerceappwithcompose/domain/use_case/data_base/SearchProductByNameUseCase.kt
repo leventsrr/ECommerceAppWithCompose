@@ -19,9 +19,7 @@ class SearchProductByNameUseCase @Inject constructor(
                 emit(Resource.Success(products.filter { product ->
                     product.title.uppercase().contains(productName.uppercase())
                 }))
-                Log.e("kontrol","arama success")
             } catch (e: Exception) {
-                Log.e("kontrol","arama error:${e.message}")
                 emit(Resource.Error(e.message ?: "Error"))
             }
         }

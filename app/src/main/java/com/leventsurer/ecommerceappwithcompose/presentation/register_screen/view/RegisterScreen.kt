@@ -32,6 +32,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -45,79 +46,109 @@ import com.leventsurer.ecommerceappwithcompose.presentation.common.GreetingsText
 @Composable
 fun RegisterScreen(
     padding: PaddingValues,
-    onLoginClick:()->Unit
-    ) {
-
+    onLoginClick: () -> Unit
+) {
     var string by remember {
         mutableStateOf("")
     }
-
     var isPasswordVisible by remember {
         mutableStateOf(false)
     }
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .padding(padding.calculateTopPadding()), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center){
-        Image(painter =  painterResource(id = R.drawable.logo), contentDescription ="logo")
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(padding.calculateTopPadding()),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Image(painter = painterResource(id = R.drawable.logo), contentDescription = "logo")
         Spacer(modifier = Modifier.height(60.dp))
-        GreetingsTexts(title = "Sign Up", text ="Create an new account" )
+        GreetingsTexts(
+            title = stringResource(id = R.string.sign_up),
+            text = stringResource(id = R.string.create_new_account)
+        )
         Spacer(modifier = Modifier.height(25.dp))
-        Text(text = "User Name", fontWeight = FontWeight.Bold, modifier = Modifier.fillMaxWidth())
+        Text(
+            text = stringResource(id = R.string.user_name),
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.fillMaxWidth()
+        )
         Spacer(modifier = Modifier.height(5.dp))
         TextField(
-
             modifier = Modifier
                 .height(20.dp)
                 .fillMaxWidth(),
-            colors = TextFieldDefaults.textFieldColors(containerColor = Color.Transparent,),
+            colors = TextFieldDefaults.textFieldColors(containerColor = Color.Transparent),
             value = "",
-            onValueChange ={} )
+            onValueChange = {})
         Spacer(modifier = Modifier.height(20.dp))
-        Text(text = "Email", fontWeight = FontWeight.Bold, modifier = Modifier.fillMaxWidth())
+        Text(
+            text = stringResource(id = R.string.email),
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.fillMaxWidth()
+        )
         Spacer(modifier = Modifier.height(5.dp))
         TextField(
-
             modifier = Modifier
                 .height(20.dp)
                 .fillMaxWidth(),
-            colors = TextFieldDefaults.textFieldColors(containerColor = Color.Transparent,),
+            colors = TextFieldDefaults.textFieldColors(containerColor = Color.Transparent),
             value = "",
-            onValueChange ={} )
+            onValueChange = {})
         Spacer(modifier = Modifier.height(20.dp))
-        Text(text = "Password", fontWeight = FontWeight.Bold, modifier = Modifier.fillMaxWidth())
+        Text(
+            text = stringResource(id = R.string.password),
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.fillMaxWidth()
+        )
         Spacer(modifier = Modifier.height(5.dp))
         TextField(
-
             modifier = Modifier
                 .height(20.dp)
                 .fillMaxWidth(),
-            colors = TextFieldDefaults.textFieldColors(containerColor = Color.Transparent,),
+            colors = TextFieldDefaults.textFieldColors(containerColor = Color.Transparent),
             value = "",
-            onValueChange ={} )
+            onValueChange = {})
         Spacer(modifier = Modifier.height(20.dp))
-        Text(text = "Confirm Password", fontWeight = FontWeight.Bold, modifier = Modifier.fillMaxWidth())
+        Text(
+            text = stringResource(id = R.string.confirm_password),
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.fillMaxWidth()
+        )
         Spacer(modifier = Modifier.height(5.dp))
         TextField(
-            visualTransformation = if(isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+            visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
             modifier = Modifier
                 .fillMaxWidth(),
-            colors = TextFieldDefaults.textFieldColors(containerColor = Color.Transparent,),
+            colors = TextFieldDefaults.textFieldColors(containerColor = Color.Transparent),
             value = string,
-            onValueChange ={
-                           string = it
+            onValueChange = {
+                string = it
             },
-            trailingIcon = { IconButton(onClick = {
-                isPasswordVisible = !isPasswordVisible
-            }) {
-                Icon(imageVector = if(isPasswordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff, contentDescription = "")
-            }}
-            )
+            trailingIcon = {
+                IconButton(onClick = {
+                    isPasswordVisible = !isPasswordVisible
+                }) {
+                    Icon(
+                        imageVector = if (isPasswordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
+                        contentDescription = ""
+                    )
+                }
+            }
+        )
         Spacer(modifier = Modifier.height(20.dp))
         Row {
-            Checkbox(checked = false, onCheckedChange ={} )
-            Text(text = "By creating an account you have to agree with our them & condication.",  color = Color.Gray)
+            Checkbox(checked = false, onCheckedChange = {})
+            Text(
+                text = stringResource(id = R.string.register_accept_term),
+                color = Color.Gray
+            )
         }
         Spacer(modifier = Modifier.height(20.dp))
-        CustomElevatedButton(buttonText = "Login", onClick = onLoginClick)
+        CustomElevatedButton(
+            buttonText = stringResource(id = R.string.login),
+            onClick = onLoginClick
+        )
     }
 }

@@ -12,26 +12,20 @@ import javax.inject.Inject
 class DataStoreRepositoryImpl @Inject constructor(
     private val context: Context
 ) : DataStoreRepository {
-
     private val userIsLoginStateKey = booleanPreferencesKey(USER_IS_LOGIN_STATE)
-    private val isFirstComeToHomeScreenKey = booleanPreferencesKey(USER_IS_LOGIN_STATE)
-
     override suspend fun setUserLoginStatus(isLogin: Boolean): Boolean {
         return try {
             context.userDataStore.edit { settings ->
                 settings[userIsLoginStateKey] = isLogin
             }
             true
-        }catch (e:Exception){
+        } catch (e: Exception) {
             false
         }
-
     }
+
     override suspend fun getUserLoginStatus(): Boolean {
-        val preference =  context.userDataStore.data.first()
+        val preference = context.userDataStore.data.first()
         return preference[userIsLoginStateKey] ?: false
     }
-
-
-
 }

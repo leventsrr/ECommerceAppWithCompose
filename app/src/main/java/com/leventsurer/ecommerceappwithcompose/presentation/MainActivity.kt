@@ -22,13 +22,10 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    @OptIn(ExperimentalMaterial3Api::class)
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
-
-
 
         setContent {
             EcommerceAppWithComposeTheme {
@@ -38,7 +35,6 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     val navController = rememberNavController()
-                    val navBackStackEntry by navController.currentBackStackEntryAsState()
                     Scaffold(
                         topBar = {
                             CustomTopAppBar(
@@ -52,7 +48,6 @@ class MainActivity : ComponentActivity() {
                             CustomBottomAppBar(navController)
                         }
                     )
-
                 }
             }
         }

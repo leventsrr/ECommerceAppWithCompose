@@ -32,13 +32,11 @@ import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.leventsurer.ecommerceappwithcompose.data.local.room.FavoriteProductModel
-import com.leventsurer.ecommerceappwithcompose.presentation.favorite_products_screen.FavoriteEvent
-import com.leventsurer.ecommerceappwithcompose.presentation.favorite_products_screen.FavoriteViewModel
 import com.leventsurer.ecommerceappwithcompose.ui.Screens
 
 @Composable
 fun FavoriteProductCard(
-    removeProductFromFavorite:(FavoriteProductModel)->Unit,
+    removeProductFromFavorite: (FavoriteProductModel) -> Unit,
     favoriteProduct: FavoriteProductModel,
     navHostController: NavHostController
 ) {
@@ -48,7 +46,7 @@ fun FavoriteProductCard(
             .padding(horizontal = 10.dp)
             .padding(bottom = 10.dp)
             .clickable {
-                      navHostController.navigate("${Screens.ProductDetailScreen.route}/${favoriteProduct.productId}")
+                navHostController.navigate("${Screens.ProductDetailScreen.route}/${favoriteProduct.productId}")
             },
         colors = CardDefaults.cardColors(containerColor = Color.White),
         elevation = CardDefaults.cardElevation(10.dp)
@@ -72,7 +70,6 @@ fun FavoriteProductCard(
                 contentDescription = null,
             )
             Spacer(modifier = Modifier.width(10.dp))
-
             Column {
                 Text(
                     text = favoriteProduct.productTitle,

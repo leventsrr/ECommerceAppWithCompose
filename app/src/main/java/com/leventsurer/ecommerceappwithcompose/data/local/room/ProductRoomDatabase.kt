@@ -8,21 +8,18 @@ import com.leventsurer.ecommerceappwithcompose.tools.Converters
 import javax.inject.Inject
 import javax.inject.Provider
 
-@Database(entities = [FavoriteProductModel::class,ProductInCartModel::class], version = 2)
+@Database(entities = [FavoriteProductModel::class, ProductInCartModel::class], version = 2)
 @TypeConverters(Converters::class)
-abstract class ProductRoomDatabase :RoomDatabase(){
+abstract class ProductRoomDatabase : RoomDatabase() {
     abstract fun productDao(): ProductDao
-
     class CallBack @Inject constructor(
         private val database: Provider<ProductRoomDatabase>
-    ) : RoomDatabase.Callback() {
+    ) : Callback() {
         override fun onCreate(db: SupportSQLiteDatabase) {
             super.onCreate(db)
-            val dao = database.get().productDao()
+            database.get().productDao()
         }
     }
-
-
 }
 
 
