@@ -76,7 +76,7 @@ class CartViewModel @Inject constructor(
                         DeleteProductFromCurrentCartState(result = it.data)
                 }
             }
-        }
+        }.launchIn(viewModelScope)
     }
 
     private fun getPastCartWithIncludesProducts() {

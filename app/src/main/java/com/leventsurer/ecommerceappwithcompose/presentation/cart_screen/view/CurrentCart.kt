@@ -34,11 +34,13 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.leventsurer.ecommerceappwithcompose.R
+import com.leventsurer.ecommerceappwithcompose.data.local.room.ProductInCartModel
 import com.leventsurer.ecommerceappwithcompose.presentation.cart_screen.CurrentCartState
 import com.leventsurer.ecommerceappwithcompose.presentation.cart_screen.composable.CartProductCard
 
 @Composable
 fun CurrentCart(
+    productRemoveFromCart:(ProductInCartModel)->Unit,
     currentCartViewModelState: CurrentCartState,
 ) {
     if (currentCartViewModelState.isLoading) {
@@ -48,13 +50,10 @@ fun CurrentCart(
             mutableDoubleStateOf(0.0)
         }
         val shippingPrice = 17
-        val currentCartList = currentCartViewModelState.currentCart
-        LaunchedEffect(Unit){
-            currentCartList.forEach {  cart->
-                totalPrice+=cart.productPrice.toDouble() * cart.productQuantity.toDouble()
-            }
+        LaunchedEffect(currentCartViewModelState.currentCart) {
+            totalPrice = currentCartViewModelState.currentCart
+                .sumOf { cart -> cart.productPrice.toDouble() * cart.productQuantity.toDouble() }
         }
-
 
         if(currentCartViewModelState.currentCart.isNotEmpty()){
             Column(
@@ -62,7 +61,11 @@ fun CurrentCart(
                     .verticalScroll(rememberScrollState())
             ) {
                 currentCartViewModelState.currentCart.forEach { model ->
-                    CartProductCard(model)
+                    CartProductCard(
+                        productRemoveFromCart = {
+                            productRemoveFromCart(it)
+                        },
+                        productInCartModel =  model)
                 }
                 Column(
                     modifier = Modifier

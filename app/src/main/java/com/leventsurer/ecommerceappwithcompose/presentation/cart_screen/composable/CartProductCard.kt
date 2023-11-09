@@ -12,7 +12,11 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.DeleteOutline
 import androidx.compose.material3.Divider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -37,20 +41,10 @@ import kotlin.math.roundToInt
 
 @Composable
 fun CartProductCard(
+    productRemoveFromCart: (ProductInCartModel) -> Unit,
     productInCartModel: ProductInCartModel
 ) {
-    var moved by remember { mutableStateOf(false) }
-    val pxToMove = with(LocalDensity.current) {
-        -50.dp.toPx().roundToInt()
-    }
-    val offset by animateIntOffsetAsState(
-        targetValue = if (moved) {
-            IntOffset(pxToMove, 0)
-        } else {
-            IntOffset.Zero
-        },
-        label = "offset"
-    )
+
 
     Column(
         modifier = Modifier
@@ -61,14 +55,7 @@ fun CartProductCard(
             modifier = Modifier
                 .padding(5.dp)
                 .fillMaxWidth()
-                .fillMaxHeight()
-                .offset { offset }
-                .clickable(
-                    interactionSource = remember { MutableInteractionSource() },
-                    indication = null
-                ) {
-                    moved = !moved
-                },
+                .fillMaxHeight(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
@@ -119,6 +106,16 @@ fun CartProductCard(
                             .padding(start = 10.dp, top = 5.dp, bottom = 5.dp, end = 10.dp)
                     )
                 }
+            }
+
+            IconButton(
+                modifier = Modifier.fillMaxHeight(),
+                onClick = {
+                    productRemoveFromCart(
+                        productInCartModel
+                    )
+                }) {
+                Icon(imageVector = Icons.Outlined.DeleteOutline, contentDescription = "")
             }
         }
         Divider(color = Color.LightGray, thickness = 0.5.dp)

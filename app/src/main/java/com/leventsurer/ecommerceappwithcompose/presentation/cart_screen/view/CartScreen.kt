@@ -71,6 +71,10 @@ fun CartScreen(
                 cartViewModel.onEvent(CartEvent.GetCurrentCart)
             }
             CurrentCart(
+                productRemoveFromCart = {
+                    cartViewModel.onEvent(CartEvent.DeleteProductFromCurrentCart(it))
+                    cartViewModel.onEvent(CartEvent.GetCurrentCart)
+                },
                 currentCartViewModelState = currentCartViewModelState,
             )
         } else if (selectedSegment == 1) {
