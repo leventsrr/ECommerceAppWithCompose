@@ -1,6 +1,5 @@
 package com.leventsurer.ecommerceappwithcompose.domain.use_case.data_base
 
-import android.util.Log
 import com.leventsurer.ecommerceappwithcompose.data.remote.dto.response.GetProductResponse
 import com.leventsurer.ecommerceappwithcompose.domain.repository.DatabaseRepository
 import com.leventsurer.ecommerceappwithcompose.tools.Resource
@@ -16,9 +15,14 @@ class SearchProductByNameUseCase @Inject constructor(
             try {
                 emit(Resource.Loading())
                 val products = databaseRepository.getAllProducts()
-                emit(Resource.Success(products.filter { product ->
-                    product.title.uppercase().contains(productName.uppercase())
-                }))
+                if(!products.isNullOrEmpty()){
+                    emit(Resource.Success(products.filter { product ->
+                        product.title.uppercase().contains(productName.uppercase())
+                    }))
+                }else{
+                    emit(Resource.Success(arrayListOf()))
+                }
+
             } catch (e: Exception) {
                 emit(Resource.Error(e.message ?: "Error"))
             }

@@ -1,8 +1,11 @@
 package com.leventsurer.ecommerceappwithcompose.presentation.product_detail_screen.view
 
-import android.widget.Toast
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.rememberScrollableState
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,9 +18,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.outlined.Favorite
@@ -28,6 +30,7 @@ import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -38,7 +41,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
@@ -69,6 +75,21 @@ fun ProductDetailScreen(
     LaunchedEffect(Unit) {
         productDetailViewModel.onEvent(ProductDetailEvent.GetProductDetailById(productId ?: "-1"))
     }
+    //the maximum height that the Column in which the product detail is located can take
+    var productDetailColumnLastHeight by remember {
+        mutableFloatStateOf(0.55f)
+    }
+    var offset by remember { mutableFloatStateOf(0f) }
+    var currentProductDetailHeight by remember {
+        mutableFloatStateOf(
+            (-offset
+                .toString()
+                .take(3)
+                .toFloat() / 100) + 0.55f
+        )
+    }
+    val screenHeight = LocalConfiguration.current.screenHeightDp.dp
+    val localDensity = LocalDensity.current
 
     if (productDetailViewModelState.isLoading) {
         Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
@@ -79,6 +100,8 @@ fun ProductDetailScreen(
         val favoriteProductsId =
             productDetailViewModel.getFavoriteProductsState.value.result!!.map { it.productId }
         isInFavorite = productDetail.id in favoriteProductsId
+
+
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -88,7 +111,35 @@ fun ProductDetailScreen(
             AsyncImage(
                 contentScale = ContentScale.Fit,
                 modifier = Modifier
-                    .fillMaxHeight(0.5f)
+                    .fillMaxHeight(
+                        if (
+                            (-offset
+                                .toString()
+                                .take(3)
+                                .toFloat() / 100) + 0.55f >= productDetailColumnLastHeight
+                        ) {
+                            Log.e("kontrol","image if")
+                            1.0f - productDetailColumnLastHeight
+                        } else {
+                            Log.e("kontrol","image else")
+                            if ((0.5f - (-offset
+                                    .toString()
+                                    .take(3)
+                                    .toFloat() / 100) < 0.5f)
+                            ) {
+                                Log.e("kontrol","image else -> iff")
+                                0.5f - (-offset
+                                    .toString()
+                                    .take(3)
+                                    .toFloat() / 100)
+                            } else {
+                                Log.e("kontrol","image else else")
+                                0.5f
+                            }
+                        }
+
+
+                    )
                     .align(Alignment.TopCenter)
                     .fillMaxSize()
                     .background(Color.White),
@@ -100,18 +151,51 @@ fun ProductDetailScreen(
             )
             Box(
                 modifier = Modifier
-                    .fillMaxHeight(0.55f)
+                    .fillMaxHeight(
+                        if (
+                            currentProductDetailHeight >= productDetailColumnLastHeight
+                        ) {
+                            productDetailColumnLastHeight
+
+                        } else {
+                            if (
+                                currentProductDetailHeight > 0.55f
+                            ) {
+                                currentProductDetailHeight + 0.55f
+                            } else {
+                                0.55f
+                            }
+                        }
+
+
+                    )
                     .align(Alignment.BottomCenter)
                     .border(1.dp, Color.LightGray, RoundedCornerShape(15.dp, 15.dp, 0.dp, 0.dp))
                     .clip(RoundedCornerShape(15.dp, 15.dp, 0.dp, 0.dp))
                     .background(Color.White)
+                    .scrollable(
+                        orientation = Orientation.Vertical,
+                        state = rememberScrollableState { delta ->
+                            offset += delta
+                            currentProductDetailHeight = calculateCurrentProductDetailHeight(offset)
+                            delta
+                        }
+                    )
 
             ) {
                 Column(
                     modifier = Modifier
                         .padding(start = 10.dp, end = 10.dp, top = 10.dp)
-                        .fillMaxHeight()
-                        .verticalScroll(rememberScrollState()),
+                        .onSizeChanged { size ->
+                            if (size.height > productDetailColumnLastHeight) {
+                                productDetailColumnLastHeight =
+                                    with(localDensity) { size.height.toDp() } / screenHeight
+                                Log.e("kontrol", " if en büyük:${productDetailColumnLastHeight}")
+                            } else {
+                                Log.e("kontrol", " else en büyük:${productDetailColumnLastHeight}")
+                            }
+                        }
+                        .wrapContentHeight(),
                     verticalArrangement = Arrangement.SpaceBetween,
                     horizontalAlignment = Alignment.End
                 ) {
@@ -208,4 +292,8 @@ fun ProductDetailScreen(
 
         }
     }
+}
+
+private fun calculateCurrentProductDetailHeight(offset: Float): Float {
+    return (-offset.toString().take(3).toFloat() / 100) + 0.55f
 }

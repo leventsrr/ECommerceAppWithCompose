@@ -21,6 +21,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedIconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -58,11 +59,15 @@ fun ProductCard(
     }
     val state = productsInProductsInCategoryViewModel.addProductToFavoriteState.value
     if (state.result != null && state.result) {
-        Toast.makeText(
-            LocalContext.current,
-            stringResource(id = R.string.added_to_favorites),
-            Toast.LENGTH_SHORT
-        ).show()
+        val context = LocalContext.current
+        val toastMessage = stringResource(id = R.string.added_to_favorites)
+        LaunchedEffect(Unit) {
+            Toast.makeText(
+                context,
+                toastMessage,
+                Toast.LENGTH_SHORT
+            ).show()
+        }
     }
 
     Column(

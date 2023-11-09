@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
@@ -98,7 +99,7 @@ fun HomeScreen(
         )
         Spacer(modifier = Modifier.height(20.dp))
         if (isUserSearchingProduct) {
-            if (!homeViewModel.searchProductByNameState.value.products.isNullOrEmpty() && !favoriteProductsState.favoriteProducts.isNullOrEmpty()) {
+            if (!homeViewModel.searchProductByNameState.value.products.isNullOrEmpty() && favoriteProductsState.favoriteProducts != null) {
                 var index = 0
                 val favoriteProductsId = favoriteProductsState.favoriteProducts.map { product ->
                     product.productId
@@ -134,8 +135,8 @@ fun HomeScreen(
                     }
                     index += 2
                 }
-            } else if (homeViewModel.searchProductByNameState.value.products != null && homeViewModel.searchProductByNameState.value.products!!.isEmpty()) {
-                Box(contentAlignment = Alignment.Center) {
+            } else {
+                Box(contentAlignment = Alignment.Center, modifier = Modifier.wrapContentSize()) {
                     Text(text = stringResource(id = R.string.cant_find_searched_product_warning))
                 }
             }
