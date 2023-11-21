@@ -33,11 +33,8 @@
 <br>
 
 ## Project Structure
-![Screenshot 2023-11-17 at 10-24-58 Excalidraw — Collaborative whiteboarding made easy](https://github.com/leventsrr/ECommerceAppWithCompose/assets/63983517/aa8e91a1-2ba0-45ed-98c1-994b01025122)
 
-
-https://github.com/leventsrr/ECommerceAppWithCompose/assets/63983517/a33c1ed9-a41e-4893-badd-07a3452f3504
-
+![Screenshot 2023-11-17 at 10-23-39 Excalidraw — Collaborative whiteboarding made easy](https://github.com/leventsrr/ECommerceAppWithCompose/assets/63983517/927b865e-7db5-421f-ae23-db85d51b25e3)
 
 
 
